@@ -55,7 +55,7 @@ export default function Login(){
                     </button>
                 </div>
                 <p className='text-center text-gray-400 '>
-                    forgot password? <Link  className='text-blue-700' href={'/'}>Click here</Link>
+                    Forgot password? <Link  className='text-blue-700' href={'/'}>Click here</Link>
                 </p>
                 <div className="input-button">
                     <button type='button' className={styles.button_custom}>
