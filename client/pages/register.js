@@ -2,18 +2,25 @@ import Head from 'next/head'
 import Layout from '../layout/layout'
 import Link from 'next/link'
 import styles from '../styles/Form.module.css';
+import axios from 'axios'
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useState } from 'react';
 
 const Register = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [name, setName] = useState("khoubaib");
+    const [email, setEmail] = useState("khoubaib@gmail.com");
+    const [password, setPassword] = useState("123456");
 
     const [show, setShow] = useState({ password: false, cpassword: false })
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.table({name, email, password});
+        const {data} = await axios.post(`http://localhost:8000/api/register`, {
+            name,
+            email,
+            password,
+        });
+        console.log('REGISTER RESPONSE', data)
     };
     
     return (
