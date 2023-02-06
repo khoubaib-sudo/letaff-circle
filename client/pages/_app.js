@@ -1,15 +1,16 @@
 import '../styles/globals.css'
 import 'antd/dist/reset.css'
 import NavBar from '../components/NavBar'
+import  {SessionProvider} from 'next-auth/react'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
-      <NavBar />
-      <Component {...pageProps} />
-    </>
-   
+    <SessionProvider session={pageProps.session}>
+      <>
+        <NavBar />
+        <Component {...pageProps} />
+      </>
+    </SessionProvider>
     );
 }
-
 export default MyApp

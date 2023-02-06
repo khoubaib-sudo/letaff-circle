@@ -5,10 +5,17 @@ import styles from '../styles/Form.module.css';
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useState } from 'react';
 
-export default function Register(){
+const Register = () => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const [show, setShow] = useState({ password: false, cpassword: false })
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.table({name, email, password});
+    };
+    
     return (
         <Layout>
         <Head>
@@ -22,13 +29,15 @@ export default function Register(){
             </div>
 
             {/* form */}
-            <form className='flex flex-col gap-5'>
+            <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
                 <div className={styles.input_group}>
                     <input 
                     type="text"
                     name='Username'
                     placeholder='Username'
                     className={styles.input_text}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     />
                     <span className='icon flex items-center px-4'>
                         <HiOutlineUser size={25} />
@@ -40,6 +49,8 @@ export default function Register(){
                     name='email'
                     placeholder='Email'
                     className={styles.input_text}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     />
                     <span className='icon flex items-center px-4'>
                         <HiAtSymbol size={25} />
@@ -51,6 +62,8 @@ export default function Register(){
                     name='password'
                     placeholder='password'
                     className={styles.input_text}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     />
                      <span className='icon flex items-center px-4' onClick={() => setShow({ ...show, password: !show.password})}>
                         <HiFingerPrint size={25} />
@@ -73,7 +86,7 @@ export default function Register(){
                 <div className="input-button">
                     <button type='submit' className={styles.button }>
                         Register
-                    </button>
+                    </button> 
                 </div>
             </form>
 
@@ -85,3 +98,5 @@ export default function Register(){
         </Layout>
     )
 }
+
+export default Register;
