@@ -6,26 +6,32 @@ import axios from 'axios'
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useState } from 'react';
 import {toast} from 'react-toastify'
+import {LoadingOutlined} from '@ant-design/icons'
+
 
 const Register = () => {
     const [name, setName] = useState("khoubaib");
     const [email, setEmail] = useState("khoubaib@gmail.com");
     const [password, setPassword] = useState("123456");
+    const [loading, setLoading] = useState(false)
 
     const [show, setShow] = useState({ password: false, cpassword: false })
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            console.table({name, email, password});
+            setLoading(true);
+            // console.table({name, email, password});
             const {data} = await axios.post(`http://localhost:8000/api/register`, {
             name,
             email,
             password,
         });
         // console.log('REGISTER RESPONSE', data)
-        toast.success("Registration Successful, Please login.")
+        toast.success("Registration Successful, Please login.");
+        setLoading(false);
         }catch(err){
             toast.error(err.response.data)
+            setLoading(false);
         }
     };
     
@@ -97,8 +103,12 @@ const Register = () => {
 
                 {/* login buttons */}
                 <div className="input-button">
-                    <button type='submit' className={styles.button }>
-                        Register
+                    <button 
+                        type='submit' 
+                        className={styles.button}
+                        disabled={!name || !email || !password || loading}
+                        >
+                        {loading ? <LoadingOutlined spin style={{ fontSize: '40px' }}/> : "Register"}
                     </button> 
                 </div>
             </form>
