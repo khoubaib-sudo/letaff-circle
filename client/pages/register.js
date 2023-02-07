@@ -5,6 +5,7 @@ import styles from '../styles/Form.module.css';
 import axios from 'axios'
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useState } from 'react';
+import {toast} from 'react-toastify'
 
 const Register = () => {
     const [name, setName] = useState("khoubaib");
@@ -14,13 +15,18 @@ const Register = () => {
     const [show, setShow] = useState({ password: false, cpassword: false })
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.table({name, email, password});
-        const {data} = await axios.post(`http://localhost:8000/api/register`, {
+        try{
+            console.table({name, email, password});
+            const {data} = await axios.post(`http://localhost:8000/api/register`, {
             name,
             email,
             password,
         });
-        console.log('REGISTER RESPONSE', data)
+        // console.log('REGISTER RESPONSE', data)
+        toast.success("Registration Successful, Please login.")
+        }catch(err){
+            toast.error(err.response.data)
+        }
     };
     
     return (
