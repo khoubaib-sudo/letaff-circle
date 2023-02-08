@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
     <SessionProvider session={pageProps.session}>
       <>
         <ToastContainer 
-          position="top-center"
+          position="bottom-center"
           autoClose={2000}
         />
         <NavBar />

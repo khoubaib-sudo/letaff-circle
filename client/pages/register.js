@@ -13,6 +13,7 @@ const Register = () => {
     const [name, setName] = useState("khoubaib");
     const [email, setEmail] = useState("khoubaib@gmail.com");
     const [password, setPassword] = useState("123456");
+    const [cpassword, setcpassword] = useState("123");
     const [loading, setLoading] = useState(false)
 
     const [show, setShow] = useState({ password: false, cpassword: false })
@@ -20,11 +21,13 @@ const Register = () => {
         e.preventDefault();
         try{
             setLoading(true);
-            // console.table({name, email, password});
-            const {data} = await axios.post(`http://localhost:8000/api/register`, {
+            console.table({name, email, password, cpassword});
+            const {data} = await axios.post(
+                `/api/register`, {
             name,
             email,
             password,
+            cpassword,
         });
         // console.log('REGISTER RESPONSE', data)
         toast.success("Registration Successful, Please login.");
@@ -95,6 +98,8 @@ const Register = () => {
                     name='cpassword'
                     placeholder='Confirm Password'
                     className={styles.input_text}
+                    value={cpassword}
+                    onChange={(e) => setcpassword(e.target.value)}
                     />
                      <span className='icon flex items-center px-4' onClick={() => setShow({ ...show, cpassword: !show.cpassword})}>
                         <HiFingerPrint size={25} />
