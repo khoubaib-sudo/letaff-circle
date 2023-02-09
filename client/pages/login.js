@@ -3,14 +3,37 @@ import Layout from '../layout/layout'
 import Link from 'next/link'
 import styles from '../styles/Form.module.css';
 import Image from 'next/image'
+import axios from 'axios'
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { useState } from 'react';
 import { signIn, signOut } from "next-auth/react"
+import {toast} from 'react-toastify'
+import {LoadingOutlined} from '@ant-design/icons'
 
-export default function Login(){
+const Login = () => {
+    const [email, setEmail] = useState("khoubaib@gmail.com");
+    const [password, setPassword] = useState("123456");
+    const [loading, setLoading] = useState(false)
 
     const [show, setShow] = useState(false)
     
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            setLoading(true);
+            // console.table({name, email, password, cpassword});
+            const {data} = await axios.post(
+                `/api/login`, {
+            email,
+            password,
+        });
+        console.log('LOGIN RESPONSE', data)
+        // setLoading(false);
+        }catch(err){
+            toast.error(err.response.data)
+            setLoading(false);
+        }
+    };
     // Google Handler function
     async function handleGoogleSignin(){
         signIn('google', { callbackUrl : "http://localhost:3000"})
@@ -34,13 +57,15 @@ export default function Login(){
             </div>
 
             {/* form */}
-            <form className='flex flex-col gap-5'>
+            <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
                 <div className={styles.input_group}>
                     <input 
                     type="email"
                     name='email'
                     placeholder='Email'
                     className={styles.input_text}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     />
                     <span className='icon flex items-center px-4'>
                         <HiAtSymbol size={25} />
@@ -52,6 +77,8 @@ export default function Login(){
                     name='password'
                     placeholder='password'
                     className={styles.input_text}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     />
                      <span className='icon flex items-center px-4' onClick={() => setShow(!show)}>
                         <HiFingerPrint size={25} />
@@ -60,7 +87,11 @@ export default function Login(){
 
                 {/* login buttons */}
                 <div className="input-button">
-                    <button type='submit' className={styles.button}>
+                    <button 
+                    type='submit' 
+                    className={styles.button}
+                    disabled={!email || !password || loading}
+                    >
                         Login
                     </button>
                 </div>
@@ -91,3 +122,5 @@ export default function Login(){
         </Layout>
     )
 }
+
+export default Login;

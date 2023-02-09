@@ -21,7 +21,7 @@ const Register = () => {
         e.preventDefault();
         try{
             setLoading(true);
-            console.table({name, email, password, cpassword});
+            // console.table({name, email, password, cpassword});
             const {data} = await axios.post(
                 `/api/register`, {
             name,
