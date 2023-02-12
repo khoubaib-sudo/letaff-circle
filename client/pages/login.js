@@ -90,7 +90,7 @@ const Login = () => {
                     <button 
                     type='submit' 
                     className={styles.button}
-                    disabled={!email || !password || loading}
+                    disabled={!email || !password }
                     >
                         Login
                     </button>

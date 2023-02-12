@@ -36,3 +36,19 @@ export const register = async (req, res) => {
         return res.status(400).send('Error. Try again!')
    }
 };
+
+export const login = async (req,res) => {
+    try{
+        // console.log(req.body);
+        const {email, password} = req.body
+        // chech if our db has user with that email
+        const user= awaitUser.findOne({ email }).exec();
+        if (!user) return res.status(400).send("No user found");
+        //check password
+        const match = await comparePassword(password, user.password);
+        //create signed jwt
+    } catch (err){
+        console.log(err);
+        return res.status(400).send("Error! try again.");
+    }
+};
