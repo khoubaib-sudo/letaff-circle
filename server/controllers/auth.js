@@ -1,6 +1,6 @@
 import User from '../models/user'
 import { hashPassword , comparePassword } from '../utils/auth';
-import jwt from 'jasonwebtoken'
+import jwt from 'jsonwebtoken'
 
 export const register = async (req, res) => {
    try{
@@ -42,7 +42,7 @@ export const login = async (req,res) => {
         // console.log(req.body);
         const {email, password} = req.body
         // chech if our db has user with that email
-        const user= awaitUser.findOne({ email }).exec();
+        const user= await User.findOne({ email }).exec();
         if (!user) return res.status(400).send("No user found");
         //check password
         const match = await comparePassword(password, user.password);
