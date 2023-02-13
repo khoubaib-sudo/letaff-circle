@@ -1,6 +1,6 @@
 import User from '../models/user'
 import { hashPassword , comparePassword } from '../utils/auth';
-    
+import jwt from 'jasonwebtoken'
 
 export const register = async (req, res) => {
    try{
@@ -47,6 +47,16 @@ export const login = async (req,res) => {
         //check password
         const match = await comparePassword(password, user.password);
         //create signed jwt
+        const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: "7d"});
+        //return user and token to clinet, excluce hashed password
+        user.password = undefined;
+        //send token in cookie
+        res.cookie("token", token, {
+            httpOnly: true,
+            // secure: true, //only work on https
+        });
+        // send user as json response 
+        res.json(user)
     } catch (err){
         console.log(err);
         return res.status(400).send("Error! try again.");

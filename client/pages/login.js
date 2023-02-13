@@ -103,11 +103,11 @@ const Login = () => {
                     type='button' 
                     onClick={handleGoogleSignin} 
                     className={styles.button_custom}>
-                        Sign In with Google <Image src={'/assets/google.svg'} width="20" height={20} ></Image>
+                        Sign In with Google <Image src={'/assets/google.svg'} alt="googlelog" width="20" height={20} ></Image>
                     </button>
                 </div>
                 <div className="input-button">
-                    <button type='button' onClick={handleGithubSignin} className={styles.button_custom}>
+                    <button type='button' onClick={handleGithubSignin} alt="githublogo" className={styles.button_custom}>
                         Sign In with Github <Image src={'/assets/github.svg'} width={25} height={25}></Image>
                     </button>
                 </div>
