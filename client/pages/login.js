@@ -5,16 +5,21 @@ import styles from '../styles/Form.module.css';
 import Image from 'next/image'
 import axios from 'axios'
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
-import { useState } from 'react';
-import { signIn, signOut } from "next-auth/react"
+import { useState, useContext} from 'react';
 import {toast} from 'react-toastify'
 import {LoadingOutlined} from '@ant-design/icons'
+import { Context } from '../context';
 
 const Login = () => {
     const [email, setEmail] = useState("khoubaib@gmail.com");
     const [password, setPassword] = useState("123456");
     const [loading, setLoading] = useState(false)
+    
+    //state 
+    const {state, dispatch} = useContext(Context)
 
+    
+    //show password
     const [show, setShow] = useState(false)
     
     const handleSubmit = async (e) => {
@@ -27,7 +32,11 @@ const Login = () => {
             email,
             password,
         });
-        console.log('LOGIN RESPONSE', data)
+        // console.log('LOGIN RESPONSE', data)
+        dispatch({
+            type: "LOGIN",
+            payload: data,
+        })
         // setLoading(false);
         }catch(err){
             toast.error(err.response.data)

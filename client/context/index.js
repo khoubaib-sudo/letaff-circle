@@ -1,12 +1,12 @@
 import { useReducer , createContext } from "react";
 
 //initial state
-const initialState = {
+const intialState = {
     user: null,
 };
 
 //create context
-const Context = createContext
+const Context = createContext()
 
 //root reducer 
 const rootReducer = (state, action) => {
@@ -22,12 +22,10 @@ const rootReducer = (state, action) => {
 
 //context provider
 const Provider = ({children}) => {
-    const [state, dispatch] = useReducer(rootReducer, intialState)
+    const [state, dispatch] = useReducer(rootReducer, intialState);
     return(
-        <Context.Provider value={{state, dispatch}}>
-            {children}
-        </Context.Provider>
+        <Context.Provider value={{ state,dispatch }}>{children}</Context.Provider>
     );  
 };
 
-export {Context, Provider}
+export { Context, Provider }

@@ -5,12 +5,11 @@ import Hero from '../components/Hero'
 import NavBar from '../components/NavBar'
 import PopularClass from '../components/PopularClass'
 import Services from '../components/Services'
-import { getSession, useSession, signOut } from "next-auth/react"
+
 
 
 export default function Home() {
   
-  const { data: session } = useSession()
   
   return (
     <div >

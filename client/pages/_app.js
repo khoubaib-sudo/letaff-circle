@@ -1,22 +1,21 @@
 import '../styles/globals.css'
 import 'antd/dist/reset.css'
 import NavBar from '../components/NavBar'
-import  {SessionProvider} from 'next-auth/react'
+
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { Provider } from '../context';  
 
 function MyApp({ Component, pageProps }) {
   return (
-    <SessionProvider session={pageProps.session}>
-      <>
+      <Provider>
         <ToastContainer 
           position="bottom-center"
           autoClose={2000}
         />
         <NavBar />
         <Component {...pageProps} />
-      </>
-    </SessionProvider>
+      </Provider>
     );
 }
 export default MyApp
