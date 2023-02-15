@@ -9,6 +9,7 @@ import { useState, useContext} from 'react';
 import {toast} from 'react-toastify'
 import {LoadingOutlined} from '@ant-design/icons'
 import { Context } from '../context';
+import {useRouter} from 'next/router'
 
 const Login = () => {
     const [email, setEmail] = useState("khoubaib@gmail.com");
@@ -18,7 +19,8 @@ const Login = () => {
     //state 
     const {state, dispatch} = useContext(Context)
 
-    
+    //router
+    const router = useRouter();
     //show password
     const [show, setShow] = useState(false)
     
@@ -37,21 +39,17 @@ const Login = () => {
             type: "LOGIN",
             payload: data,
         })
+        //save in local storage
+        window.localStorage.setItem('user', JSON.stringify(data));
+        // redirect
+        router.push("/"); 
         // setLoading(false);
         }catch(err){
             toast.error(err.response.data)
             setLoading(false);
         }
     };
-    // // Google Handler function
-    // async function handleGoogleSignin(){
-    //     signIn('google', { callbackUrl : "http://localhost:3000"})
-    // }
-    // // Github Login 
-    // async function handleGithubSignin(){
-    //     signIn('github', { callbackUrl : "http://localhost:3000"})
-    // }
-
+    
     return (
         <Layout>
 
@@ -115,8 +113,8 @@ const Login = () => {
                     </button>
                 </div>
                 <div className="input-button">
-                    <button type='button'  alt="githublogo" className={styles.button_custom}>
-                        Sign In with Github <Image src={'/assets/github.svg'} width={25} height={25}></Image>
+                    <button type='button'   className={styles.button_custom}>
+                        Sign In with Github <Image src={'/assets/github.svg'} alt="githublogo" width={25} height={25}></Image>
                     </button>
                 </div>
             </form>
