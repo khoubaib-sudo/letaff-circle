@@ -5,11 +5,14 @@ import Hero from '../components/Hero'
 import NavBar from '../components/NavBar'
 import PopularClass from '../components/PopularClass'
 import Services from '../components/Services'
-
+import { useContext } from 'react';
+import {Context} from '../context';
 
 
 export default function Home() {
-  
+  const { state, dispatch } = useContext(Context);
+  const {user} = state;
+
   
   return (
     <div >
@@ -19,10 +22,21 @@ export default function Home() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"></link>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Hero/>
-      <Services/>
-      <PopularClass/>
-      <Footer/>
+      
+      {user === null && (
+        <>
+          <Hero/>
+          <Services/>
+          <PopularClass/>
+          <Footer/>
+        </>
+      )}
+      
+      {user !== null && (
+        <p>
+          welcome
+        </p>
+      )}
     </div>
   )
 }

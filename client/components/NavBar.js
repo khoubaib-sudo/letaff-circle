@@ -1,16 +1,20 @@
 import { useContext } from 'react';
-import React from 'react'
-import Link from 'next/link'
+import { Menu } from "antd";
 import {Context} from '../context';
 import {useRouter} from 'next/router';
 import {toast} from 'react-toastify';
-import axios from 'axios'
-import { BiLogOut } from 'react-icons/bi';
+import axios from 'axios';
+import React from 'react';
+import Link from 'next/link';
+import { ProfileOutlined } from '@ant-design/icons';
 
+
+
+const {Item , SubMenu} = Menu;
 
 const NavBar = () => {
   const { state, dispatch } = useContext(Context);
-
+  const {user} = state;
   const router = useRouter();
    
   const logout = async () => {
@@ -20,6 +24,8 @@ const NavBar = () => {
     toast(data.message);
     router.push("/login");
   };
+  
+
 
   return (
     <div className='mx-auto flex justify-center '>
@@ -28,16 +34,32 @@ const NavBar = () => {
               <img src="/assets/logo.png" alt="logo" />
             </a>
             <div className="flex items-center gap-4">
-                <p className='text-base font-medium cursor-pointer'><Link href={'/login'}>Sign In</Link></p>
-                <p className='text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm'>
-                  <Link  href={'/register'}>Create Free Account</Link>
-                </p>
-                <p 
-                onClick={logout}
-                className='text-base font-medium cursor-pointer' 
-                >
-                  Sign out
-                </p>
+                {user === null && (
+                  <>
+                  <p className='text-base font-medium cursor-pointer'><Link href={'/login'}>Sign In</Link></p>
+                  <p className='text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm'>
+                    <Link  href={'/register'}>Create Free Account</Link>
+                  </p>
+                  </>
+                )}
+                {user !== null && (
+                  <Menu mode="vertical" style={{ direction: 'rtl' }}>
+                    <SubMenu title={user && user.name} className="ant-dropdown-submenu float-right cursor-pointer "  icon ={<ProfileOutlined />}>
+                      <Item
+                        onClick={logout}
+                        className='text-base font-medium cursor-pointer' 
+                      >
+                          Sign out
+                      </Item>
+                      <Item
+                        onClick={logout}
+                        className='text-base font-medium cursor-pointer' 
+                      >
+                          profile
+                      </Item>
+                    </SubMenu>       
+                  </Menu>
+                )}
             </div>
         </div>
     </div>
