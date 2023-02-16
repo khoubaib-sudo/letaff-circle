@@ -1,9 +1,5 @@
 .ant-dropdown-submenu {
-    font-size: 16px;
+    font-size: 18px;
     color : #9f7aea;
     flex-grow: 1;
-}
-.ant-dropdown-submenu:hover {
-  
-  color:  #9f7aea;
 }
