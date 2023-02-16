@@ -2,25 +2,25 @@ import { useContext } from 'react';
 import React from 'react'
 import Link from 'next/link'
 import {Context} from '../context';
-import axios from 'axios'
 import {useRouter} from 'next/router';
-import {toast} from 'react-toastify'
+import {toast} from 'react-toastify';
+import axios from 'axios'
+import { BiLogOut } from 'react-icons/bi';
 
 
 const NavBar = () => {
-  const { state, dispatch} = useContext(Context);
-  
+  const { state, dispatch } = useContext(Context);
+
   const router = useRouter();
-  
+   
   const logout = async () => {
-    dispatch({type : "LOGOUT"});
+    dispatch({ type: "LOGOUT" });
     window.localStorage.removeItem("user");
-    const {data} = await axios.get("/api/logout");
+    const { data } = await axios.get("/api/logout");
     toast(data.message);
     router.push("/login");
-  }
-  
-  
+  };
+
   return (
     <div className='mx-auto flex justify-center '>
         <div className="container flex flex-col lg:flex-row py-2 justify-between items-center">
@@ -34,7 +34,10 @@ const NavBar = () => {
                 </p>
                 <p 
                 onClick={logout}
-                className='text-base font-medium cursor-pointer'>Sign out</p>
+                className='text-base font-medium cursor-pointer' 
+                >
+                  Sign out
+                </p>
             </div>
         </div>
     </div>
