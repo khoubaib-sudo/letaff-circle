@@ -6,7 +6,7 @@ import {toast} from 'react-toastify';
 import axios from 'axios';
 import React from 'react';
 import Link from 'next/link';
-import { ProfileOutlined,LogoutOutlined} from '@ant-design/icons';
+import { MenuOutlined,LogoutOutlined,UserOutlined} from '@ant-design/icons';
 
 
 
@@ -46,7 +46,7 @@ const NavBar = () => {
                   <Menu mode="vertical" style={{ direction: 'ltr' }} >
                     <SubMenu title={user && user.name} 
                     className="ant-dropdown-submenu float-right cursor-pointer "  
-                    icon ={<ProfileOutlined />}
+                    icon ={<MenuOutlined />}
                     popupPlacement="leftTop" popupOffset={[-150, 50]}>
                       <Item
                         onClick={logout}
@@ -58,8 +58,9 @@ const NavBar = () => {
                       <Item
                         onClick={logout}
                         className='text-base font-medium cursor-pointer' 
+                        icon ={<UserOutlined />}
                       >
-                          Sign out
+                          Profile
                       </Item>
                     </SubMenu>       
                   </Menu>
