@@ -5,7 +5,7 @@ import styles from '../styles/Form.module.css';
 import Image from 'next/image'
 import axios from 'axios'
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
-import { useState, useContext} from 'react';
+import { useState, useContext, useEffect} from 'react';
 import {toast} from 'react-toastify'
 import {LoadingOutlined} from '@ant-design/icons'
 import { Context } from '../context';
@@ -18,9 +18,16 @@ const Login = () => {
     
     //state 
     const {state, dispatch} = useContext(Context)
-
+    const {user} = state
     //router
     const router = useRouter();
+    
+    useEffect(() => {
+        if(user !== null) router.push("/")
+    }, [user])
+    
+    
+    
     //show password
     const [show, setShow] = useState(false)
     
@@ -34,15 +41,19 @@ const Login = () => {
             email,
             password,
         });
+        
         // console.log('LOGIN RESPONSE', data)
         dispatch({
             type: "LOGIN",
             payload: data,
         })
+        
         //save in local storage
         window.localStorage.setItem('user', JSON.stringify(data));
+        
         // redirect
         router.push("/"); 
+        
         // setLoading(false);
         }catch(err){
             toast.error(err.response.data)
