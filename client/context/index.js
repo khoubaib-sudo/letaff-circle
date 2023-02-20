@@ -1,7 +1,7 @@
 
 import { useReducer , createContext, useEffect } from "react";
 import axios from 'axios'
-import { userRouter } from "next/router";   
+import { useRouter } from "next/router";   
 //initial state
 const intialState = {
     user: null,
@@ -25,6 +25,7 @@ const rootReducer = (state, action) => {
 //context provider
 const Provider = ({children}) => {
     const [state, dispatch] = useReducer(rootReducer, intialState);
+    
     // router 
     const router = useRouter();
     
@@ -53,7 +54,7 @@ const Provider = ({children}) => {
                         Window.localStorage.removeItem('user');
                         router.push("/login");
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         console.log('AXIOS INTERCEPTORS ERR', err);
                         reject(error);
                     });
@@ -61,7 +62,18 @@ const Provider = ({children}) => {
             }
             return Promise.reject(error)
         }
-    )
+    );
+    
+    
+    
+    useEffect(() => {
+        const getCsrfToken = async () => {
+            const {data} = await axios.get('/api/csrf-token');
+            // console.log("CSRF", data);
+            axios.defaults.headers['X-CSRF-Token'] = data.getCsrfToken;
+        };
+        getCsrfToken();
+    }, [])
     
     
     
