@@ -7,9 +7,12 @@ import axios from 'axios'
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { useState, useContext, useEffect} from 'react';
 import {toast} from 'react-toastify'
+import { providers, signIn } from 'next-auth/react'
 import {LoadingOutlined} from '@ant-design/icons'
 import { Context } from '../context';
 import {useRouter} from 'next/router'
+
+
 
 const Login = () => {
     const [email, setEmail] = useState("khoubaib@gmail.com");
@@ -26,7 +29,12 @@ const Login = () => {
         if(user !== null) router.push("/")
     }, [user])
     
-    
+    // Google authentication
+    const handleGoogleSignIn = async () => {
+        const provider = 'google'
+        const { url } = await signIn(provider)
+        window.location.href = url
+    }
     
     //show password
     const [show, setShow] = useState(false)
@@ -119,6 +127,7 @@ const Login = () => {
                 <div className="input-button">
                     <button 
                     type='button' 
+                    onClick={handleGoogleSignIn}
                     className={styles.button_custom}>
                         Sign In with Google <Image src={'/assets/google.svg'} alt="googlelog" width="20" height={20} ></Image>
                     </button>

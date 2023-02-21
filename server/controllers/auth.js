@@ -1,6 +1,7 @@
 import User from '../models/user'
 import { hashPassword , comparePassword } from '../utils/auth';
 import jwt from 'jsonwebtoken'
+import { getSession } from 'next-auth/react'
 
 export const register = async (req, res) => {
    try{
@@ -78,5 +79,36 @@ export const logout = async (req, res) => {
     }
   };
   
+  
+export const currentUser = async (req, res) => {
+  try{
+    const user = await User.findById(req.user._id).select('_password').exec();
+    console.log('CURRENT_USER', user);
+    return res.json(user);
+  }catch(err){
+    console.log(err)
+  }
+}
 
+
+export const googleAuth = async (req, res) => {
+    const session = await getSession({ req })
+    if (!session) {
+      return res.status(401).send('Unauthorized')
+    }
+  
+    const { name, email } = session.user
+    const user = await User.findOne({ email }).exec()
+  
+    if (!user) {
+      const hashedPassword = await hashPassword('google')
+      const newUser = new User({ name, email, password: hashedPassword })
+      await newUser.save()
+    }
+  
+    req.session.set('user', { name, email })
+    await req.session.save()
+  
+    return res.redirect('/')
+}
 
