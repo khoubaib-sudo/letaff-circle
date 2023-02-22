@@ -21,14 +21,14 @@ const UserIndex = () => {
       setHidden(false);
     } catch (err) {
       console.log(err);
-      setHidden(false);
+      setHidden(true);
     }
   };
 
   return (
     <>
       {!hidden && (
-        <h1 className="jumbotron text-center square">
+        <h1 className=" text-center ">
           <pre>{JSON.stringify(user, null, 4)}</pre>
         </h1>
       )}
