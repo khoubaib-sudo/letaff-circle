@@ -31,7 +31,7 @@ const NavBar = () => {
     <div className='mx-auto flex justify-center '>
         <div className="container flex flex-col lg:flex-row py-2 justify-between items-center">
             <a href={'/'}>
-              <img src="/assets/logo.png" alt="logo" />
+              <img className="object-scale-down h-15 w-60" src="/assets/logo.png" alt="logo" />
             </a>
             <div className="flex items-center gap-4">
                 {user === null && (
