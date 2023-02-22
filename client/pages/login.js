@@ -29,13 +29,7 @@ const Login = () => {
         if(user !== null) router.push("/")
     }, [user])
     
-    // Google authentication
-    const handleGoogleSignIn = async () => {
-        const provider = 'google'
-        const { url } = await signIn(provider)
-        window.location.href = url
-    }
-    
+   
     //show password
     const [show, setShow] = useState(false)
     
@@ -116,9 +110,9 @@ const Login = () => {
                     <button 
                     type='submit' 
                     className={styles.button}
-                    disabled={!email || !password }
+                    disabled={!email || !password || loading}
                     >
-                        Login
+                        {loading ? <LoadingOutlined spin style={{ fontSize: '40px' }}/> : "Login"}
                     </button>
                 </div>
                 <p className='text-center text-gray-400 '>
@@ -127,7 +121,6 @@ const Login = () => {
                 <div className="input-button">
                     <button 
                     type='button' 
-                    onClick={handleGoogleSignIn}
                     className={styles.button_custom}>
                         Sign In with Google <Image src={'/assets/google.svg'} alt="googlelog" width="20" height={20} ></Image>
                     </button>
