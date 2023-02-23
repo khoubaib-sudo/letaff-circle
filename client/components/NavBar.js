@@ -10,7 +10,7 @@ import { MenuOutlined,LogoutOutlined,UserOutlined} from '@ant-design/icons';
 
 
 
-const {Item , SubMenu} = Menu;
+const {Item , SubMenu, ItemGroup} = Menu;
 
 const NavBar = () => {
   const { state, dispatch } = useContext(Context);
@@ -48,20 +48,23 @@ const NavBar = () => {
                     className="ant-dropdown-submenu float-right cursor-pointer "  
                     icon ={<MenuOutlined />}
                     popupPlacement="leftTop" popupOffset={[-150, 50]}>
-                      <Item
-                        onClick={logout}
-                        className='text-base font-medium cursor-pointer' 
-                        icon ={<LogoutOutlined />}
-                      >
-                          Sign out
-                      </Item>
-                      <Item
-                        onClick={logout}
-                        className='text-base font-medium cursor-pointer' 
-                        icon ={<UserOutlined />}
-                      >
-                          Profile
-                      </Item>
+                      <ItemGroup>
+                        <Item
+                            key="/user"
+                            className='text-base font-medium cursor-pointer' 
+                            icon ={<UserOutlined />}
+                          >
+                              <Link   href={'/user'}>Profile</Link>
+                        </Item>
+                        <Item
+                          onClick={logout}
+                          className='text-base font-medium cursor-pointer' 
+                          icon ={<LogoutOutlined />}
+                        >
+                            Sign out
+                        </Item>
+                        
+                      </ItemGroup>
                     </SubMenu>       
                   </Menu>
                 )}
