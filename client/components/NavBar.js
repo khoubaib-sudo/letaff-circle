@@ -47,7 +47,7 @@ const NavBar = () => {
                     <SubMenu title={user && user.name} 
                     className="ant-dropdown-submenu float-right cursor-pointer "  
                     icon ={<MenuOutlined />}
-                    popupPlacement="leftTop" popupOffset={[-150, 50]}>
+                    popupPlacement="leftTop" popupOffset={[-155, 45]}>
                       <ItemGroup>
                         <Item
                             key="/user"
