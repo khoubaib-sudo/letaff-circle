@@ -116,7 +116,7 @@ const Login = () => {
                     </button>
                 </div>
                 <p className='text-center text-gray-400 '>
-                    Forgot password? <Link  className='text-blue-700' href={'/'}>Click here</Link>
+                    Forgot password? <Link  className='text-blue-700' href={'/forgot-password'}>Click here</Link>
                 </p>
                 <div className="input-button">
                     <button 
@@ -125,11 +125,7 @@ const Login = () => {
                         Sign In with Google <Image src={'/assets/google.svg'} alt="googlelog" width="20" height={20} ></Image>
                     </button>
                 </div>
-                {/* <div className="input-button">
-                    <button type='button'   className={styles.button_custom}>
-                        Sign In with Github <Image src={'/assets/github.svg'} alt="githublogo" width={25} height={25}></Image>
-                    </button>
-                </div> */}
+                
             </form>
 
             {/* bottom */}
