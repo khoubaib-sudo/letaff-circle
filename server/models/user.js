@@ -34,7 +34,7 @@ const userSchema = new Schema(
     stripeSession: {},
     passwordResetCode: {
       data: String,
-      default: "",
+      default: "",  
     }
   },
   { timestamps: true }
