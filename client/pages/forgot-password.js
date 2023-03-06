@@ -13,7 +13,7 @@ import {useRouter} from 'next/router'
 const ForgotPassword = () => {
     // state
     const [email, setEmail] = useState('')
-    const [success, setSuccess] = useState('')
+    const [success, setSuccess] = useState(false)
     const [code, setCode] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [loading, setLoading] = useState(false); 
@@ -40,7 +40,25 @@ const ForgotPassword = () => {
             setLoading(false)
             toast(err.response.data)
         }
-    }    
+    }  
+    const handleResetPassword  = async (e) => {
+        e.preventDefault();
+        console.log(email, code , newPassword)
+        return; 
+        try{
+          setLoading (true)
+          const {data} = await axios.post('/api/reset-password', {
+            email, code , newPassword
+          })    
+          setEmail('')
+          setCode('')
+          setNewPassword('')
+          setLoading(false)
+        }catch (err) {
+            setLoading(false)
+            toast(err.response.data) 
+        }
+    }
     return (
         <Layout>
         <Head>
@@ -52,7 +70,8 @@ const ForgotPassword = () => {
                 <h1 className='text-gray-800 text-4xl font-bold py-4'>Forgot password</h1>
             </div>
             {/* form */}
-            <form className='flex flex-col w-80 gap-5' onSubmit={handleSubmit} >
+            <form className='flex flex-col w-80 gap-5' 
+            onSubmit={success ? handleResetPassword : handleSubmit} >
                 <div className={styles.input_group}>
                     <input 
                     type="text"
@@ -63,11 +82,32 @@ const ForgotPassword = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     />
+                    
                     <span className='icon flex items-center px-4'>
                         <HiAtSymbol size={25} />
                     </span>
+                    
                 </div>
-                
+                {success && <> 
+                    <input 
+                    type="text"
+                    name='email'
+                    placeholder='Enter code'
+                    className={styles.input_text}
+                    value={code}
+                    onChange={(e) => setCode (e.target.value)}
+                    required
+                    />
+                    <input 
+                    type="password"
+                    name='email'
+                    placeholder='Enter your new password'
+                    className={styles.input_text}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                    />
+                </>}
                 {/* login buttons */}
                 <div className="input-button">
                     <button 
