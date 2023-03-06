@@ -13,7 +13,7 @@ import {useRouter} from 'next/router'
 const ForgotPassword = () => {
     // state
     const [email, setEmail] = useState('')
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState(true)
     const [code, setCode] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [loading, setLoading] = useState(false); 
@@ -43,8 +43,8 @@ const ForgotPassword = () => {
     }  
     const handleResetPassword  = async (e) => {
         e.preventDefault();
-        console.log(email, code , newPassword)
-        return; 
+        // console.log(email, code , newPassword)
+        // return; 
         try{
           setLoading (true)
           const {data} = await axios.post('/api/reset-password', {
@@ -54,6 +54,7 @@ const ForgotPassword = () => {
           setCode('')
           setNewPassword('')
           setLoading(false)
+          toast("You can now login with your new password")
         }catch (err) {
             setLoading(false)
             toast(err.response.data) 
@@ -82,7 +83,6 @@ const ForgotPassword = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     />
-                    
                     <span className='icon flex items-center px-4'>
                         <HiAtSymbol size={25} />
                     </span>
