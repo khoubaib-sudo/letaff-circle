@@ -96,43 +96,6 @@ export const currentUser = async (req, res) => {
   }
 };
 
-// export const sendTestEmail = async (req, res) => {
-//   // console.log('send email using SES');
-//   // res.json({  ok:true  })
-//   const params = {
-//     Source: process.env.EMAIL_FROM,
-//     Destination: {
-//       ToAddresses : ['khoubaibmaam@gmail.com'],
-//     },
-//     ReplyToAddresses: [process.env.EMAIL_FROM],
-//     Message: {
-//       Body: {
-//         Html: {
-//           Charset: "UTF-8",
-//           Data: `
-//             <html>
-//               <h1>Reset password link</h1>
-//               <p>PLease use the following link to reset your password</p>
-//             </html>
-//           `,
-//         },
-//       },
-//       Subject: {
-//         Charset: "UTF-8",
-//         Data: "Password reset link"
-//       }
-//     }
-//   };
-//   const emailSent = SES.sendEmail(params).promise();
-//   emailSent.then((data) => {
-//     console.log(data);
-//     res.json({ok:true});
-//   })
-//   .catch(err=> {
-//     console.log(err);
-//   })
-// }
-
 export const forgotPassword = async (req, res) => {
   try{
     const {email} = req.body;
