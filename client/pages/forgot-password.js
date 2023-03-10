@@ -13,7 +13,7 @@ import {useRouter} from 'next/router'
 const ForgotPassword = () => {
     // state
     const [email, setEmail] = useState('')
-    const [success, setSuccess] = useState(true)
+    const [success, setSuccess] = useState(false)
     const [code, setCode] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [loading, setLoading] = useState(false); 

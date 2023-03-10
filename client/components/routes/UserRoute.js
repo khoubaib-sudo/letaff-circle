@@ -3,7 +3,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { SyncOutlined } from "@ant-design/icons";
 import UserNav from "../nav/UserNav";
+import { Menu } from "antd";
 
+const { Item, SubMenu, ItemGroup } = Menu;
 const UserRoute = ({ children }) => {
   // state
   const [ok, setOk] = useState(false);
@@ -35,14 +37,38 @@ const UserRoute = ({ children }) => {
         />
       ) : (
         <div className="container mx-auto ">
-          <div className="flex flex-col md:flex-row justify-between items-center py-10">
-            <div
-              className="bg-purple-500  text-white w-64 flex flex-col items-center"
-              style={{ boxShadow: "5px 0px 5px rgba(0,0,0,0.2)" }}
-            >
-              <UserNav />
-            </div>
-            <div className="bg-gray-100 flex-grow p-10">{children}</div>
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <Menu mode="inline" style={{ width: 250 }}>
+              <ItemGroup>
+                <Item
+                  className="text-base font-medium cursor-pointer bg-purple-500"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "100%",
+                    fontWeight: 'bold'
+                  }}
+                >
+                  <div style={{ margin: "0 auto" }}>
+                    <UserNav />
+                  </div>
+                </Item>
+                <Item
+                  className="text-base font-medium cursor-pointer bg-purple-500"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "100%",
+                    fontWeight: 'bold'
+                  }}
+                >
+                  <div style={{ margin: "0 auto" }}>
+                    UserNav 
+                  </div>
+                </Item>
+              </ItemGroup>
+            </Menu>
+            <div className="flex-grow">{children}</div>
           </div>
         </div>
       )}
