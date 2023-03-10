@@ -33,9 +33,9 @@ export default function Home() {
       )}
       
       {user !== null && (
-        <p>
+        <>
           welcome
-        </p>
+        </>
       )}
     </div>
   )

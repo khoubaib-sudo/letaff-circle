@@ -54,7 +54,7 @@ const Login = () => {
         window.localStorage.setItem('user', JSON.stringify(data));
         
         // redirect
-        router.push("/"); 
+        router.push("/user"); 
         
         // setLoading(false);
         }catch(err){
