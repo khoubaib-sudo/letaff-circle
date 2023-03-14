@@ -15,7 +15,7 @@ import {useRouter} from 'next/router'
 
 
 const Login = () => {
-    const [email, setEmail] = useState("khoubaib@gmail.com");
+    const [email, setEmail] = useState("khoubaibmaam1@gmail.com");
     const [password, setPassword] = useState("123456");
     const [loading, setLoading] = useState(false)
     

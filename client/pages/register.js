@@ -11,10 +11,10 @@ import { Context } from '../context';
 import {useRouter} from 'next/router'
 
 const Register = () => {
-    const [name, setName] = useState("khoubaib");
-    const [email, setEmail] = useState("khoubaib@gmail.com");
+    const [name, setName] = useState("maamouri");
+    const [email, setEmail] = useState("khoubaibmaam1@gmail.com");
     const [password, setPassword] = useState("123456");
-    const [cpassword, setcpassword] = useState("123");
+    const [cpassword, setcpassword] = useState("123456");
     const [loading, setLoading] = useState(false)
     
     const {state: {user},} = useContext(Context)
