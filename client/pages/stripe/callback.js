@@ -11,7 +11,8 @@ const StripeCallback = () => {
   useEffect(() => {
     if (user) {
       axios.post("/api/get-account-status").then((res) => {
-        window.location.href = "/instructor";
+        console.log(res);
+        // window.location.href = "/instructor";
       });
     }
   }, [user]);
@@ -20,6 +21,7 @@ const StripeCallback = () => {
     <div
       className="mx-auto flex justify-center "
       style={{
+        color: "#9f7aea",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
