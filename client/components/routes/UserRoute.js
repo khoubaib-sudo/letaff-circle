@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { SyncOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import UserNav from "../nav/UserNav";
 import { Menu } from "antd";
 
@@ -31,9 +31,17 @@ const UserRoute = ({ children }) => {
   return (
     <>
       {!ok ? (
-        <SyncOutlined
+        <LoadingOutlined
           spin
-          className="d-flex justify-content-center display-1 bg-purple-500 p-5"
+          style={{
+            fontSize: "48px",
+            display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "80vh",
+
+          }}
+  
         />
       ) : (
         <div className="container mx-auto ">
