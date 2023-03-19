@@ -10,7 +10,7 @@ import {makeInstructor, getAccountStatus, currentInstructor} from "../controller
 
 router.post("/make-instructor", requireSignin, makeInstructor)
 router.post("/get-account-status", requireSignin, getAccountStatus)
-router.post("/current-instructor", requireSignin, currentInstructor)
+router.get("/current-instructor", requireSignin, currentInstructor)
 
 
 module.exports = router;
