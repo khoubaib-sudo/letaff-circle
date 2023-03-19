@@ -1,6 +1,12 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const InstructorNav = () => {
+    const [currentn, setCurrent] = useState('')
+  useEffect(() => {
+    process.browser && setCurrent(window.location.pathname);
+  }, [process.browser && window.location.pathname]);
+
   return (
     <div>
       <Link className="nav-link active" href="/instructor">

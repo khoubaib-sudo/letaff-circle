@@ -61,19 +61,7 @@ const UserRoute = ({ children }) => {
                     <UserNav />
                   </div>
                 </Item>
-                <Item
-                  className="text-base font-medium cursor-pointer bg-purple-500"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "100%",
-                    fontWeight: 'bold'
-                  }}
-                >
-                  <div style={{ margin: "0 auto" }}>
-                    UserNav 
-                  </div>
-                </Item>
+              
               </ItemGroup>
             </Menu>
             <div className="flex-grow">{children}</div>

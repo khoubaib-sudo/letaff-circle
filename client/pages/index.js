@@ -7,6 +7,8 @@ import PopularClass from '../components/PopularClass'
 import Services from '../components/Services'
 import { useContext } from 'react';
 import {Context} from '../context';
+import WelcomePage from '../components/welcome'
+
 
 
 export default function Home() {
@@ -34,7 +36,7 @@ export default function Home() {
       
       {user !== null && (
         <>
-          welcome
+          <WelcomePage/>
         </>
       )}
     </div>

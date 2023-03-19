@@ -27,7 +27,10 @@ const InstructorRoute = ({ children }) => {
       router.push("/");
     }
   };
-
+  const [current, setCurrent] = useState("");
+  useEffect(() => {
+    process.browser && setCurrent(window.location.pathname);
+  }, [process.browser && window.location.pathname]);
   return (
     <>
       {!ok ? (
@@ -55,7 +58,14 @@ const InstructorRoute = ({ children }) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <Link className="nav-link active" href="/instructor">Dashboard</Link>
+                  <Link
+                    className={`nav-link ${
+                      current === "/instructor" && "active"
+                    }`}
+                    href="/instructor"
+                  >
+                    Dashboard
+                  </Link>
                 </Item>
                 <Item
                   className="text-base font-medium cursor-pointer bg-purple-500"
@@ -66,7 +76,14 @@ const InstructorRoute = ({ children }) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <Link className="nav-link active" href="/instructor/course/create">Create Course</Link>
+                  <Link
+                    className={`nav-link ${
+                      current === "/instructor/course/create" && "active"
+                    }`}
+                    href="/instructor/course/create"
+                  >
+                    Create Course
+                  </Link>
                 </Item>
               </ItemGroup>
             </Menu>

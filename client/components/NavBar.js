@@ -6,7 +6,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import React from "react";
 import Link from "next/link";
-import { MenuOutlined, LogoutOutlined, UserOutlined, FileAddOutlined, FundProjectionScreenOutlined } from "@ant-design/icons";
+import {
+  MenuOutlined,
+  LogoutOutlined,
+  UserOutlined,
+  FileAddOutlined,
+  FundProjectionScreenOutlined,
+} from "@ant-design/icons";
 
 const { Item, SubMenu, ItemGroup } = Menu;
 
@@ -46,8 +52,8 @@ const NavBar = () => {
               </p>
             </>
           )}
-          {user !== null && (
-            user && user.role && user.role.includes("Instructor") ? (
+          {user !== null &&
+            (user && user.role && user.role.includes("Instructor") ? (
               <Menu>
                 <Item
                   key="/instructor/course/create"
@@ -57,19 +63,18 @@ const NavBar = () => {
                   <Link href={"/instructor/course/create"}>Create course</Link>
                 </Item>
               </Menu>
-            ):(
+            ) : (
               <Menu>
                 <Item
                   key="/user/become-instructor"
                   onClick={(e) => setCurrent(e.key)}
-                  icon={<FundProjectionScreenOutlined />} 
+                  icon={<FundProjectionScreenOutlined />}
                 >
                   <Link href={"/user/become-instructor"}>Become Instuctor</Link>
                 </Item>
               </Menu>
-            )
-          )}
-          
+            ))}
+
           {user !== null && (
             <Menu mode="vertical" style={{ direction: "ltr" }}>
               <SubMenu
@@ -87,6 +92,17 @@ const NavBar = () => {
                   >
                     <Link href={"/user"}>Profile</Link>
                   </Item>
+                  
+                  {user && user.role && user.role.includes("Instructor") && (
+                    <Item
+                      key="/instructor"
+                      className="text-base font-medium cursor-pointer"
+                      onClick={(e) => setCurrent(e.key)}
+                      icon={<FundProjectionScreenOutlined />}
+                    >
+                      <Link href="/instructor">Instructor</Link>
+                    </Item>
+                  )}
                   <Item
                     onClick={logout}
                     className="text-base font-medium cursor-pointer"
