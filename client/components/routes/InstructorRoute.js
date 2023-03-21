@@ -45,7 +45,7 @@ const InstructorRoute = ({ children }) => {
           }}
         />
       ) : (
-        <div className="container mx-auto ">
+        <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <Menu mode="inline" style={{ width: 250 }}>
               <ItemGroup>
@@ -61,8 +61,9 @@ const InstructorRoute = ({ children }) => {
                   <Link
                     className={`nav-link ${
                       current === "/instructor" && "active"
-                    }`}
+                    }` }
                     href="/instructor"
+                    style={{ color: "#fff" }}
                   >
                     Dashboard
                   </Link>
@@ -81,6 +82,7 @@ const InstructorRoute = ({ children }) => {
                       current === "/instructor/course/create" && "active"
                     }`}
                     href="/instructor/course/create"
+                    style={{ color: "#fff" }}
                   >
                     Create Course
                   </Link>
