@@ -13,14 +13,15 @@ const CourseCreate = () => {
     price: "9.99",
     uploading: false,
     paid: true,
+    category: "",
     loading: false,
     imagePreview: "",
   });
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+  const handleChange = (name, value) => {
+    setValues({ ...values, [name]: value });
   };
 
   const handleImage = () => {
