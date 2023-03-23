@@ -24,8 +24,27 @@ const CourseCreate = () => {
     setValues({ ...values, [name]: value });
   };
 
-  const handleImage = () => {
-    //
+  const handleImage = (e) => {
+    let file = e.target.files[0];
+    setPreview(window.URL.createObjectURL(file));
+    setUploadButtonText(file.name);
+    setValues({ ...values, loading: true });
+
+    // resize
+    Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
+      try {
+        let { data } = await axios.post("/api/course/upload-image", {
+          image: uri,
+        });
+        console.log("IMAGE UPLOADED", data);
+        // set image in the state
+        setValues({ ...values, loading: false });
+      } catch (err) {
+        console.log(err);
+        setValues({ ...values, loading: false });
+        toast("Image upload failed. Try later.");
+      }
+    });
   };
   const handleSubmit = (e) => {
     e.preventDefault();

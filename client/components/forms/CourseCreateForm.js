@@ -100,7 +100,7 @@ const CourseCreateForm = ({
             </Form.Item>
     
             <Form.Item >
-              <Upload name="image" type="file" onChange={handleImage} accept="image/*" hidden>
+              <Upload type="file" name="image"  onChange={handleImage} accept="image/*" hidden>
                 <Button icon={<UploadOutlined />}> {values.loading ? 'Uploading' : 'Image Upload'} </Button>
               </Upload>
             </Form.Item>
