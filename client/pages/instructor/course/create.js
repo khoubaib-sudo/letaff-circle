@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import InstructorRoute from "../../../components/routes/InstructorRoute";
-import CourseCreateForm from '../../../components/forms/CourseCreateForm'
-
-
+import CourseCreateForm from "../../../components/forms/CourseCreateForm";
+import Resizer from "react-image-file-resizer";
+import { toast } from "react-toastify";
 
 const CourseCreate = () => {
-  //state
+  // state
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -15,13 +15,14 @@ const CourseCreate = () => {
     paid: true,
     category: "",
     loading: false,
-    imagePreview: "",
   });
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
-  const handleChange = (name, value) => {
-    setValues({ ...values, [name]: value });
+  const [image, setImage] = useState({});
+  const [preview, setPreview] = useState("");
+
+  const [uploadButtonText, setUploadButtonText] = useState("Upload Image");
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const handleImage = (e) => {
@@ -29,7 +30,6 @@ const CourseCreate = () => {
     setPreview(window.URL.createObjectURL(file));
     setUploadButtonText(file.name);
     setValues({ ...values, loading: true });
-
     // resize
     Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
       try {
@@ -38,6 +38,7 @@ const CourseCreate = () => {
         });
         console.log("IMAGE UPLOADED", data);
         // set image in the state
+        setImage(data);
         setValues({ ...values, loading: false });
       } catch (err) {
         console.log(err);
@@ -46,38 +47,59 @@ const CourseCreate = () => {
       }
     });
   };
-  const handleSubmit = (e) => {
+  const handleCategoryChange = (value) => {
+    setValues({ ...values, category: value });
+  };
+  const handleImageRemove = async () => {
+    try {
+      // console.log(values);
+      setValues({ ...values, loading: true });
+      const res = await axios.post("/api/course/remove-image", { image });
+      setImage({});
+      setPreview("");
+      setUploadButtonText("Upload Image");
+      setValues({ ...values, loading: false });
+    } catch (err) {
+      console.log(err);
+      setValues({ ...values, loading: false });
+      toast("Image upload failed. Try later.");
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(values);
   };
+
   return (
     <InstructorRoute>
       <div
-        style={{
-          width: "50%",
-          float: "left",
-          paddingTop: "20px",
-          paddingLeft: "360px",
-        }}
+        className="flex-grow flex flex-col items-center md:items-start md:flex-row md:justify-center"
+        style={{ position: "absolute", top: 110, right: 0, left: 220 }}
       >
-        <h1 className="text-7xl capitalize font-semibold">
-          Create
-          <br />
-          <span className="text-purple-500 capitalize">Course</span>
-        </h1>
-        <pre>{JSON.stringify(values, null, 4)}</pre>
+        <div className="md:w-1/2 md:mr-10">
+          <h1 className="text-4xl md:text-7xl capitalize font-semibold">
+            Create
+            <br />
+            <span className="text-purple-500 capitalize">Course</span>
+          </h1>
+          <div className="mt-5">
+            <CourseCreateForm
+              handleSubmit={handleSubmit}
+              handleImage={handleImage}
+              handleChange={handleChange}
+              values={values}
+              setValues={setValues}
+              preview={preview}
+              uploadButtonText={uploadButtonText}
+              handleImageRemove={handleImageRemove}
+              handleCategoryChange={handleCategoryChange}
+            />
+          </div>
+        </div>
       </div>
-      <div
-        style={{ float: "right", paddingTop: "20px", paddingRight: "200px" }}
-      >
-        <CourseCreateForm 
-        handleSubmit={handleSubmit} 
-        handleImage={handleImage} 
-        handleChange={handleChange}
-        values={values}
-        setValues={setValues}
-        />
-      </div>
+
+      {/* <pre>{JSON.stringify(values, null, 4)}</pre> */}
     </InstructorRoute>
   );
 };
