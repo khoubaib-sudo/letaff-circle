@@ -75,7 +75,8 @@ const CourseCreate = () => {
     <InstructorRoute>
       <div
         className="flex-grow flex flex-col items-center md:items-start md:flex-row md:justify-center"
-        style={{ position: "absolute", top: 110, right: 0, left: 220 }}
+        style={{ position: "absolute", top: 110, right: 0, left: 300
+       }}
       >
         <div className="md:w-1/2 md:mr-10">
           <h1 className="text-4xl md:text-7xl capitalize font-semibold">
