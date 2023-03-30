@@ -1,3 +1,29 @@
+const cloudinary = require("cloudinary").v2;
+const { nanoid } = require("nanoid");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 export const uploadImage = async (req, res) => {
-    console.log(req.body)
-}
+  try {
+    const { image } = req.body;
+    if (!image) return res.status(400).send("No image");
+
+    // prepare the image
+    const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+    const type = image.split(";")[0].split("/")[1];
+
+    //upload to cloudinary
+    const result = await cloudinary.uploader.upload(`data:image/${type};base64,${base64Data}`, {
+      public_id: nanoid(),
+    });
+
+    console.log(result);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
+};

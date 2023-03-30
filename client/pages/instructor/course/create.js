@@ -73,12 +73,8 @@ const CourseCreate = () => {
 
   return (
     <InstructorRoute>
-      <div
-        className="flex-grow flex flex-col items-center md:items-start md:flex-row md:justify-center"
-        style={{ position: "absolute", top: 110, right: 0, left: 300
-       }}
-      >
-        <div className="md:w-1/2 md:mr-10">
+      <div className="flex flex-col justify-between items-center">
+      <div className="md:mr-auto ml-auto">
           <h1 className="text-4xl md:text-7xl capitalize font-semibold">
             Create
             <br />
@@ -100,7 +96,7 @@ const CourseCreate = () => {
         </div>
       </div>
 
-      {/* <pre>{JSON.stringify(values, null, 4)}</pre> */}
+      <pre>{JSON.stringify(values, null, 4)}</pre>
     </InstructorRoute>
   );
 };
