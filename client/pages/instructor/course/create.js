@@ -62,7 +62,7 @@ const CourseCreate = () => {
     } catch (err) {
       console.log(err); 
       setValues({ ...values, loading: false });
-      toast("Image upload failed. Try later.");
+      toast.error("Image upload failed" , {theme: "colored"});
     }
   };
 

@@ -110,7 +110,7 @@ const CourseCreateForm = ({
             style={{ display: "none" }}
           />
           {preview && (
-            <Badge>
+            <Badge count="X" onClick={handleImageRemove}>
               <Avatar src={preview} shape="square" size={200} />
             </Badge>
           )}
