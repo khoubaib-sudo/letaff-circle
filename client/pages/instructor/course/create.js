@@ -52,19 +52,20 @@ const CourseCreate = () => {
   };
   const handleImageRemove = async () => {
     try {
-      // console.log(values);
       setValues({ ...values, loading: true });
-      const res = await axios.post("/api/course/remove-image", { image });
+      const res = await axios.post("/api/course/remove-image", { public_id: image.public_id });
       setImage({});
       setPreview("");
       setUploadButtonText("Upload Image");
-      setValues({ ...values, loading: false });
+      setValues({ ...values, loading: false, public_id: "" });
     } catch (err) {
       console.log(err); 
       setValues({ ...values, loading: false });
-      toast.error("Image upload failed" , {theme: "colored"});
+      toast.error("Image removal failed" , {theme: "colored"});
     }
   };
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
