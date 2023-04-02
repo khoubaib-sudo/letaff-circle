@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import InstructorRoute from "../../../components/routes/InstructorRoute";
 import CourseCreateForm from "../../../components/forms/CourseCreateForm";
 import Resizer from "react-image-file-resizer";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+
 const CourseCreate = () => {
   // state
   const [values, setValues] = useState({
@@ -20,6 +21,9 @@ const CourseCreate = () => {
   const [preview, setPreview] = useState("");
 
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image");
+  
+  // router
+  const router = useRouter();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -43,7 +47,7 @@ const CourseCreate = () => {
       } catch (err) {
         console.log(err);
         setValues({ ...values, loading: false });
-        toast("Image upload failed. Try later.");
+        toast.error("Image upload failed. Try later.");
       }
     });
   };
@@ -75,10 +79,10 @@ const CourseCreate = () => {
         ...values,
         image,
       });
-      toast("Great! now you can start adding lessons");
+      toast.success("Great! now you can start adding lessons",{theme: "colored",});
       router.push("/instructor");
     } catch (err) {
-      toast(err.response.data);
+      toast.error(err.response.data);
     }
   };
 
@@ -107,9 +111,9 @@ const CourseCreate = () => {
         </div>
       </div>
 
-      <pre>{JSON.stringify(values, null, 4)}</pre>
+      {/* <pre>{JSON.stringify(values, null, 4)}</pre>
       <hr />
-      <pre>{JSON.stringify(image, null, 4)}</pre>
+      <pre>{JSON.stringify(image, null, 4)}</pre> */}
     </InstructorRoute>
   );
 };

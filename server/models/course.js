@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const { ObjectId } = mongoose.Schema;
 
-const lessonSchema = new mangoose.Schema(
+const lessonSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      trime: true,
-      minlenghth: 3,
+      trim: true,
+      minlength: 3,
       maxlength: 320,
       required: true,
     },
@@ -15,9 +15,9 @@ const lessonSchema = new mangoose.Schema(
       type: String,
       lowercase: true,
     },
-    contecnt: {
+    content: {
       type: {},
-      minleagth: 200,
+      minlength: 200,
     },
     video_link: {},
     free_preview: {
@@ -32,8 +32,8 @@ const courseSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      trime: true,
-      minlenghth: 3,
+      trim: true,
+      minlength: 3,
       maxlength: 320,
       required: true,
     },
@@ -61,7 +61,7 @@ const courseSchema = new mongoose.Schema(
       default: true,
     },
     instructor: {
-      type: Object,
+      type: ObjectId,
       ref: "User",
       required: true,
     },
@@ -70,4 +70,4 @@ const courseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Course", courseSchema); 
+export default mongoose.model("Course", courseSchema);

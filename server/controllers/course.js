@@ -1,5 +1,7 @@
 const cloudinary = require("cloudinary").v2;
 const { nanoid } = require("nanoid");
+import Course from '../models/course'
+import slugify from 'slugify'
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -48,5 +50,20 @@ export const removeImage = async (req, res) => {
 };
 
 export const create = async (req, res) => {
-  console.log("CREATE COURSE");
+  
+  try{
+    const alreadyExist = await Course.findOne({
+      slug: slugify(req.body.name.toLowerCase())
+    })
+    if(alreadyExist) return res.status(400).send('Title is taken')
+    const course = await new Course({
+      slug: slugify(req.body.name),
+      instructor: req.user._id,
+      ...req.body,
+    }).save();
+    res.json(course);
+  }catch(err){
+    console.log(err)
+    return res.status(400).send('course create failed. try again')
+  }
 };
