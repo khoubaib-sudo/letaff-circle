@@ -4,7 +4,7 @@ import InstructorRoute from "../../../components/routes/InstructorRoute";
 import CourseCreateForm from "../../../components/forms/CourseCreateForm";
 import Resizer from "react-image-file-resizer";
 import { toast } from "react-toastify";
-
+import { useRouter } from "next/router";
 const CourseCreate = () => {
   // state
   const [values, setValues] = useState({
@@ -53,29 +53,39 @@ const CourseCreate = () => {
   const handleImageRemove = async () => {
     try {
       setValues({ ...values, loading: true });
-      const res = await axios.post("/api/course/remove-image", { public_id: image.public_id });
+      const res = await axios.post("/api/course/remove-image", {
+        public_id: image.public_id,
+      });
       setImage({});
       setPreview("");
       setUploadButtonText("Upload Image");
       setValues({ ...values, loading: false, public_id: "" });
     } catch (err) {
-      console.log(err); 
+      console.log(err);
       setValues({ ...values, loading: false });
-      toast.error("Image removal failed" , {theme: "colored"});
+      toast.error("Image removal failed", { theme: "colored" });
     }
   };
 
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
+    // console.log(values);
+    try {
+      const { data } = await axios.post("/api/course", {
+        ...values,
+        image,
+      });
+      toast("Great! now you can start adding lessons");
+      router.push("/instructor");
+    } catch (err) {
+      toast(err.response.data);
+    }
   };
 
   return (
     <InstructorRoute>
       <div className="flex flex-col justify-between items-center">
-      <div className="md:mr-auto ml-auto">
+        <div className="md:mr-auto ml-auto">
           <h1 className="text-4xl md:text-7xl capitalize font-semibold">
             Create
             <br />
@@ -98,7 +108,7 @@ const CourseCreate = () => {
       </div>
 
       <pre>{JSON.stringify(values, null, 4)}</pre>
-      <hr/>
+      <hr />
       <pre>{JSON.stringify(image, null, 4)}</pre>
     </InstructorRoute>
   );

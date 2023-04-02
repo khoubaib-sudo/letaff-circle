@@ -46,3 +46,7 @@ export const removeImage = async (req, res) => {
     res.sendStatus(400);
   }
 };
+
+export const create = async (req, res) => {
+  console.log("CREATE COURSE");
+};
