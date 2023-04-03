@@ -46,7 +46,7 @@ const UserRoute = ({ children }) => {
       ) : (
         <div className="container mx-auto ">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <Menu mode="inline" style={{ width: 250 }}>
+            <Menu mode="inline" style={{ width: 180}}>
               <ItemGroup>
                 <Item
                   className="text-base font-medium cursor-pointer bg-purple-500"
