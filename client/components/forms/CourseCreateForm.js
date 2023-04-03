@@ -70,7 +70,7 @@ const CourseCreateForm = ({
         <div style={{ display: "flex" }}>
           <Select
             value={values.paid}
-            onChange={(v) => setValues({ ...values, paid: !values.paid })}
+            onChange={(v) => setValues({ ...values, paid: v , price: 0})}
             placeholder="pricing"
             style={{ width: 275 }}
           >
