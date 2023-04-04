@@ -3,7 +3,7 @@ import axios from "axios";
 import InstructorRoute from "../../components/routes/InstructorRoute";
 import { Avatar } from "antd";
 import Link from "next/link";
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 const InstructorIndex = () => {
   const [courses, setCourses] = useState([]);
@@ -48,7 +48,7 @@ const InstructorIndex = () => {
                   <div className="flex-grow pl-4">
                     <Link
                       className="text-lg mt-2 cursor-pointer font-semibold hover:underline"
-                      href={`/instructor/course/view/${course._id}`}
+                      href={`/instructor/course/view/${course.slug}`}
                     >
                       {course.name}
                     </Link>
@@ -72,11 +72,11 @@ const InstructorIndex = () => {
                   <div className="col-md-3 mb-20 text-center">
                     {course.published ? (
                       <div>
-                        <CheckCircleOutlined className="text-success" />
+                        <ExclamationCircleOutlined className="text-success" />
                       </div>
                     ) : (
                       <div>
-                        <CloseCircleOutlined className="text-warning" />
+                        <ExclamationCircleOutlined className="text-warning" />
                       </div>
                     )}
                   </div>
