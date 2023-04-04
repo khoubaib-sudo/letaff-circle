@@ -32,7 +32,7 @@ const InstructorIndex = () => {
             courses.map((course) => (
               <div
                 key={course._id}
-                className=" bg-gray-100 max-w-xl rounded-lg shadow-lg overflow-hidden mb-8"
+                className=" bg-slate-100 max-w-xl rounded-lg shadow-lg overflow-hidden mb-8"
               >
                 <div className="flex items-center p-4">
                   <Avatar

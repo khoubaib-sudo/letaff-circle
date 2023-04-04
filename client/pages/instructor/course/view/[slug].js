@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import InstructorRoute from "../../../../components/routes/InstructorRoute";
 import axios from "axios";
-import { Avatar, Tooltip } from "antd";
-import { EditOutlined, CheckOutlined } from "@ant-design/icons";
+import { Avatar, Tooltip, Button, Modal } from "antd";
+import { EditOutlined, CheckOutlined, PlusOutlined } from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
 
 const CourseView = () => {
   const [course, setCourse] = useState({});
-
+  //for lessons
+  const [visible, setVisible] = useState(false);
   const router = useRouter();
   const { slug } = router.query;
 
@@ -23,11 +24,10 @@ const CourseView = () => {
 
   return (
     <InstructorRoute>
-      <div className="container-fluid pt-3">
-        {/* <pre>{JSON.stringify(course, null, 4)}</pre> */}
+      <div className="container mx-auto px-4 py-3">
         {course && (
-          <div className="container-fluid pt-1">
-            <div className="flex pt-2">
+          <div className="bg-slate-100 rounded-lg shadow-md p-6">
+            <div className="flex items-center">
               <Avatar
                 size={150}
                 shape="square"
@@ -36,35 +36,56 @@ const CourseView = () => {
                 }
               />
 
-              <div className="media-body pl-2">
-                <div className="flex flex-row">
+              <div className="flex-grow pl-6">
+                <div className="flex items-center">
                   <div className="flex-grow">
-                    <h5 className="mt-2">{course.name}</h5>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <h5 className="text-3xl font-semibold">{course.name}</h5>
+                    <p className="text-sm text-gray-500 mt-1">
                       {course.lessons && course.lessons.length} Lessons
                     </p>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 mt-1">
                       {course.category}
                     </p>
                   </div>
 
-                  <div className="flex pt-4">
-                    <Tooltip title="Edit">
-                      <EditOutlined className="h-5 w-5 text-warning mr-4 cursor-pointer" />
-                    </Tooltip>
-                    <Tooltip title="Publish">
-                      <CheckOutlined className="h-5 w-5 text-danger cursor-pointer" />
-                    </Tooltip>
+                  <div className="flex pt-4 items-center">
+                    <div className="flex flex-col">
+                      <Tooltip title="Edit">
+                        <EditOutlined className="text-2xl cursor-pointer" />
+                      </Tooltip>
+                      <Tooltip title="Publish">
+                        <CheckOutlined className="text-2xl cursor-pointer" />
+                      </Tooltip>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <br />
-            <div className="row">
-              <div className="col">
-                <ReactMarkdown children={course.description} />
-              </div>
+            <div className="mt-4">
+              <ReactMarkdown children={course.description} />
             </div>
+            <div className="row">
+              <Button
+                onClick={() => setVisible(true)}
+                className="bg-purple-500 text-white flex items-center"
+                type="primary"
+                size="large"
+                shape="round"
+              >
+                <PlusOutlined className="mr-1" />
+                Add Lesson
+              </Button>
+            </div>
+            <Modal
+              title="Add Lesson"
+              centered
+              visible={visible}
+              onCancel={() => setVisible(false)}
+              footer={null}
+            >
+              show add Lesson component
+            </Modal>
           </div>
         )}
       </div>
