@@ -69,14 +69,14 @@ const InstructorIndex = () => {
                       </p>
                     )}
                   </div>
-                  <div className="col-md-3 mt-3 text-center">
+                  <div className="col-md-3 mb-20 text-center">
                     {course.published ? (
                       <div>
-                        <CheckCircleOutlined className="h5 pointer text-success" />
+                        <CheckCircleOutlined className="text-success" />
                       </div>
                     ) : (
                       <div>
-                        <CloseCircleOutlined className="h5 pointer text-warning" />
+                        <CloseCircleOutlined className="text-warning" />
                       </div>
                     )}
                   </div>

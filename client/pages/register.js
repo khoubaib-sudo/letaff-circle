@@ -53,22 +53,22 @@ const Register = () => {
   };
 
   return (
-    <Layout>
+    <div className="flex justify-center pt-20">
       <Head>
         <title>Register</title>
       </Head>
 
-      <section className="w-3/4 mx-auto flex flex-col gap-10">
+      <section className="w-3/4 flex flex-col items-center gap-10">
         <div className="title">
-          <h1 className="text-gray-800 text-4xl font-bold py-4">Register</h1>
-          <p className="w-3/4 mx-auto text-gray-400">
+          <h1 className="flex flex-col items-center text-gray-800 text-4xl font-bold py-4">Register</h1>
+          <p className="w-3/4 flex flex-col items-center mx-auto text-gray-400">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
             officia?
           </p>
         </div>
 
         {/* form */}
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-5 w-96" onSubmit={handleSubmit}>
           <div className={styles.input_group}>
             <input
               type="text"
@@ -153,7 +153,7 @@ const Register = () => {
           </Link>
         </p>
       </section>
-    </Layout>
+    </div>
   );
 };
 
