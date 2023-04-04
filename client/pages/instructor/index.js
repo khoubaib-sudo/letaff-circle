@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import InstructorRoute from "../../components/routes/InstructorRoute";
-import { Avatar } from "antd";
+import { Avatar , Tooltip } from "antd";
 import Link from "next/link";
 import { CheckCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
@@ -72,11 +72,15 @@ const InstructorIndex = () => {
                   <div className="col-md-3 mb-20 text-center">
                     {course.published ? (
                       <div>
+                        <Tooltip title="Publish">
                         <ExclamationCircleOutlined className="text-success" />
+                        </Tooltip>
                       </div>
                     ) : (
                       <div>
+                        <Tooltip title="Not Publish Yet">
                         <ExclamationCircleOutlined className="text-warning" />
+                        </Tooltip>
                       </div>
                     )}
                   </div>
