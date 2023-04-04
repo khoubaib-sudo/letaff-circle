@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import InstructorRoute from "../../components/routes/InstructorRoute";
 import { Avatar } from "antd";
+import Link from "next/link";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 const InstructorIndex = () => {
   const [courses, setCourses] = useState([]);
@@ -14,37 +16,75 @@ const InstructorIndex = () => {
     setCourses(data);
   };
 
+  const myStyle = { marginTop: "15px", fontSize: "18px" };
+
   return (
     <InstructorRoute>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          
-        }}
-      >
+      <div className="flex justify-center items-center">
         <h1 className="text-4xl md:text-7xl capitalize font-semibold">
           Instructor&nbsp;
-          <span className="text-purple-500 capitalize">Deshbord</span>
+          <span className="text-purple-500 capitalize">Dashboard</span>
         </h1>
       </div>
+      <div className="flex justify-center items-center">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
+          {courses &&
+            courses.map((course) => (
+              <div
+                key={course._id}
+                className=" bg-gray-100 max-w-xl rounded-lg shadow-lg overflow-hidden mb-8"
+              >
+                <div className="flex items-center p-4">
+                  <Avatar
+                    size={120}
+                    shape="square"
+                    src={
+                      course.image
+                        ? course.image.secure_url
+                        : "/assets/course.png"
+                    }
+                  />
 
-      {/* <pre>{JSON.stringify(courses, null, 4)}</pre> */}
-      {courses &&
-        courses.map((course) => (
-          <>
-            <div className="media pt-2">
-              <Avatar
-                size={120}
-                shape="square"
-                src={
-                  course.image ? course.image.secure_url : "/assets/course.png"
-                }
-              />
-            </div>
-          </>
-        ))}
+                  <div className="flex-grow pl-4">
+                    <Link
+                      className="text-lg mt-2 cursor-pointer font-semibold hover:underline"
+                      href={`/instructor/course/view/${course._id}`}
+                    >
+                      {course.name}
+                    </Link>
+                    <p style={{ marginTop: "-8px" }}>
+                      {course.lessons.length} Lessons
+                    </p>
+                    {course.lessons.length < 5 ? (
+                      <p style={myStyle} className="text-warning">
+                        At least 5 lessons are required to publish
+                      </p>
+                    ) : course.published ? (
+                      <p style={myStyle} className="text-success">
+                        Your course is in the marketplace
+                      </p>
+                    ) : (
+                      <p style={myStyle} className="text-warning">
+                        Your course is ready to be published
+                      </p>
+                    )}
+                  </div>
+                  <div className="col-md-3 mt-3 text-center">
+                    {course.published ? (
+                      <div>
+                        <CheckCircleOutlined className="h5 pointer text-success" />
+                      </div>
+                    ) : (
+                      <div>
+                        <CloseCircleOutlined className="h5 pointer text-warning" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
     </InstructorRoute>
   );
 };
