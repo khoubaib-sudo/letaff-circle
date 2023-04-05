@@ -10,6 +10,7 @@ const AddLessonForm = ({
   uploading,
   uploadButtonText,
   handleVideo,
+  handleVideoRemove,
 }) => {
   return (
     <div className="container pt-3">
@@ -41,7 +42,12 @@ const AddLessonForm = ({
           />
         </Form.Item>
         <Form.Item>
-          <Dragger onChange={handleVideo} accept="video/*" multiple={false}>
+          <Dragger
+            onChange={handleVideo}
+            accept="video/*"
+            multiple={false}
+            onRemove={handleVideoRemove}
+          >
             <p className="ant-upload-drag-icon">
               <InboxOutlined style={{ color: "#8B5CF6" }} />
             </p>
@@ -49,6 +55,7 @@ const AddLessonForm = ({
             <p className="ant-upload-hint">Support for a single video upload</p>
           </Dragger>
         </Form.Item>
+
         <Form.Item>
           <Button
             onClick={handleAddLesson}
