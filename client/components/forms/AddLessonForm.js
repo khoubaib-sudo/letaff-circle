@@ -1,8 +1,16 @@
-import { Button, Form, Input } from "antd";
-import { SaveOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Upload } from "antd";
+import { SaveOutlined, InboxOutlined } from "@ant-design/icons";
 
+const { Dragger } = Upload;
 const { TextArea } = Input;
-const AddLessonForm = ({ values, setValues, handleAddLesson , uploading}) => {
+const AddLessonForm = ({
+  values,
+  setValues,
+  handleAddLesson,
+  uploading,
+  uploadButtonText,
+  handleVideo,
+}) => {
   return (
     <div className="container pt-3">
       <Form
@@ -31,6 +39,15 @@ const AddLessonForm = ({ values, setValues, handleAddLesson , uploading}) => {
             value={values.content}
             style={{ width: 360 }}
           />
+        </Form.Item>
+        <Form.Item>
+          <Dragger onChange={handleVideo} accept="video/*" multiple={false}>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined style={{ color: "#8B5CF6" }} />
+            </p>
+            <p className="ant-upload-text">{uploadButtonText}</p>
+            <p className="ant-upload-hint">Support for a single video upload</p>
+          </Dragger>
         </Form.Item>
         <Form.Item>
           <Button
