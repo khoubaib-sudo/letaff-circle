@@ -35,13 +35,27 @@ const CourseView = () => {
   };
 
   // functions for add lesson
-  const handleAddLesson = (e) => {
+  const handleAddLesson = async (e) => {
     e.preventDefault();
-    console.log(values);
+    // console.log(values);
+    try {
+      const { data } = await axios.post(
+        `/api/course/lesson/${slug}/${course.instructor._id}`,
+        values
+      );
+      // console.log(data)
+      setValues({ ...values, title: "", content: "", video: {} });
+      setVisible(false);
+      setUploadButtonText("Upload video");
+      setCourse(data);
+      toast.success("Lesson added", { theme: "colored" });
+    } catch (err) {
+      console.log(err);
+      toast.error("Lesson add failed", { theme: "colored" });
+    }
   };
 
   const handleVideo = async (info) => {
-    
     try {
       const { status, originFileObj } = info.file;
       if (status === "done" && !uploading) {
@@ -88,6 +102,7 @@ const CourseView = () => {
   return (
     <InstructorRoute>
       <div className="container mx-auto px-4 py-3">
+        <pre>{JSON.stringify(course, null, 4)}</pre>
         {course && (
           <div className="bg-purple-100 rounded-lg shadow-md p-6">
             <div className="flex items-center">

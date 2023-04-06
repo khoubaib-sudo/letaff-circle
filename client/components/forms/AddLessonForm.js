@@ -1,3 +1,4 @@
+
 import { Button, Form, Input, Upload } from "antd";
 import { SaveOutlined, InboxOutlined } from "@ant-design/icons";
 
@@ -35,6 +36,7 @@ const AddLessonForm = ({
         </Form.Item>
         <Form.Item>
           <TextArea
+            name="content"
             rows={4}
             placeholder="Content"
             onChange={(e) => setValues({ ...values, content: e.target.value })}
