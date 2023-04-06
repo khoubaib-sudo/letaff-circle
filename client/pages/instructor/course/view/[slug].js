@@ -7,6 +7,7 @@ import { EditOutlined, CheckOutlined, PlusOutlined } from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
 import { toast } from "react-toastify";
+
 const CourseView = () => {
   const [course, setCourse] = useState({});
   //for lessons
@@ -18,7 +19,7 @@ const CourseView = () => {
   });
   const [uploading, setUploading] = useState(false);
   const [uploadButtonText, setUploadButtonText] = useState("Upload video");
-  const [progress, setProgress] = useState(0);
+
   const router = useRouter();
   const { slug } = router.query;
 
@@ -40,37 +41,39 @@ const CourseView = () => {
   const handleVideo = async (info) => {
     try {
       const { status, originFileObj } = info.file;
-      if (status === "done") {
+      if (status === "done" && !uploading) {
         setUploadButtonText(originFileObj.name);
         setUploading(true);
+        const videoData = new FormData();
+        videoData.append("video", originFileObj);
+        // send video as form data to backend
+        const { data } = await axios.post("/api/course/video-upload", videoData);
+        // once response is received
+        console.log(data);
+        setValues({ ...values, video: data });
+        setUploading(false);
       }
-      const videoData = new FormData();
-      videoData.append("video", originFileObj);
-      // send video as form data to backend
-      const { data } = await axios.post("/api/course/video-upload", videoData);
-      // once response is received
-      console.log(data);
-      setValues({ ...values, video: data });
-      setUploading(false);
     } catch (err) {
       console.log(err);
       setUploading(false);
       toast.error("Video upload failed", { theme: "colored" });
     }
   };
+  
+  
 
   const handleVideoRemove = async () => {
     // console.log('handle remove video')
     try {
-      setUploading(true)
+      setUploading(true);
       const { data } = await axios.post(
-        "/api/course/remove-video",
+        "/api/course/video-remove",
         values.video
       );
-      console.log(data)
-      setValues({...values, video: {} })
-      setUploading(false)
-      setUploadButtonText('Upload another video')
+      console.log(data);
+      setValues({ ...values, video: {} });
+      setUploading(false);
+      setUploadButtonText("Upload another video");
     } catch (err) {
       console.log(err);
       setUploading(false);

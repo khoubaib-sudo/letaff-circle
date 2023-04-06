@@ -2,7 +2,7 @@ const cloudinary = require("cloudinary").v2;
 const { nanoid } = require("nanoid");
 import Course from "../models/course";
 import slugify from "slugify";
-import {readFileSync} from 'fs'
+import { readFileSync } from "fs";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -98,3 +98,20 @@ export const uploadVideo = async (req, res) => {
   }
 };
 
+export const removeVideo = async (req, res) => {
+  try {
+    const { public_id } = req.body;
+    if (!public_id) return res.status(400).send("No public_id");
+
+    // remove video from cloudinary
+    const result = await cloudinary.uploader.destroy(public_id, {
+      resource_type: "video",
+    });
+
+    console.log(result);
+    res.send({ ok: true });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
