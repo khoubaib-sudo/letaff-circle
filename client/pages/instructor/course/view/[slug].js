@@ -3,10 +3,12 @@ import { useRouter } from "next/router";
 import InstructorRoute from "../../../../components/routes/InstructorRoute";
 import axios from "axios";
 import { Avatar, Tooltip, Button, Modal } from "antd";
-import { EditOutlined, CheckOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
 import { toast } from "react-toastify";
+
+import { TbEdit, TbCheckbox } from "react-icons/tb";
 
 const CourseView = () => {
   const [course, setCourse] = useState({});
@@ -39,6 +41,7 @@ const CourseView = () => {
   };
 
   const handleVideo = async (info) => {
+    
     try {
       const { status, originFileObj } = info.file;
       if (status === "done" && !uploading) {
@@ -47,9 +50,12 @@ const CourseView = () => {
         const videoData = new FormData();
         videoData.append("video", originFileObj);
         // send video as form data to backend
-        const { data } = await axios.post("/api/course/video-upload", videoData);
+        const { data } = await axios.post(
+          `/api/course/video-upload/${course.instructor._id}`,
+          videoData
+        );
         // once response is received
-        console.log(data);
+        // console.log(data);
         setValues({ ...values, video: data });
         setUploading(false);
       }
@@ -59,15 +65,13 @@ const CourseView = () => {
       toast.error("Video upload failed", { theme: "colored" });
     }
   };
-  
-  
 
   const handleVideoRemove = async () => {
     // console.log('handle remove video')
     try {
       setUploading(true);
       const { data } = await axios.post(
-        "/api/course/video-remove",
+        `/api/course/video-remove/${course.instructor._id}`,
         values.video
       );
       console.log(data);
@@ -85,7 +89,7 @@ const CourseView = () => {
     <InstructorRoute>
       <div className="container mx-auto px-4 py-3">
         {course && (
-          <div className="bg-slate-100 rounded-lg shadow-md p-6">
+          <div className="bg-purple-100 rounded-lg shadow-md p-6">
             <div className="flex items-center">
               <Avatar
                 size={150}
@@ -110,10 +114,10 @@ const CourseView = () => {
                   <div className="flex pt-4 items-center">
                     <div className="flex flex-col">
                       <Tooltip title="Edit">
-                        <EditOutlined className="text-2xl cursor-pointer" />
+                        <TbEdit className="text-3xl cursor-pointer" />
                       </Tooltip>
                       <Tooltip title="Publish">
-                        <CheckOutlined className="text-2xl cursor-pointer" />
+                        <TbCheckbox className="text-3xl cursor-pointer" />
                       </Tooltip>
                     </div>
                   </div>

@@ -5,6 +5,7 @@ import { Avatar , Tooltip } from "antd";
 import Link from "next/link";
 import { CheckCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
+
 const InstructorIndex = () => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
@@ -32,7 +33,7 @@ const InstructorIndex = () => {
             courses.map((course) => (
               <div
                 key={course._id}
-                className=" bg-slate-100 max-w-xl rounded-lg shadow-lg overflow-hidden mb-8"
+                className=" bg-purple-100 max-w-xl rounded-lg shadow-lg overflow-hidden mb-8"
               >
                 <div className="flex items-center p-4">
                   <Avatar
@@ -56,15 +57,15 @@ const InstructorIndex = () => {
                       {course.lessons.length} Lessons
                     </p>
                     {course.lessons.length < 5 ? (
-                      <p style={myStyle} className="text-warning">
+                      <p style={myStyle} className="text-purple-500 ">
                         At least 5 lessons are required to publish
                       </p>
                     ) : course.published ? (
-                      <p style={myStyle} className="text-success">
+                      <p style={myStyle} className="text-purple-500 ">
                         Your course is in the marketplace
                       </p>
                     ) : (
-                      <p style={myStyle} className="text-warning">
+                      <p style={myStyle} className="text-purple-500 ">
                         Your course is ready to be published
                       </p>
                     )}
@@ -73,13 +74,13 @@ const InstructorIndex = () => {
                     {course.published ? (
                       <div>
                         <Tooltip title="Publish">
-                        <ExclamationCircleOutlined className="text-success" />
+                        <CheckCircleOutlined className="text-success" />
                         </Tooltip>
                       </div>
                     ) : (
                       <div>
                         <Tooltip title="Not Publish Yet">
-                        <ExclamationCircleOutlined className="text-warning" />
+                        <ExclamationCircleOutlined className="text-purple-500 " />
                         </Tooltip>
                       </div>
                     )}

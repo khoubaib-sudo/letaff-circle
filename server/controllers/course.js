@@ -81,6 +81,12 @@ export const read = async (req, res) => {
 
 export const uploadVideo = async (req, res) => {
   try {
+    // console.log("req.user._id", req.user._id);
+    // console.log("req.params.instructorId", req.params.instructorId);
+    // return;
+    if(req.user._id != req.params.instructorId){
+      return res.status(400).send('Unauthorized')
+    }
     const { video } = req.files;
     if (!video) return res.status(400).send("No video");
 
@@ -90,7 +96,7 @@ export const uploadVideo = async (req, res) => {
       public_id: nanoid(),
     });
 
-    console.log(result);
+    // console.log(result);
     res.send(result);
   } catch (err) {
     console.log(err);
@@ -99,6 +105,9 @@ export const uploadVideo = async (req, res) => {
 };
 
 export const removeVideo = async (req, res) => {
+  if(req.user._id != req.params.instructorId){
+    return res.status(400).send('Unauthorized')
+  }
   try {
     const { public_id } = req.body;
     if (!public_id) return res.status(400).send("No public_id");
