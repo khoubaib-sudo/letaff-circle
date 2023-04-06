@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import InstructorRoute from "../../../../components/routes/InstructorRoute";
 import axios from "axios";
-import { Avatar, Tooltip, Button, Modal } from "antd";
+import { Avatar, Tooltip, Button, Modal, List } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
+import Item from "antd/lib/list/Item";
 import { toast } from "react-toastify";
 
 import { TbEdit, TbCheckbox } from "react-icons/tb";
@@ -102,7 +103,7 @@ const CourseView = () => {
   return (
     <InstructorRoute>
       <div className="container mx-auto px-4 py-3">
-        <pre>{JSON.stringify(course, null, 4)}</pre>
+        {/* <pre>{JSON.stringify(course, null, 4)}</pre> */}
         {course && (
           <div className="bg-purple-100 rounded-lg shadow-md p-6">
             <div className="flex items-center">
@@ -172,6 +173,34 @@ const CourseView = () => {
                 handleVideoRemove={handleVideoRemove}
               />
             </Modal>
+            <div className="flex flex-wrap pt-10">
+              <div className="w-full px-4 mb-4 md:mb-0">
+                <h4 className="text-2xl font-bold mb-4">
+                  {course && course.lessons && course.lessons.length} Lessons
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {course &&
+                    course.lessons &&
+                    course.lessons.map((lesson, index) => (
+                      <div
+                        key={index}
+                        className="bg-white rounded-lg shadow-md"
+                      >
+                        <div className="p-4">
+                          <h5 className="text-lg font-bold mb-2">
+                            {lesson.title}
+                          </h5>
+                        </div>
+                        <div className="p-4 bg-purple-400 rounded-b-lg">
+                          <span className="text-black-700">
+                          Lesson {index + 1} 
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
