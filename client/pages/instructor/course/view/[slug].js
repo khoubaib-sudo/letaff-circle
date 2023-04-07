@@ -130,7 +130,12 @@ const CourseView = () => {
                   <div className="flex pt-4 items-center">
                     <div className="flex flex-col">
                       <Tooltip title="Edit">
-                        <TbEdit className="text-3xl cursor-pointer" />
+                        <TbEdit
+                          onClick={() =>
+                            router.push(`/instructor/course/edit/${slug}`)
+                          }
+                          className="text-3xl cursor-pointer"
+                        />
                       </Tooltip>
                       <Tooltip title="Publish">
                         <TbCheckbox className="text-3xl cursor-pointer" />
@@ -179,26 +184,23 @@ const CourseView = () => {
                   {course && course.lessons && course.lessons.length} Lessons
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {course &&
-                    course.lessons &&
-                    course.lessons.map((lesson, index) => (
-                      <div
-                        key={index}
-                        className="bg-white rounded-lg shadow-md"
-                      >
-                        <div className="p-4">
-                          <h5 className="text-lg font-bold mb-2">
-                            {lesson.title}
-                          </h5>
-                        </div>
-                        <div className="p-4 bg-purple-400 rounded-b-lg">
-                          <span className="text-black-700">
-                          Lesson {index + 1} 
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                </div>
+  {course &&
+    course.lessons &&
+    course.lessons.map((lesson, index) => (
+      <div
+        key={index}
+        className="bg-white rounded-lg shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105"
+      >
+        <div className="p-4">
+          <h5 className="text-lg font-bold mb-2">{lesson.title}</h5>
+        </div>
+        <div className="p-4 bg-purple-400 rounded-b-lg">
+          <span className="text-black-700">Lesson {index + 1}</span>
+        </div>
+      </div>
+    ))}
+</div>
+
               </div>
             </div>
           </div>

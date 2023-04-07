@@ -140,7 +140,7 @@ export const forgotPassword = async (req, res) => {
         </style>
       </head>
       <body>
-        <div style="text-align: center;">
+        <div style="text-align">
           <img src="https://imgtr.ee/images/2023/04/06/kuNHc.png" alt="Letaff logo" />
         </div>
         <h1>Reset Password Code</h1>
