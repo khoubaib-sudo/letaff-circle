@@ -114,18 +114,19 @@ const ForgotPassword = () => {
               />
             </>
           )}
-          {/* login buttons */}
+          {/* forgetpassword button */}
           <div className="input-button">
             <button
               type="submit"
               className={styles.button}
-              disabled={loading || !email}
+              // disabled={loading || !email}
             >
-              {loading ? (
+              Submit
+              {/* {loading ? (
                 <LoadingOutlined spin style={{ fontSize: "40px" }} />
               ) : (
                 "Submit"
-              )}
+              )} */}
             </button>
           </div>
         </form>

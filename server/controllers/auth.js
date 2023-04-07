@@ -1,18 +1,17 @@
 import User from "../models/user";
 import { hashPassword, comparePassword } from "../utils/auth";
 import jwt from "jsonwebtoken";
-import AWS from "aws-sdk"
-import { nanoid } from 'nanoid'
+import AWS from "aws-sdk";
+import { nanoid } from "nanoid";
+import nodemailer from "nodemailer";
 
-const awsConfig = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-  apiVersion: process.env.AWS_API_VERSION,
-}
-
-const SES = new AWS.SES(awsConfig)
-
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER, // Your email address
+    pass: process.env.EMAIL_PASS, // Your email password
+  },
+});
 
 export const register = async (req, res) => {
   try {
@@ -26,7 +25,8 @@ export const register = async (req, res) => {
         .send("Password is required and should be min 6 characters long");
     }
     if (!cpassword) return res.status(400).send("Confirm password is required");
-    if(password !== cpassword) return res.status(400).send("Password Not Match...!")
+    if (password !== cpassword)
+      return res.status(400).send("Password Not Match...!");
     let userExist = await User.findOne({ email }).exec();
     if (userExist) return res.status(400).send("Email is taken");
 
@@ -90,76 +90,93 @@ export const currentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password").exec();
     // console.log("CURRENT_USER", user);
-    return res.json({ok: true});
+    return res.json({ ok: true });
   } catch (err) {
     console.log(err);
   }
 };
 
 export const forgotPassword = async (req, res) => {
-  try{
-    const {email} = req.body;
-    // console.log(email) 
+  try {
+    const { email } = req.body;
     const shortCode = nanoid(6).toUpperCase();
-    const user = await User.findOneAndUpdate({email}, {passwordResetCode:shortCode});
+    const user = await User.findOneAndUpdate(
+      { email },
+      { passwordResetCode: shortCode }
+    );
     if (!user) return res.status(400).send("User not found");
-    // prepate for email
-    const params = {
-      Source: process.env.EMAIL_FROM,
-      Destination:   {
-        ToAddresses: [email]
-      },
-      Message:{
-        Body:{
-          Html: {
-            Charset: "UTF-8",
-            Data: `
-            <html>
-              <h1>Reset password link</h1>
-              <p>use this code to reset your password</p>
-              <h2 style="color:red;">${shortCode}</h2>
-              <i>letaff.com</i>
-            </html>
-            `
-          },
-        },
-        Subject: {
-          Charset: "UTF-8",
-          Data: "Reset Password",
-        }
-      },
-      
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER, // Your email address
+      to: email,
+      subject: "Reset Password",
+      html: `
+      <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+            color: #333;
+          }
+          h1 {
+            font-size: 28px;
+            color: #9f7aea;
+          }
+          h2 {
+            font-size: 24px;
+            color: #9f7aea;
+          }
+          p {
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+          }
+          img {
+            width: 120px;
+            height: auto;
+          }
+        </style>
+      </head>
+      <body>
+        <div style="text-align: center;">
+          <img src="https://imgtr.ee/images/2023/04/06/kuNHc.png" alt="Letaff logo" />
+        </div>
+        <h1>Reset Password Code</h1>
+        <p>Use the code below to reset your password:</p>
+        <h2 style="font-weight: bold;">${shortCode}</h2>
+      </body>
+    </html>
+    
+      `,
     };
-    const emailSent = SES.sendEmail(params).promise();
-    emailSent.then((data) =>{
-      console.log(data)
-      res.json({ok:true});
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }catch(err) {
+
+    const emailSent = await transporter.sendMail(mailOptions);
+    console.log(emailSent);
+    res.json({ ok: true });
+  } catch (err) {
     console.log(err);
   }
-}
+};
 
 export const resetPassword = async (req, res) => {
   try {
-    const {email, code, newPassword  } = req.body
-    // console.table({email, code, newPassword})
+    const { email, code, newPassword } = req.body;
     const hashedPassword = await hashPassword(newPassword);
-    const user = User.findOneAndUpdate({
-      email, 
-      passwordResetCode: code,
-    }, 
-    {
-      password: hashPassword,
-      passwordResetCode: "",
-    }
+    const user = User.findOneAndUpdate(
+      {
+        email,
+        passwordResetCode: code,
+      },
+      {
+        password: hashedPassword, // Use hashedPassword instead of hashPassword
+        passwordResetCode: "",
+      }
     ).exec();
-    res.json({ok: true});
-  }catch{
-    console.log(err)
-    return res.status(400).send('Error! try agin')
+    res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Error! try agin");
   }
-}
+};
