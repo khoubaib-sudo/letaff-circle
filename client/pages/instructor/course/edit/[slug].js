@@ -33,6 +33,7 @@ const CourseEdit = () => {
   const loadCourse = async () => {
     const {data} = await axios.get(`/api/course/${slug}`);
     setValues(data);
+    if (data && data.image) setImage(data.image)
   }
 
   const handleChange = (e) => {
@@ -61,6 +62,22 @@ const CourseEdit = () => {
       }
     });
   };
+  const handleImageRemove = async () => {
+    try {
+      setValues({ ...values, loading: true });
+      const res = await axios.post("/api/course/remove-image", {
+        public_id: image.public_id,
+      });
+      setImage({});
+      setPreview("");
+      setUploadButtonText("Upload Image");
+      setValues({ ...values, loading: false, public_id: "" });
+    } catch (err) {
+      console.log(err);
+      setValues({ ...values, loading: false });
+      toast.error("Image removal failed", { theme: "colored" });
+    }
+  };
   const handleCategoryChange = (value) => {
     setValues({ ...values, category: value });
   };
@@ -70,7 +87,7 @@ const CourseEdit = () => {
     e.preventDefault();
     // console.log(values);
     try {
-      const { data } = await axios.put("/api/course", {
+      const { data } = await axios.put(`/api/course/${slug}`, {
         ...values,
         image,
       });
@@ -79,7 +96,9 @@ const CourseEdit = () => {
       });
       // router.push("/instructor");
     } catch (err) {
-      toast.error(err.response.data);
+      toast.error(err.response.data, {
+        theme: "colored",
+      });
     }
   };
 
@@ -102,7 +121,7 @@ const CourseEdit = () => {
               setValues={setValues}
               preview={preview}
               uploadButtonText={uploadButtonText}
-              
+              handleImageRemove={handleImageRemove}
               handleCategoryChange={handleCategoryChange}
               editPage={true}
             />
