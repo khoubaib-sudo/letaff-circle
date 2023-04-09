@@ -197,15 +197,16 @@ const CourseView = () => {
                             {lesson.title}
                           </h5>
                         </div>
-                        {/* <div>
-      <ReactPlayer
-        url={values.video.Location}
-        controls
-        width="100%"
-        height="100%"
-        className="react-player"
-      />
-    </div> */}
+                        <div>
+                          {lesson && lesson.video && (
+                            <ReactPlayer
+                              url={lesson.video.url}
+                              controls
+                              width="100%"
+                              height="100%"
+                            />
+                          )}
+                        </div>
                         <div className="p-4 bg-purple-400 rounded-b-lg">
                           <span className="text-black-700">
                             Lesson {index + 1}
