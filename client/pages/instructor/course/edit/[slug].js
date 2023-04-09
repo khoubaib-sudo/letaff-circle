@@ -64,35 +64,20 @@ const CourseEdit = () => {
   const handleCategoryChange = (value) => {
     setValues({ ...values, category: value });
   };
-  const handleImageRemove = async () => {
-    try {
-      setValues({ ...values, loading: true });
-      const res = await axios.post("/api/course/remove-image", {
-        public_id: image.public_id,
-      });
-      setImage({});
-      setPreview("");
-      setUploadButtonText("Upload Image");
-      setValues({ ...values, loading: false, public_id: "" });
-    } catch (err) {
-      console.log(err);
-      setValues({ ...values, loading: false });
-      toast.error("Image removal failed", { theme: "colored" });
-    }
-  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(values);
     try {
-      const { data } = await axios.post("/api/course", {
+      const { data } = await axios.put("/api/course", {
         ...values,
         image,
       });
-      toast.success("Great! now you can start adding lessons", {
+      toast.success("course updated", {
         theme: "colored",
       });
-      router.push("/instructor");
+      // router.push("/instructor");
     } catch (err) {
       toast.error(err.response.data);
     }
@@ -117,8 +102,9 @@ const CourseEdit = () => {
               setValues={setValues}
               preview={preview}
               uploadButtonText={uploadButtonText}
-              handleImageRemove={handleImageRemove}
+              
               handleCategoryChange={handleCategoryChange}
+              editPage={true}
             />
           </div>
         </div>
