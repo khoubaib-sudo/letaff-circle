@@ -68,9 +68,9 @@ const BecomeInstructor = () => {
                 loading
               }
               style={{
-                backgroundColor: "#9f7aea",
+                backgroundColor: "#a855f7",
                 color: "black",
-                borderColor: "#9f7aea",
+                borderColor: "#a855f7",
               }}
               ghost
             >

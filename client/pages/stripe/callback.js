@@ -27,7 +27,7 @@ const StripeCallback = () => {
     <div
       className="mx-auto flex justify-center "
       style={{
-        color: "#9f7aea",
+        color: "#a855f7",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

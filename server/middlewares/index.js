@@ -13,6 +13,7 @@ export const requireSignin = jwt({
   algorithms: ['HS256'],
   getToken: getToken,
 });
+
 // module.exports = { requireSignin };
 
 export const isInstructor = async (req, res, next) => {

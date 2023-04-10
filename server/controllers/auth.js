@@ -122,11 +122,11 @@ export const forgotPassword = async (req, res) => {
           }
           h1 {
             font-size: 28px;
-            color: #9f7aea;
+            color: #a855f7;
           }
           h2 {
             font-size: 24px;
-            color: #9f7aea;
+            color: #a855f7;
           }
           p {
             font-size: 18px;
