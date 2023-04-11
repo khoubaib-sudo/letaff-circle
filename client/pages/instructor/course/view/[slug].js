@@ -103,10 +103,10 @@ const CourseView = () => {
 
   return (
     <InstructorRoute>
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto  py-3">
         {/* <pre>{JSON.stringify(course, null, 4)}</pre> */}
         {course && (
-          <div className="bg-purple-100 rounded-lg shadow-md p-6">
+          <div className="bg-gradient-to-br from-purple-100 to-purple-700 rounded-lg shadow-md p-6">
             <div className="flex items-center">
               <Avatar
                 size={150}
@@ -207,7 +207,7 @@ const CourseView = () => {
                             />
                           )}
                         </div>
-                        <div className="p-4 bg-purple-400 rounded-b-lg">
+                        <div className="p-4 bg-purple-200 rounded-b-lg">
                           <span className="text-black-700">
                             Lesson {index + 1}
                           </span>

@@ -14,6 +14,7 @@ const AddLessonForm = ({
   handleVideo,
   handleVideoRemove,
 }) => {
+  const { title, video } = values;
   return (
     <div className="container pt-3">
       <Form
@@ -67,6 +68,7 @@ const AddLessonForm = ({
             size="large"
             shape="round"
             loading={uploading}
+            disabled={!values.title || !values.video}
           >
             <SaveOutlined className="mr-1" />
             Save

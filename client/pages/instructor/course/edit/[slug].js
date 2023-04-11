@@ -101,7 +101,34 @@ const CourseEdit = () => {
       });
     }
   };
+  
+  const handleDrag = (e, index) => {
+    // console.log("ON DRAG => ", index);
+    e.dataTransfer.setData("itemIndex", index);
+  };
 
+  const handleDrop = async (e, index) => {
+    // console.log("ON DROP => ", index);
+
+    const movingItemIndex = e.dataTransfer.getData("itemIndex");
+    const targetItemIndex = index;
+    let allLessons = values.lessons;
+
+    let movingItem = allLessons[movingItemIndex]; // clicked/dragged item to re-order
+    allLessons.splice(movingItemIndex, 1); // remove 1 item from the given index
+    allLessons.splice(targetItemIndex, 0, movingItem); // push item after target item index
+
+    setValues({ ...values, lessons: [...allLessons] });
+    // save the new lessons order in db
+    const { data } = await axios.put(`/api/course/${slug}`, {
+      ...values,
+      image,
+    });
+    // console.log("LESSONS REARRANGED RES => ", data);
+    toast("Lessons rearranged successfully");
+  };
+  
+  
   return (
     <InstructorRoute>
       <div className="flex flex-col justify-between items-center">
@@ -132,16 +159,19 @@ const CourseEdit = () => {
       {/* <pre>{JSON.stringify(values, null, 4)}</pre>
       <hr />
       <pre>{JSON.stringify(image, null, 4)}</pre> */}
-      <div className="flex flex-wrap pt-10">
+      <div className="flex flex-wrap pt-10 bg-gradient-to-br from-purple-100 to-purple-700 rounded-lg shadow-md p-6">
         <div className="w-full px-4 mb-4 md:mb-0">
           <h4 className="text-2xl font-bold mb-4">
             {values && values.lessons && values.lessons.length} Lessons
           </h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div onDragOver={(e) => e.preventDefault()} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {values &&
               values.lessons &&
               values.lessons.map((lesson, index) => (
                 <div
+                  draggable
+                  onDragStart={e => handleDrag(e, index)}
+                  onDrop={e => handleDrop(e, index)}
                   key={index}
                   className="bg-white rounded-lg shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105"
                 >
