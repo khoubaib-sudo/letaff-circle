@@ -88,12 +88,12 @@ const CourseCreate = () => {
 
   return (
     <InstructorRoute>
-      <div className="flex flex-col justify-between items-center">
+      <div className="flex flex-col justify-between items-center bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8">
         <div className="md:mr-auto ml-auto">
           <h1 className="text-4xl md:text-7xl capitalize font-semibold">
             Create
             <br />
-            <span className="text-purple-500 capitalize">Course</span>
+            <span className="text-white capitalize">Course</span>
           </h1>
           <div className="mt-5">
             <CourseCreateForm

@@ -21,10 +21,11 @@ const InstructorIndex = () => {
 
   return (
     <InstructorRoute>
+      <div className="flex flex-col justify-between items-center bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8">
       <div className="flex justify-center items-center">
         <h1 className="text-4xl md:text-7xl capitalize font-semibold">
           Instructor&nbsp;
-          <span className="text-purple-500 capitalize">Dashboard</span>
+          <span className="text-white capitalize">Dashboard</span>
         </h1>
       </div>
       <div className="flex justify-center items-center">
@@ -89,6 +90,7 @@ const InstructorIndex = () => {
               </div>
             ))}
         </div>
+      </div>
       </div>
     </InstructorRoute>
   );

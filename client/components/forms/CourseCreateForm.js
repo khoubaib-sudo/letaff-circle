@@ -12,7 +12,6 @@ const CourseCreateForm = ({
   setValues,
   preview,
   handleCategoryChange,
-  uploadButtonText,
   handleImageRemove = (f) => f,
   editPage = false,
 }) => {
@@ -100,6 +99,7 @@ const CourseCreateForm = ({
             <div style={{ display: "flex", flexDirection: "column" }}>
               <label htmlFor="image">
                 <Button
+                className="bg-white  flex items-center"
                   icon={<UploadOutlined />}
                   onClick={() => document.getElementById("image").click()}
                 >

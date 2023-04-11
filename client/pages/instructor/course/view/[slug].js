@@ -106,7 +106,7 @@ const CourseView = () => {
       <div className="container mx-auto  py-3">
         {/* <pre>{JSON.stringify(course, null, 4)}</pre> */}
         {course && (
-          <div className="bg-gradient-to-br from-purple-100 to-purple-700 rounded-lg shadow-md p-6">
+          <div className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-6">
             <div className="flex items-center">
               <Avatar
                 size={150}
@@ -119,11 +119,11 @@ const CourseView = () => {
               <div className="flex-grow pl-6">
                 <div className="flex items-center">
                   <div className="flex-grow">
-                    <h5 className="text-3xl font-semibold">{course.name}</h5>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <h5 className="text-3xl text-white font-semibold">{course.name}</h5>
+                    <p className="text-sm text-gray-50 mt-1">
                       {course.lessons && course.lessons.length} Lessons
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-50 mt-1">
                       {course.category}
                     </p>
                   </div>
@@ -135,11 +135,11 @@ const CourseView = () => {
                           onClick={() =>
                             router.push(`/instructor/course/edit/${slug}`)
                           }
-                          className="text-3xl cursor-pointer"
+                          className="text-3xl cursor-pointer text-white"
                         />
                       </Tooltip>
                       <Tooltip title="Publish">
-                        <TbCheckbox className="text-3xl cursor-pointer" />
+                        <TbCheckbox className="text-3xl cursor-pointer text-white" />
                       </Tooltip>
                     </div>
                   </div>
@@ -147,18 +147,18 @@ const CourseView = () => {
               </div>
             </div>
             <br />
-            <div className="mt-4">
+            <div className="mt-4 text-white ">
               <ReactMarkdown children={course.description} />
             </div>
             <div className="row">
               <Button
                 onClick={() => setVisible(true)}
-                className="bg-purple-500 text-white flex items-center"
+                className="bg-white text-purple-500 flex items-center"
                 type="primary"
                 size="large"
                 shape="round"
               >
-                <PlusOutlined className="mr-1" />
+                <PlusOutlined className="mr-1 " />
                 Add Lesson
               </Button>
             </div>
@@ -181,8 +181,8 @@ const CourseView = () => {
             </Modal>
             <div className="flex flex-wrap pt-10">
               <div className="w-full px-4 mb-4 md:mb-0">
-                <h4 className="text-2xl font-bold mb-4">
-                  {course && course.lessons && course.lessons.length} Lessons
+                <h4 className="text-2xl font-bold mb-4 text-white">
+                  You have uploaded {course && course.lessons && course.lessons.length} Lessons
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {course &&
@@ -192,8 +192,8 @@ const CourseView = () => {
                         key={index}
                         className="bg-white rounded-lg shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105"
                       >
-                        <div className="p-4">
-                          <h5 className="text-lg font-bold mb-2">
+                        <div className="p-4 bg-purple-800 rounded-t-lg">
+                          <h5 className="text-lg text-white font-bold mb-2">
                             {lesson.title}
                           </h5>
                         </div>
@@ -207,8 +207,8 @@ const CourseView = () => {
                             />
                           )}
                         </div>
-                        <div className="p-4 bg-purple-200 rounded-b-lg">
-                          <span className="text-black-700">
+                        <div className="p-4 bg-purple-800 rounded-b-lg">
+                          <span className="text-white">
                             Lesson {index + 1}
                           </span>
                         </div>
