@@ -18,8 +18,10 @@ function MyApp({ Component, pageProps }) {
         toastStyle={{
           backgroundColor: "#a855f7", //a855f7
           borderRadius: "35px",
-          color: "black", 
-          height: "20px"    
+          color: "white",
+          width:"360px",
+          height: "40px",  
+          fontWeight: "bold"  
         }}
       />
       <NavBar />

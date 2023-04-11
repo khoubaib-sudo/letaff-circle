@@ -143,12 +143,12 @@ const CourseEdit = () => {
 
   return (
     <InstructorRoute>
-      <div className="flex flex-col justify-between items-center">
+      <div className="flex flex-col justify-between items-center bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8">
         <div className="md:mr-auto ml-auto">
-          <h1 className="text-4xl md:text-7xl capitalize font-semibold">
-            Edit <FiEdit3 className="inline-block mr-2 text-purple-500" />
+          <h1 className="text-4xl  md:text-7xl capitalize font-semibold">
+            Edit <FiEdit3 className="inline-block mr-2 text-white" />
             <br />
-            <span className=" capitalize">Course</span>
+            <span className=" capitalize text-white">Course</span>
           </h1>
           {/* {JSON.stringify(values)} */}
           <div className="mt-5">
@@ -166,55 +166,49 @@ const CourseEdit = () => {
             />
           </div>
         </div>
-      </div>
-
-      {/* <pre>{JSON.stringify(values, null, 4)}</pre>
-      <hr />
-      <pre>{JSON.stringify(image, null, 4)}</pre> */}
-      <div className="flex flex-wrap pt-10 bg-gradient-to-br from-purple-100 to-purple-700 rounded-lg shadow-md p-6">
-        <div className="w-full px-4 mb-4 md:mb-0">
-          <h4 className="text-2xl font-bold mb-4">
-            {values && values.lessons && values.lessons.length} Lessons
-          </h4>
-          <div
-            onDragOver={(e) => e.preventDefault()}
-            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
-          >
-            {values &&
-              values.lessons &&
-              values.lessons.map((lesson, index) => (
-                <div
-                  draggable
-                  onDragStart={(e) => handleDrag(e, index)}
-                  onDrop={(e) => handleDrop(e, index)}
-                  key={index}
-                  className="bg-white rounded-lg shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105"
-                >
-                  <div className="p-4">
-                    <h5 className="text-lg font-bold mb-2">{lesson.title}</h5>
-                  </div>
-
-                  <div>
-                    {lesson && lesson.video && (
-                      <ReactPlayer
-                        url={lesson.video.url}
-                        controls
-                        width="100%"
-                        height="100%"
+        <div className="flex flex-wrap pt-10 ">
+          <div className="w-full px-4 mb-4 md:mb-0">
+            <h4 className="text-2xl font-bold mb-4">
+              {values && values.lessons && values.lessons.length} Lessons
+            </h4>
+            <div
+              onDragOver={(e) => e.preventDefault()}
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+            >
+              {values &&
+                values.lessons &&
+                values.lessons.map((lesson, index) => (
+                  <div
+                    draggable
+                    onDragStart={(e) => handleDrag(e, index)}
+                    onDrop={(e) => handleDrop(e, index)}
+                    key={index}
+                    className="bg-white rounded-lg shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105"
+                  >
+                    <div className="p-4 flex justify-between items-center">
+                      <h5 className="text-lg font-bold mb-2">{lesson.title}</h5>
+                      <DeleteOutlined
+                        onClick={() => handleDelete(index)}
+                        style={{ fontSize: "1.1rem" }}
                       />
-                    )}
-                  </div>
-                  <div className="p-4  rounded-b-lg">
-                    <span className="text-black-700">Lesson {index + 1}</span>
-                  </div>
+                    </div>
 
-                  <DeleteOutlined
-                    onClick={() => handleDelete(index)}
-                    className="absolute top-6 right-4"
-                    style={{ fontSize: "1.1rem" }}
-                  />
-                </div>
-              ))}
+                    <div>
+                      {lesson && lesson.video && (
+                        <ReactPlayer
+                          url={lesson.video.url}
+                          controls
+                          width="100%"
+                          height="100%"
+                        />
+                      )}
+                    </div>
+                    <div className="p-4  rounded-b-lg">
+                      <span className="text-black-700">Lesson {index + 1}</span>
+                    </div>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </div>
