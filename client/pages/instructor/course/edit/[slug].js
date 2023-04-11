@@ -6,8 +6,9 @@ import Resizer from "react-image-file-resizer";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { FiEdit3 } from "react-icons/fi";
+import { Modal } from "antd";
 import ReactPlayer from "react-player";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 const CourseEdit = () => {
   // state
   const [values, setValues] = useState({
@@ -22,8 +23,16 @@ const CourseEdit = () => {
   });
   const [image, setImage] = useState({});
   const [preview, setPreview] = useState("");
-
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image");
+  
+  // state for lessons update
+  const [visible, setVisible] = useState(false);
+  const [current, setCurrent] = useState({});
+  const [uploadVideoButtonText, setUploadVideoButtonText] = useState(
+    "Upload Video"
+  );
+  const [progress, setProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   // router
   const router = useRouter();
@@ -187,8 +196,12 @@ const CourseEdit = () => {
                   >
                     <div className="p-4 flex justify-between items-center">
                       <h5 className="text-lg font-bold mb-2">{lesson.title}</h5>
-                      <DeleteOutlined
-                        onClick={() => handleDelete(index)}
+                      <EditOutlined
+                        className="text-gray-500 hover:text-purple-500 "
+                        onClick={() => {
+                          setVisible(true);
+                          setCurrent(lesson);
+                        }}
                         style={{ fontSize: "1.1rem" }}
                       />
                     </div>
@@ -203,8 +216,13 @@ const CourseEdit = () => {
                         />
                       )}
                     </div>
-                    <div className="p-4  rounded-b-lg">
+                    <div className="p-4 flex justify-between items-center rounded-b-lg">
                       <span className="text-black-700">Lesson {index + 1}</span>
+                      <DeleteOutlined
+                        onClick={() => handleDelete(index)}
+                        className="text-gray-500 hover:text-red-500 "
+                        style={{ fontSize: "1.1rem" }}
+                      />
                     </div>
                   </div>
                 ))}
@@ -212,6 +230,15 @@ const CourseEdit = () => {
           </div>
         </div>
       </div>
+      <Modal
+        title="Update lesson"
+        centered
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        footer={null}
+      >Update lesson
+      <pre>{JSON.stringify(current, null, 4)}</pre> 
+      </Modal>
     </InstructorRoute>
   );
 };
