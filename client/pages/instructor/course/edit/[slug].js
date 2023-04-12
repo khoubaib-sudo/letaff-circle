@@ -9,6 +9,8 @@ import { FiEdit3 } from "react-icons/fi";
 import { Modal } from "antd";
 import ReactPlayer from "react-player";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import UpdateLessonForm from "../../../../components/forms/UpdateLessonForm";
+
 const CourseEdit = () => {
   // state
   const [values, setValues] = useState({
@@ -24,13 +26,12 @@ const CourseEdit = () => {
   const [image, setImage] = useState({});
   const [preview, setPreview] = useState("");
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image");
-  
+
   // state for lessons update
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState({});
-  const [uploadVideoButtonText, setUploadVideoButtonText] = useState(
-    "Upload Video"
-  );
+  const [uploadVideoButtonText, setUploadVideoButtonText] =
+    useState("Upload another Video");
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
 
@@ -149,6 +150,39 @@ const CourseEdit = () => {
     const { data } = await axios.put(`/api/course/${slug}/${removed[0]._id}`);
     console.log("LESSON DELETED =>", data);
   };
+  
+  /**
+   * lesson update functions
+   */
+
+  const handleVideo = async (info) => {
+    try {
+      const { status, originFileObj } = info.file;
+      if (status === "done" && !uploading) {
+        setUploadButtonText(originFileObj.name);
+        setUploading(true);
+        const videoData = new FormData();
+        videoData.append("video", originFileObj);
+        // send video as form data to backend
+        const { data } = await axios.post(
+          `/api/course/video-upload/${course.instructor._id}`,
+          videoData
+        );
+        // once response is received
+        // console.log(data);
+        setValues({ ...values, video: data });
+        setUploading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setUploading(false);
+      toast.error("Video upload failed", { theme: "colored" });
+    }
+  };
+  const handleUpdateLesson = async () => {
+    console.log('handle Update Lesson')
+    
+  };
 
   return (
     <InstructorRoute>
@@ -236,8 +270,17 @@ const CourseEdit = () => {
         visible={visible}
         onCancel={() => setVisible(false)}
         footer={null}
-      >Update lesson
-      <pre>{JSON.stringify(current, null, 4)}</pre> 
+      >
+        <UpdateLessonForm
+          current={current}
+          setCurrent={setCurrent}
+          handleVideo={handleVideo}
+          handleUpdateLesson={handleUpdateLesson}
+          uploadVideoButtonText={uploadVideoButtonText}
+          progress={progress}
+          uploading={uploading}
+        />
+        {/* <pre>{JSON.stringify(current, null, 4)}</pre>  */}
       </Modal>
     </InstructorRoute>
   );

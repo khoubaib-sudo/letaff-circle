@@ -60,7 +60,7 @@ const AddLessonForm = ({
           </Dragger>
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item className="flex justify-center">
           <Button
             onClick={handleAddLesson}
             className="bg-purple-500 text-white flex items-center"
