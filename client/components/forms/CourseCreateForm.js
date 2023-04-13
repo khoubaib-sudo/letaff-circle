@@ -22,6 +22,7 @@ const CourseCreateForm = ({
   return (
     <>
       {values && (
+        <div class="flex flex-col md:flex-row">
         <Form
           name="complex-form"
           onSubmit={handleSubmit}
@@ -139,6 +140,8 @@ const CourseCreateForm = ({
             </Button>
           </Form.Item>
         </Form>
+        
+        </div>
       )}
     </>
   );

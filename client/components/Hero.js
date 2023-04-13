@@ -42,9 +42,9 @@ const Hero = () => {
           </div>
         </div>
 
-        <img src="/assets/hero.png" alt="" />
+        <img src="/assets/hero.png" alt="hero" />
       </div>
-      <img src="/assets/company.svg" alt="" />
+      <img src="/assets/company.svg" alt="company" />
     </div>
   );
 };
