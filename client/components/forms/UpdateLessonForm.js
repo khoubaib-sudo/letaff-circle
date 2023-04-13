@@ -15,7 +15,9 @@ const UpdateLessonForm = ({
   progress,
 }) => {
   return (
+    
     <div className="container pt-3">
+      {/* {JSON.stringify(current)} */}
       <Form
         name="complex-form"
         onSubmit={handleUpdateLesson}
@@ -27,7 +29,7 @@ const UpdateLessonForm = ({
           <Input
             name="title"
             style={{ width: 325 }}
-            onChange={(e) => setValues({ ...current, title: e.target.value })}
+            onChange={(e) => setCurrent({ ...current, title: e.target.value })}
             value={current.title}
             autoFocus
             required
@@ -37,7 +39,7 @@ const UpdateLessonForm = ({
           <TextArea
             name="content"
             rows={4}
-            onChange={(e) => setValues({ ...current, content: e.target.value })}
+            onChange={(e) => setCurrent({ ...current, content: e.target.value })}
             value={current.content}
             style={{ width: 360 }}
           />
@@ -47,13 +49,31 @@ const UpdateLessonForm = ({
             checkedChildren="Preview"
             unCheckedChildren="Postview"
             className="bg-purple-500 "
+            disabled={uploading}
+            defaultChecked={current.free_preview}
+            name="free_preview"
+            onChange={(v)=> setCurrent({...current, free_preview: v})}
           />
         </Form.Item>
-        <Form.Item>
+        
+        {/* <Form.Item>
           <label className="btn btn-dark btn-block text-left mt-3">
             {uploadVideoButtonText}
             <input onChange={handleVideo} type="file" accept="video/*" hidden />
           </label>
+        </Form.Item> */}
+        <Form.Item>
+          <Dragger
+            onChange={handleVideo}
+            accept="video/*"
+            multiple={false}
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined style={{ color: "#a855f7" }} />
+            </p>
+            <p className="ant-upload-text">{uploadVideoButtonText}</p>
+            <p className="ant-upload-hint">Support for a single video upload</p>
+          </Dragger>
         </Form.Item>
 
         <Form.Item className="flex justify-center">
