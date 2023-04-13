@@ -30,8 +30,9 @@ const CourseEdit = () => {
   // state for lessons update
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState({});
-  const [uploadVideoButtonText, setUploadVideoButtonText] =
-    useState("Upload another Video");
+  const [uploadVideoButtonText, setUploadVideoButtonText] = useState(
+    "Upload another Video"
+  );
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
 
@@ -150,7 +151,7 @@ const CourseEdit = () => {
     const { data } = await axios.put(`/api/course/${slug}/${removed[0]._id}`);
     console.log("LESSON DELETED =>", data);
   };
-  
+
   /**
    * lesson update functions
    */
@@ -159,31 +160,19 @@ const CourseEdit = () => {
     try {
       const { status, originFileObj } = info.file;
       if (status === "done" && !uploading) {
-        // Remove previous video if it exists
-        if (values.video && values.video.Location) {
-          const res = await axios.post(
-            `/api/course/video-remove/${values.instructor._id}`,
-            values.video
-          );
-          console.log("REMOVED ===>", res);
-        }
-  
         setUploadButtonText(originFileObj.name);
         setUploading(true);
         const videoData = new FormData();
         videoData.append("video", originFileObj);
-        videoData.append("courseId", values._id);
         // send video as form data to backend
         const { data } = await axios.post(
-          `/api/course/video-upload/${values.instructor._id}`,
-          videoData,
-          {
-            onUploadProgress: (e) =>
-              setProgress(Math.round((100 * e.loaded) / e.total)),
-          }
+          `/api/course/video-upload/${course.instructor._id}`,
+          videoData
         );
         // once response is received
-        // console.log(data);
+        if (values && values.video) {
+          await handleVideoRemove(); // remove the old video
+        }
         setValues({ ...values, video: data });
         setUploading(false);
       }
@@ -193,13 +182,24 @@ const CourseEdit = () => {
       toast.error("Video upload failed", { theme: "colored" });
     }
   };
-  
-  
-  
-  
-  const handleUpdateLesson = async () => {
-    console.log('handle Update Lesson')
-    
+
+  const handleUpdateLesson = async (e) => {
+    // console.log("handle update lesson");
+    e.preventDefault();
+    const { data } = await axios.put(
+      `/api/course/lesson/${slug}/${current._id}`,
+      current
+    );
+    setUploadVideoButtonText("Upload Video");
+    setVisible(false);
+    // update ui
+    if (data.ok) {
+      let arr = values.lessons;
+      const index = arr.findIndex((el) => el._id === current._id);
+      arr[index] = current;
+      setValues({ ...values, lessons: arr });
+      toast("Lesson updated");
+    }
   };
 
   return (
@@ -227,10 +227,13 @@ const CourseEdit = () => {
             />
           </div>
         </div>
-        <div className="flex flex-wrap pt-10 ">
+        <div className="flex flex-col justify-between items-center bg-purple-800 rounded-lg shadow-md p-10 ">
           <div className="w-full px-4 mb-4 md:mb-0">
-            <h4 className="text-2xl font-bold mb-4">
-              {values && values.lessons && values.lessons.length} Lessons
+            <h4 className="text-2xl text-white font-bold mb-4">
+              You can edit your lessons in this section
+              <p className="text-sm text-gray-100 ">
+                you can drag and drop to rearrange lessons
+              </p>
             </h4>
             <div
               onDragOver={(e) => e.preventDefault()}

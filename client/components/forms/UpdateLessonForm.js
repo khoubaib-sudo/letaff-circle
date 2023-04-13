@@ -15,9 +15,7 @@ const UpdateLessonForm = ({
   progress,
 }) => {
   return (
-    
     <div className="container pt-3">
-      {/* {JSON.stringify(current)} */}
       <Form
         name="complex-form"
         onSubmit={handleUpdateLesson}
@@ -39,7 +37,9 @@ const UpdateLessonForm = ({
           <TextArea
             name="content"
             rows={4}
-            onChange={(e) => setCurrent({ ...current, content: e.target.value })}
+            onChange={(e) =>
+              setCurrent({ ...current, content: e.target.value })
+            }
             value={current.content}
             style={{ width: 360 }}
           />
@@ -52,10 +52,10 @@ const UpdateLessonForm = ({
             disabled={uploading}
             defaultChecked={current.free_preview}
             name="free_preview"
-            onChange={(v)=> setCurrent({...current, free_preview: v})}
+            onChange={(v) => setCurrent({ ...current, free_preview: v })}
           />
         </Form.Item>
-        
+
         {/* <Form.Item>
           <label className="btn btn-dark btn-block text-left mt-3">
             {uploadVideoButtonText}
@@ -63,11 +63,7 @@ const UpdateLessonForm = ({
           </label>
         </Form.Item> */}
         <Form.Item>
-          <Dragger
-            onChange={handleVideo}
-            accept="video/*"
-            multiple={false}
-          >
+          <Dragger onChange={handleVideo} accept="video/*" multiple={false}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined style={{ color: "#a855f7" }} />
             </p>

@@ -120,7 +120,7 @@ const CourseView = () => {
                 <div className="flex items-center">
                   <div className="flex-grow">
                     <h5 className="text-3xl text-white font-semibold">{course.name}</h5>
-                    <p className="text-sm text-gray-50 mt-1">
+                    <p className="text-sm text-gray-50 ">
                       {course.lessons && course.lessons.length} Lessons
                     </p>
                     <p className="text-sm text-gray-50 mt-1">
