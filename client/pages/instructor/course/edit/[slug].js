@@ -159,14 +159,28 @@ const CourseEdit = () => {
     try {
       const { status, originFileObj } = info.file;
       if (status === "done" && !uploading) {
+        // Remove previous video if it exists
+        if (values.video && values.video.Location) {
+          const res = await axios.post(
+            `/api/course/video-remove/${values.instructor._id}`,
+            values.video
+          );
+          console.log("REMOVED ===>", res);
+        }
+  
         setUploadButtonText(originFileObj.name);
         setUploading(true);
         const videoData = new FormData();
         videoData.append("video", originFileObj);
+        videoData.append("courseId", values._id);
         // send video as form data to backend
         const { data } = await axios.post(
-          `/api/course/video-upload/${course.instructor._id}`,
-          videoData
+          `/api/course/video-upload/${values.instructor._id}`,
+          videoData,
+          {
+            onUploadProgress: (e) =>
+              setProgress(Math.round((100 * e.loaded) / e.total)),
+          }
         );
         // once response is received
         // console.log(data);
@@ -179,6 +193,10 @@ const CourseEdit = () => {
       toast.error("Video upload failed", { theme: "colored" });
     }
   };
+  
+  
+  
+  
   const handleUpdateLesson = async () => {
     console.log('handle Update Lesson')
     

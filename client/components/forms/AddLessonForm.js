@@ -14,7 +14,7 @@ const AddLessonForm = ({
   handleVideo,
   handleVideoRemove,
 }) => {
-  const { title, video } = values;
+ 
   return (
     <div className="container pt-3">
       <Form
