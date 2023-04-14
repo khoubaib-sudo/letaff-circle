@@ -29,6 +29,15 @@ module.exports = {
         'lg': '1024px',
         'xl': '1280px',
       },
+      animation: {
+        'float': 'float 5s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(-1%)' },
+          '50%': { transform: 'translateY(10%)' },
+        },
+      },
       boxShadow: {
         "3xl": "-1px 34px 47px -29px rgb(32 32 32 / 100%)",
         "4xl": " 0vw 0vw 0.5vw 0vw rgb(32 32 32 / 20%)",

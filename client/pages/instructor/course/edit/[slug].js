@@ -205,28 +205,41 @@ const CourseEdit = () => {
   return (
     <InstructorRoute>
       <div className="flex flex-col justify-between items-center bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8">
-        <div className="md:mr-auto ml-auto">
-          <h1 className="text-4xl  md:text-7xl capitalize font-semibold">
-            Edit <FiEdit3 className="inline-block mr-2 text-white" />
-            <br />
-            <span className=" capitalize text-white">Course</span>
-          </h1>
-          {/* {JSON.stringify(values)} */}
-          <div className="mt-5">
-            <CourseCreateForm
-              handleSubmit={handleSubmit}
-              handleImage={handleImage}
-              handleChange={handleChange}
-              values={values}
-              setValues={setValues}
-              preview={preview}
-              uploadButtonText={uploadButtonText}
-              handleImageRemove={handleImageRemove}
-              handleCategoryChange={handleCategoryChange}
-              editPage={true}
-            />
-          </div>
-        </div>
+      <div className="md:flex md:items-center">
+  <div className="md:w-1/2 md:mr-auto ml-auto">
+    <h1 className="text-4xl md:text-7xl capitalize font-semibold">
+      Edit <FiEdit3 className="inline-block mr-2 text-white" />
+      <br />
+      <span className="capitalize text-white">Course</span>
+    </h1>
+    <div className="mt-5">
+      <CourseCreateForm
+        handleSubmit={handleSubmit}
+        handleImage={handleImage}
+        handleChange={handleChange}
+        values={values}
+        setValues={setValues}
+        preview={preview}
+        uploadButtonText={uploadButtonText}
+        handleImageRemove={handleImageRemove}
+        handleCategoryChange={handleCategoryChange}
+        editPage={true}
+      />
+    </div>
+  </div>
+  <div className="md:w-full md:ml-auto">
+  <img
+  src="/assets/edit-course.png"
+  alt="Example image"
+  className="mx-auto md:mt-0 md:w-11/12 animate-float"
+  
+/>
+  </div>
+</div>
+
+
+
+
         <div className="flex flex-col justify-between items-center bg-purple-800 rounded-lg shadow-md p-10 ">
           <div className="w-full px-4 mb-4 md:mb-0">
             <h4 className="text-2xl text-white font-bold mb-4">

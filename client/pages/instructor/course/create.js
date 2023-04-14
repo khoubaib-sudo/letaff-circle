@@ -109,7 +109,7 @@ const CourseCreate = () => {
             />
           </div>
         </div>
-        <img src="/assets/Create-Course.png" alt="Example image" className="mt-4 mx-auto md:ml-4 md:mt-0 md:max-w-none " />
+        <img src="/assets/Create-Course.png" alt="Example image" className="mt-4 mx-auto md:ml-4 md:mt-0 md:max-w-none animate-float" />
       </div>
 
       {/* <pre>{JSON.stringify(values, null, 4)}</pre>
