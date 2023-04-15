@@ -111,6 +111,35 @@ const CourseView = () => {
       toast.error("Video remove failed", { theme: "colored" });
     }
   };
+  
+  const handlePublish = async (e, courseId) => {
+    try {
+      let answer = window.confirm(
+        "Once you publsih your course, it will be live in the marketplace for users to enroll"
+      );
+      if (!answer) return;
+      const { data } = await axios.put(`/api/course/publish/${courseId}`);
+      setCourse(data);
+      toast("Congrats! Your course is live");
+    } catch (err) {
+      toast("Course publish failed. Try again");
+    }
+  };
+
+  const handleUnpublish = async (e, courseId) => {
+    try {
+      let answer = window.confirm(
+        "Once you unpublsih your course, it will no be available for users to enroll"
+      );
+      if (!answer) return;
+      const { data } = await axios.put(`/api/course/unpublish/${courseId}`);
+      setCourse(data);
+      toast("Your course is unpublished");
+    } catch (err) {
+      toast("Course publish failed. Try again");
+    }
+  };
+
 
   return (
     <InstructorRoute>

@@ -134,7 +134,7 @@ const CourseCreateForm = ({
               <Button
                 onClick={handleSubmit}
                 disabled={values.loading || values.uploading}
-                className="bg-purple-500 hover:bg-black text-white"
+                className="bg-purple-600 text-white"
                 loading={values.loading}
                 type="primary"
                 size="large"
