@@ -8,19 +8,9 @@ import ReactMarkdown from "react-markdown";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
-import {
-  EditOutlined,
-  CheckOutlined,
-  UploadOutlined,
-  QuestionOutlined,
-  CloseOutlined,
-  UserSwitchOutlined,
-} from "@ant-design/icons";
-import {
-  TbEdit,
-  TbCheckbox,
-  TbXboxX,
-} from "react-icons/tb";
+
+import { TbEdit, TbCheckbox, TbCircleX } from "react-icons/tb";
+
 import { RiQuestionLine } from "react-icons/ri";
 
 const CourseView = () => {
@@ -111,7 +101,7 @@ const CourseView = () => {
       toast.error("Video remove failed", { theme: "colored" });
     }
   };
-  
+
   const handlePublish = async (e, courseId) => {
     try {
       let answer = window.confirm(
@@ -140,14 +130,13 @@ const CourseView = () => {
     }
   };
 
-
   return (
     <InstructorRoute>
       <div className="flex flex-col justify-between items-center">
         {/* <pre>{JSON.stringify(course, null, 4)}</pre> */}
         {course && (
           <div className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8">
-            <div className="flex items-center">
+            <div className="flex items-center p-6">
               <Avatar
                 size={150}
                 shape="square"
@@ -170,8 +159,8 @@ const CourseView = () => {
                     </p>
                   </div>
 
-                  <div className="flex pt-4 items-center">
-                    <div className="flex flex-col">
+                  <div className="flex pb-8 items-center">
+                    <div className="flex flex-row">
                       <Tooltip title="Edit">
                         <TbEdit
                           onClick={() =>
@@ -182,34 +171,34 @@ const CourseView = () => {
                       </Tooltip>
 
                       {course.lessons && course.lessons.length < 5 ? (
-                      <Tooltip title="Min 5 lessons required to publish">
-                        <RiQuestionLine className="text-3xl cursor-pointer text-white" />
-                      </Tooltip>
-                    ) : course.published ? (
-                      <Tooltip title="Unpublish">
-                        <TbXboxX
-                          onClick={(e) => handleUnpublish(e, course._id)}
-                          className="text-3xl cursor-pointer text-white"
-                        />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title="Publish">
-                        <TbCheckbox
-                          onClick={(e) => handlePublish(e, course._id)}
-                          className="text-3xl cursor-pointer text-white"
-                        />
-                      </Tooltip>
-                    )}
+                        <Tooltip title="Min 5 lessons required to publish">
+                          <RiQuestionLine className="text-3xl cursor-pointer text-white" />
+                        </Tooltip>
+                      ) : course.published ? (
+                        <Tooltip title="Unpublish">
+                          <TbCircleX
+                            onClick={(e) => handleUnpublish(e, course._id)}
+                            className="text-3xl cursor-pointer text-white"
+                          />
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Publish">
+                          <TbCheckbox
+                            onClick={(e) => handlePublish(e, course._id)}
+                            className="text-3xl cursor-pointer text-white"
+                          />
+                        </Tooltip>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <br />
-            <div className="mt-4 text-white ">
+            <div className="mt-4 text-white pl-6">
               <ReactMarkdown children={course.description} />
             </div>
-            <div className="row">
+            <div className="row pl-6">
               <Button
                 onClick={() => setVisible(true)}
                 className="bg-white text-purple-500 flex items-center"

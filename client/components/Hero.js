@@ -42,7 +42,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <img src="/assets/hero.png" alt="hero" />
+        <img src="/assets/hero.png" alt="hero" className="animate-float"/>
       </div>
       <img src="/assets/company.svg" alt="company" />
     </div>

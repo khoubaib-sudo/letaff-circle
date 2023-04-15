@@ -43,7 +43,7 @@ const CourseCreateForm = ({
               <TextArea
                 name="description"
                 rows={4}
-                placeholder="Description"
+                placeholder="Description you can use markdown)"
                 value={values.description}
                 onChange={handleChange}
                 style={{ width: 360 }}
