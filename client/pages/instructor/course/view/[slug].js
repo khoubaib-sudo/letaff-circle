@@ -6,11 +6,22 @@ import { Avatar, Tooltip, Button, Modal, List } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
-import Item from "antd/lib/list/Item";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
-
-import { TbEdit, TbCheckbox } from "react-icons/tb";
+import {
+  EditOutlined,
+  CheckOutlined,
+  UploadOutlined,
+  QuestionOutlined,
+  CloseOutlined,
+  UserSwitchOutlined,
+} from "@ant-design/icons";
+import {
+  TbEdit,
+  TbCheckbox,
+  TbXboxX,
+} from "react-icons/tb";
+import { RiQuestionLine } from "react-icons/ri";
 
 const CourseView = () => {
   const [course, setCourse] = useState({});
@@ -119,7 +130,9 @@ const CourseView = () => {
               <div className="flex-grow pl-6">
                 <div className="flex items-center">
                   <div className="flex-grow">
-                    <h5 className="text-3xl text-white font-semibold">{course.name}</h5>
+                    <h5 className="text-3xl text-white font-semibold">
+                      {course.name}
+                    </h5>
                     <p className="text-sm text-gray-50 ">
                       {course.lessons && course.lessons.length} Lessons
                     </p>
@@ -138,9 +151,26 @@ const CourseView = () => {
                           className="text-3xl cursor-pointer text-white"
                         />
                       </Tooltip>
-                      <Tooltip title="Publish">
-                        <TbCheckbox className="text-3xl cursor-pointer text-white" />
+
+                      {course.lessons && course.lessons.length < 5 ? (
+                      <Tooltip title="Min 5 lessons required to publish">
+                        <RiQuestionLine className="text-3xl cursor-pointer text-white" />
                       </Tooltip>
+                    ) : course.published ? (
+                      <Tooltip title="Unpublish">
+                        <TbXboxX
+                          onClick={(e) => handleUnpublish(e, course._id)}
+                          className="text-3xl cursor-pointer text-white"
+                        />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Publish">
+                        <TbCheckbox
+                          onClick={(e) => handlePublish(e, course._id)}
+                          className="text-3xl cursor-pointer text-white"
+                        />
+                      </Tooltip>
+                    )}
                     </div>
                   </div>
                 </div>
@@ -182,7 +212,8 @@ const CourseView = () => {
             <div className="flex flex-wrap pt-10">
               <div className="w-full px-4 mb-4 md:mb-0">
                 <h4 className="text-2xl font-bold mb-4 text-white">
-                  You have uploaded {course && course.lessons && course.lessons.length} Lessons
+                  You have uploaded{" "}
+                  {course && course.lessons && course.lessons.length} Lessons
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {course &&
@@ -208,9 +239,7 @@ const CourseView = () => {
                           )}
                         </div>
                         <div className="p-4 bg-purple-800 rounded-b-lg">
-                          <span className="text-white">
-                            Lesson {index + 1}
-                          </span>
+                          <span className="text-white">Lesson {index + 1}</span>
                         </div>
                       </div>
                     ))}
