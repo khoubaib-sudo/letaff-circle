@@ -239,9 +239,9 @@ const CourseView = () => {
                     course.lessons.map((lesson, index) => (
                       <div
                         key={index}
-                        className="bg-white rounded-lg shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105"
+                        className="bg-purple-800 rounded-lg shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105"
                       >
-                        <div className="p-4 bg-purple-800 rounded-t-lg">
+                        <div className="p-4 rounded-t-lg">
                           <h5 className="text-lg text-white font-bold mb-2">
                             {lesson.title}
                           </h5>
@@ -256,7 +256,7 @@ const CourseView = () => {
                             />
                           )}
                         </div>
-                        <div className="p-4 bg-purple-800 rounded-b-lg">
+                        <div className="p-4 rounded-b-lg">
                           <span className="text-white">Lesson {index + 1}</span>
                         </div>
                       </div>
