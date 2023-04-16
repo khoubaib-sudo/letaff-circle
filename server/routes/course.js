@@ -18,9 +18,11 @@ import {
   removeLesson,
   updateLesson,
   publishCourse,
-  unpublishCourse
+  unpublishCourse,
+  courses
 } from "../controllers/course";
 
+router.get("/courses", courses);
 
 //image
 router.post("/course/upload-image", uploadImage);
@@ -35,6 +37,8 @@ router.post(
   formidable(),
   uploadVideo
 );
+
+
 router.post("/course/video-remove/:instructorId", requireSignin, removeVideo);
 
 // publish unpublish

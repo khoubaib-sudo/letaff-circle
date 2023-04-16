@@ -129,7 +129,7 @@ export const addLesson = async (req, res) => {
   try {
     const { slug, instructorId } = req.params;
     const { title, content, video } = req.body;
-    
+
     if (req.user._id != instructorId) {
       return res.status(400).send("Unauthorized");
     }
@@ -186,8 +186,6 @@ export const removeLesson = async (req, res) => {
 
   res.json({ ok: true });
 };
-
-
 
 export const updateLesson = async (req, res) => {
   try {
@@ -260,4 +258,11 @@ export const unpublishCourse = async (req, res) => {
     console.log(err);
     return res.status(400).send("Unpublish course failed");
   }
+};
+
+export const courses = async (req, res) => {
+  const all = await Course.find({ published: true })
+    .populate("instructor", "_id name")
+    .exec();
+  res.json(all);
 };

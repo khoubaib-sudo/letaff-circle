@@ -48,8 +48,8 @@ const CourseView = () => {
       );
       // console.log(data)
       setValues({ ...values, title: "", content: "", video: {} });
-      setVisible(false);
       setUploadButtonText("Upload video");
+      setVisible(false);
       setCourse(data);
       toast.success("Lesson added", { theme: "colored" });
     } catch (err) {
