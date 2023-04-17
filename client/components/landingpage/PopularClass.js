@@ -1,5 +1,5 @@
 import React from "react";
-import { IoIosArrowForward } from "react-icons/io";
+
 import { HiOutlineArrowUpRight } from "react-icons/hi2";
 const PopularClass = () => {
   const service = [
@@ -7,22 +7,19 @@ const PopularClass = () => {
       img: "/assets/figma.svg",
       title: "Figma UI Ux Design",
       sub: "Lessons on design that cover the most recent developments.",
-      promo: "design",
-      rating: "4.5",
+      promo: "Ux design",
     },
     {
       img: "/assets/learn.svg",
       title: "web  Development",
       sub: "Lessons on design that cover then most recent developments.",
-      promo: "design",
-      rating: "4.5",
+      promo: "Ux design",
     },
     {
       img: "/assets/code.svg",
       title: "Marketing",
       sub: "Lessons on design that cover then most recent developments.",
-      promo: "design",
-      rating: "4.5",
+      promo: "Ux design",
     },
   ];
   return (
@@ -54,11 +51,11 @@ const PopularClass = () => {
               <p className="text-base group-hover:text-white pr-6 py-2">
                 {ser.sub}
               </p>
-              <div className="flex items-center gap-2 group-hover:text-white">
+              {/* <div className="flex items-center gap-2 group-hover:text-white">
                 <p>{ser.rating}</p>
                 <img src="/assets/star.svg" alt="star" />
                 <p>123</p>
-              </div>
+              </div> */}
             <div className="flex justify-between py-2">
                 <div className="flex gap-3">
                     <img src="/assets/person.svg" alt="person" />

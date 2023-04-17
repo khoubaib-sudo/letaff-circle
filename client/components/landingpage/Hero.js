@@ -1,5 +1,5 @@
 import React from "react";
-
+import Link from "next/link";
 const Hero = () => {
   return (
     <div className="container mx-auto ">
@@ -19,8 +19,8 @@ const Hero = () => {
             that help your knowledge growing.
           </p>
           <div className="flex gap-4">
-            <button className="btn bg-purple-500 border-none capitalize btn-lg">
-              Get Started
+            <button href={"/login"} className="btn bg-purple-500 border-none capitalize btn-lg">
+              <Link href={"/login"}>Get Started</Link>
             </button>
             <button className="btn bg-purple-100 text-purple-500 border-none capitalize btn-lg ">
               Get Free Trial

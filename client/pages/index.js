@@ -1,10 +1,8 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Footer from '../components/Footer'
-import Hero from '../components/Hero'
-import NavBar from '../components/NavBar'
-import PopularClass from '../components/PopularClass'
-import Services from '../components/Services'
+import Footer from '../components/landingpage/Footer'
+import Hero from '../components/landingpage/Hero'
+import PopularClass from '../components/landingpage/PopularClass'
+import Services from '../components/landingpage/Services'
 import { useContext } from 'react';
 import {Context} from '../context';
 import WelcomePage from '../components/welcome'
