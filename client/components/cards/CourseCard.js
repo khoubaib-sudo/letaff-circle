@@ -8,7 +8,7 @@ const CourseCard = ({ course }) => {
   return (
     <Link href={`/course/${slug}`}>
       <Card
-        className="mb-4 cursor-pointer"
+        className="mb-4 cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105"
         cover={
           <img
             src={course.image ? course.image.secure_url : "/assets/course.png"}

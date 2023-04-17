@@ -5,6 +5,7 @@ import CourseCreateForm from "../../../components/forms/CourseCreateForm";
 import Resizer from "react-image-file-resizer";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 const CourseCreate = () => {
   // state
@@ -21,7 +22,7 @@ const CourseCreate = () => {
   const [preview, setPreview] = useState("");
 
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image");
-  
+
   // router
   const router = useRouter();
 
@@ -79,16 +80,29 @@ const CourseCreate = () => {
         ...values,
         image,
       });
-      toast.success("Great! now you can start adding lessons",{theme: "colored",});
+      toast.success("Great! now you can start adding lessons", {
+        theme: "colored",
+      });
       router.push("/instructor");
     } catch (err) {
       toast.error(err.response.data);
     }
   };
 
+  // Framer Motion Variants
+  const cardVariants = {
+    hidden: { opacity: 0, y: 100 },
+    visible: { opacity: 1, y: 0 },
+  };
   return (
     <InstructorRoute>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8">
+      <motion.div
+        className="flex flex-col md:flex-row justify-between items-center bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8"
+        initial="hidden"
+        animate="visible"
+        variants={cardVariants}
+        transition={{ duration: 0.5 }}
+      >
         <div className="md:mr-auto ml-auto">
           <h1 className="text-4xl md:text-7xl capitalize font-semibold">
             Create
@@ -109,8 +123,12 @@ const CourseCreate = () => {
             />
           </div>
         </div>
-        <img src="/assets/Create-Course.png" alt="Example image" className="mt-4 mx-auto md:ml-4 md:mt-0 md:max-w-none animate-float" />
-      </div>
+        <img
+          src="/assets/Create-Course.png"
+          alt="Example image"
+          className="mt-4 mx-auto md:ml-4 md:mt-0 md:max-w-none animate-float"
+        />
+      </motion.div>
 
       {/* <pre>{JSON.stringify(values, null, 4)}</pre>
       <hr />

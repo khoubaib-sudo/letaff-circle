@@ -83,8 +83,8 @@ const WelcomePage = () => {
             initial="hidden"
             animate="visible"
           >
-        <div className="container-fluid flex-grow">
-          <div className="grid grid-cols-3 row justify-center gap-10 px-5 py-10">
+        <div className="container-fluid flex-grow ">
+          <div className="grid grid-cols-3 row justify-center gap-10 px-5 py-10 ">
             {courses.map((course) => (
               <div className="w-full max-w-sm">
                 <CourseCard course={course} />
