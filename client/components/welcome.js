@@ -20,7 +20,7 @@ const WelcomePage = () => {
       transition: { duration: 0.8, ease: "easeInOut" },
     },
   };
-
+  
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: {
