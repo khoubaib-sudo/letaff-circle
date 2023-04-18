@@ -56,6 +56,7 @@ const NavBar = () => {
             (user && user.role && user.role.includes("Instructor") ? (
               <Menu>
                 <Item
+                  className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
                   key="/instructor/course/create"
                   onClick={(e) => setCurrent(e.key)}
                   icon={<FileAddOutlined />}
@@ -66,6 +67,7 @@ const NavBar = () => {
             ) : (
               <Menu>
                 <Item
+                  className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
                   key="/user/become-instructor"
                   onClick={(e) => setCurrent(e.key)}
                   icon={<FundProjectionScreenOutlined />}
@@ -78,6 +80,7 @@ const NavBar = () => {
           {user !== null && (
             <Menu mode="vertical" style={{ direction: "ltr" }}>
               <SubMenu
+              
                 title={user && user.name}
                 className="ant-dropdown-submenu float-right cursor-pointer "
                 icon={<MenuOutlined />}
@@ -92,7 +95,7 @@ const NavBar = () => {
                   >
                     <Link href={"/user"}>Profile</Link>
                   </Item>
-                  
+
                   {user && user.role && user.role.includes("Instructor") && (
                     <Item
                       key="/instructor"

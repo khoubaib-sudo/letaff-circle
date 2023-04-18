@@ -1,6 +1,6 @@
 import { Button, Form, Input, Upload, Switch } from "antd";
 import { SaveOutlined, InboxOutlined } from "@ant-design/icons";
-import ReactPlayer from "react-player";
+
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -50,7 +50,7 @@ const UpdateLessonForm = ({
             unCheckedChildren="Postview"
             className="bg-purple-500 "
             disabled={uploading}
-            defaultChecked={current.free_preview}
+            checked={current.free_preview}
             name="free_preview"
             onChange={(v) => setCurrent({ ...current, free_preview: v })}
           />
