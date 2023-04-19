@@ -1,4 +1,4 @@
-import { List, Avatar } from "antd";
+import { List, Avatar, Button } from "antd";
 const { Item } = List;
 import { motion } from "framer-motion";
 
@@ -27,6 +27,18 @@ const SingleCourseLessons = ({
                     avatar={<Avatar>{index + 1}</Avatar>}
                     title={<span className="text-lg text-white">{item.title}</span>}
                   />
+                  {item.video && item.video !== null && item.free_preview && (
+                  <Button
+                  className="text-gray-50"
+                    onClick={() => {
+                      setPreview(item.video.url);
+                      setShowModal(!showModal);
+                    }}
+                    
+                  >
+                    Preview
+                  </Button>
+                )}
                 </Item>
               )}
               className="relative"
