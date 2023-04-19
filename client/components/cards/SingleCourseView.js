@@ -1,12 +1,7 @@
 import { Badge, Button, Modal } from "antd";
-import { motion } from "framer-motion";
-import ReactPlayer from "react-player";
 
-// Framer Motion Variants
-const cardVariants = {
-  hidden: { opacity: 0, y: 100 },
-  visible: { opacity: 1, y: 0 },
-};
+import ReactPlayer from "react-player";
+import SingleCourseLessons from "./SingleCourseLessons"; // Import SingleCourseLessons component
 
 const SingleCourseView = ({
   course,
@@ -29,13 +24,7 @@ const SingleCourseView = ({
   } = course;
   return (
     <div className="container mx-auto">
-      <motion.div
-        className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8 flex"
-        initial="hidden"
-        animate="visible"
-        variants={cardVariants}
-        transition={{ duration: 0.5 }}
-      >
+      <div className="max-w-6xl mx-auto p-6 pt-12 flex">
         <div className="flex-1">
           <div>
             {/* title */}
@@ -65,7 +54,7 @@ const SingleCourseView = ({
               )}
             </h4>
             {/* enroll button */}
-            <Button className="mt-6">Enroll</Button>
+            <Button className="mt-6 text-gray-50">Enroll</Button>
           </div>
         </div>
         <div className="w-full md:w-1/3 lg:w-1/4">
@@ -87,15 +76,11 @@ const SingleCourseView = ({
             </div>
           ) : (
             <div>
-              <img
-                src={image.url}
-                alt={name}
-                className="w-full h-auto"
-              />
+              <img src={image.url} alt={name} className="w-full h-auto" />
             </div>
           )}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

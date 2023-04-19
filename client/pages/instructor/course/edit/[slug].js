@@ -297,7 +297,7 @@ const CourseEdit = () => {
       <Modal
         title="Update lesson"
         centered
-        visible={visible}
+        open={visible}
         onCancel={() => setVisible(false)}
         footer={null}
       >

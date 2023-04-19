@@ -6,9 +6,10 @@ const PreviewModal = ({ showModal, setShowModal, preview }) => {
     <>
       <Modal
         title="Course Preview"
-        visible={showModal}
+        centered
+        open={showModal}
         onCancel={() => setShowModal(!showModal)}
-        widht={720}
+        width={1000}
         footer={null}
       >
         <div className="wrapper">

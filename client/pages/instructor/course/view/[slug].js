@@ -213,7 +213,7 @@ const CourseView = () => {
             <Modal
               title="Add Lesson"
               centered
-              visible={visible}
+              open={visible}
               onCancel={() => setVisible(false)}
               footer={null}
             >
