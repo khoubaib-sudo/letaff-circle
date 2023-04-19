@@ -80,7 +80,7 @@ const SingleCourseView = ({
               <ReactPlayer
                 className="react-player-div"
                 url={lessons[0].video.url}
-                light={course.image.secure_url}
+                light={image.url}
                 width="100%"
                 height="225px"
               />
@@ -88,7 +88,7 @@ const SingleCourseView = ({
           ) : (
             <div>
               <img
-                src={course.image.secure_url}
+                src={image.url}
                 alt={name}
                 className="w-full h-auto"
               />
