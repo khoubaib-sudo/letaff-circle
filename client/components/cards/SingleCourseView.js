@@ -73,10 +73,9 @@ const SingleCourseView = ({
                 onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
               >
                 {user
-                  ? enrolled.status
-                    ? "Go to course"
-                    : "Enroll"
-                  : "Login to enroll"}
+  ? (user.enrolled && user.enrolled.status ? "Go to course" : "Enroll")
+  : "Login to enroll"}
+
               </Button>
             )}
           </div>
