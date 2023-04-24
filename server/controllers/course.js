@@ -3,6 +3,7 @@ const { nanoid } = require("nanoid");
 import Course from "../models/course";
 import slugify from "slugify";
 import { readFileSync } from "fs";
+import User from "../models/user";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

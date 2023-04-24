@@ -19,6 +19,16 @@ const SingleCourse = ({ course }) => {
     state: { user },
   } = useContext(Context);
 
+  useEffect(() => {
+    if (user && course) checkEnrollment();
+  }, [user, course]);
+  
+  const checkEnrollment = async () => {
+    const { data } = await axios.get(`/api/check-enrollment/${course._id}`);
+    console.log("CHECK ENROLLMENT", data);
+    setEnrolled(data);
+  };
+
   const router = useRouter();
   const { slug } = router.query;
 

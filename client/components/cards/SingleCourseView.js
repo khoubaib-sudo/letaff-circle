@@ -13,6 +13,8 @@ const SingleCourseView = ({
   user,
   handlePaidEnrollment,
   handleFreeEnrollment,
+  enrolled,
+  setEnrolled,
 }) => {
   // destructure
   const {
@@ -70,7 +72,11 @@ const SingleCourseView = ({
                 disabled={loading}
                 onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
               >
-                {user ? "Enroll" : "login to Enroll"}
+                {user
+                  ? enrolled.status
+                    ? "Go to course"
+                    : "Enroll"
+                  : "Login to enroll"}
               </Button>
             )}
           </div>
