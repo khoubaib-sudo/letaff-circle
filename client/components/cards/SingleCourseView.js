@@ -1,7 +1,7 @@
 import { Badge, Button, Modal } from "antd";
 
 import ReactPlayer from "react-player";
-import SingleCourseLessons from "./SingleCourseLessons"; // Import SingleCourseLessons component
+import { LoadingOutlined } from "@ant-design/icons";
 
 const SingleCourseView = ({
   course,
@@ -9,6 +9,10 @@ const SingleCourseView = ({
   setShowModal,
   preview,
   setPreview,
+  loading,
+  user,
+  handlePaidEnrollment,
+  handleFreeEnrollment,
 }) => {
   // destructure
   const {
@@ -54,7 +58,21 @@ const SingleCourseView = ({
               )}
             </h4>
             {/* enroll button */}
-            <Button className="mt-6 text-gray-50">Enroll</Button>
+            {loading ? (
+              <div className=" w-64 flex justify-center">
+                <LoadingOutlined className="h1" />
+              </div>
+            ) : (
+              <Button
+                className=" w-64 flex justify-center mt-6 text-gray-50"
+                shape="round"
+                size="large"
+                disabled={loading}
+                onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
+              >
+                {user ? "Enroll" : "login to Enroll"}
+              </Button>
+            )}
           </div>
         </div>
         <div className="w-full md:w-1/3 lg:w-1/4">
