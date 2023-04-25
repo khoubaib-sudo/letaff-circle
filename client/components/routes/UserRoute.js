@@ -6,7 +6,7 @@ import UserNav from "../nav/UserNav";
 import { Menu } from "antd";
 
 const { Item, SubMenu, ItemGroup } = Menu;
-const UserRoute = ({ children }) => {
+const UserRoute = ({ children, showNav = true  }) => {
   // state
   const [ok, setOk] = useState(false);
   // router
@@ -47,7 +47,7 @@ const UserRoute = ({ children }) => {
             <Menu mode="inline" style={{ width: 180 }}>
               <ItemGroup>
                 <Item
-                  className="text-base font-medium cursor-pointer bg-purple-500"
+                  className="text-base font-medium cursor-pointer text-white bg-purple-500"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -56,7 +56,7 @@ const UserRoute = ({ children }) => {
                   }}
                 >
                   <div style={{ margin: "0 auto" }}>
-                    <UserNav />
+                    {showNav && <UserNav />}
                   </div>
                 </Item>
               </ItemGroup>
