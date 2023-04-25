@@ -307,3 +307,7 @@ export const freeEnrollment = async (req, res) => {
     return res.status(400).send("Enrollment create failed");
   }
 };
+
+export const paidEnrollment = async (req, res) => {
+  //
+};

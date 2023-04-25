@@ -66,22 +66,26 @@ const SingleCourseView = ({
               </div>
             ) : (
               <Button
-                className=" w-64 flex justify-center mt-6 text-gray-50"
+                className=" w-64 flex justify-center mt-6 bg-gray-50"
                 shape="round"
                 size="large"
                 disabled={loading}
                 onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
               >
                 {user
-  ? (user.enrolled && user.enrolled.status ? "Go to course" : "Enroll")
-  : "Login to enroll"}
-
+                  ? user.enrolled && user.enrolled.status
+                    ? "Go to course"
+                    : "Enroll"
+                  : "Login to enroll"}
               </Button>
             )}
           </div>
         </div>
         <div className="w-full md:w-1/3 lg:w-1/4">
-          {/* show course image and video preview */}
+          <img src={image.url} alt={name} className="w-full h-auto" />
+        </div>
+        {/* show course image and video preview */}
+        {/* <div className="w-full md:w-1/3 lg:w-1/4">
           {lessons[0].video && lessons[0].video.url ? (
             <div
               onClick={() => {
@@ -102,7 +106,7 @@ const SingleCourseView = ({
               <img src={image.url} alt={name} className="w-full h-auto" />
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
