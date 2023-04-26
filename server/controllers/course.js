@@ -341,7 +341,7 @@ export const paidEnrollment = async (req, res) => {
       success_url: `${process.env.STRIPE_SUCCESS_URL}/${course._id}`,
       cancel_url: process.env.STRIPE_CANCEL_URL,
     });
-    console.log("SESSION ID => ", session);
+    // console.log("SESSION ID => ", session);
 
     await User.findByIdAndUpdate(req.user._id, {
       stripeSession: session,
@@ -352,3 +352,31 @@ export const paidEnrollment = async (req, res) => {
     return res.status(400).send("Enrollment create failed");
   }
 };
+
+export const stripeSuccess = async (req, res) => {
+  try {
+    // find course
+    const course = await Course.findById(req.params.courseId).exec();
+    // get user from db to get stripe session id
+    const user = await User.findById(req.user._id).exec();
+    // if no stripe session return
+    if (!user.stripeSession.id) return res.sendStatus(400);
+    // retrieve stripe session
+    const session = await stripe.checkout.sessions.retrieve(
+      user.stripeSession.id
+    );
+    console.log("STRIPE SUCCESS", session);
+    // if session payment status is paid, push course to user's course []
+    if (session.payment_status === "paid") {
+      await User.findByIdAndUpdate(user._id, {
+        $addToSet: { courses: course._id },
+        $set: { stripeSession: {} },
+      }).exec();
+    }
+    res.json({ success: true, course });
+  } catch (err) {
+    console.log("STRIPE SUCCESS ERR", err);
+    res.json({ success: false });
+  }
+};
+ 
