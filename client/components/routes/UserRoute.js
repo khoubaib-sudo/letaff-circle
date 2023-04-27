@@ -44,23 +44,6 @@ const UserRoute = ({ children, showNav = true  }) => {
       ) : (
         <div className="container mx-auto ">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <Menu mode="inline" style={{ width: 180 }}>
-              <ItemGroup>
-                <Item
-                  className="text-base font-medium cursor-pointer text-white bg-purple-500"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "100%",
-                    fontWeight: "bold",
-                  }}
-                >
-                  <div style={{ margin: "0 auto" }}>
-                    {showNav && <UserNav />}
-                  </div>
-                </Item>
-              </ItemGroup>
-            </Menu>
             <div className="flex-grow">{children}</div>
           </div>
         </div>
