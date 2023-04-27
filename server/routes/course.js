@@ -63,6 +63,6 @@ router.post("/paid-enrollment/:courseId", requireSignin, paidEnrollment);
 router.get("/stripe-success/:courseId", requireSignin, stripeSuccess);
 
 router.get("/user-courses", requireSignin, userCourses);
-
+router.get("/user/course/:slug", requireSignin, read);
 
 module.exports = router;
