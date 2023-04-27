@@ -4,8 +4,10 @@ import UserRoute from "../../components/routes/UserRoute";
 import { Avatar } from "antd";
 import axios from "axios";
 import Link from "next/link";
-import { SyncOutlined, PlayCircleFilled } from "@ant-design/icons";
+import { SyncOutlined } from "@ant-design/icons";
 import { FaPlay } from "react-icons/fa";
+import { motion } from "framer-motion";
+
 const UserIndex = () => {
   const {
     state: { user },
@@ -29,6 +31,25 @@ const UserIndex = () => {
       setLoading(false);
     }
   };
+
+  const bgVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
+  const cardVariants = {
+    hidden: { scale: 0 },
+    visible: {
+      scale: 1,
+      transition: {
+        delay: 0.2,
+        duration: 0.5,
+        type: "spring",
+        stiffness: 120,
+      },
+    },
+  };
+
   return (
     <UserRoute>
       {loading && (
@@ -37,67 +58,105 @@ const UserIndex = () => {
           className="flex justify-center items-center text-purple-500 text-5xl p-10"
         />
       )}
-      <div className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8">
+      <motion.div
+        className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8"
+        variants={bgVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="flex items-center mb-4">
+        <motion.div
+            variants={cardVariants}
+            className="flex flex-col justify-center"
+          >
           <Avatar
-            src="https://img.freepik.com/free-psd/3d-illustration-business-man-with-glasses_23-2149436194.jpg?w=826&t=st=1682603332~exp=1682603932~hmac=74084fbe09a707df9af349f0fe4d1aadc24682f3cd0200fff75d46ddf5e52cdb"
+            src="https://www.christies.com/img/LotImages/2022/CKS/2022_CKS_20661_0088_000(world_of_women_woman_5672110206).jpg?mode=max?w=780"
             className="w-20 h-20 mr-4 border-4 border-purple-200 rounded-full shadow-lg"
           />
-          <div>
-            <p className="text-3xl font-bold text-white mb-1">{user?.name}</p>
-            <p className="text-gray-100 text-lg font-medium">
+          </motion.div>
+          <motion.div
+            variants={cardVariants}
+            className="flex flex-col justify-center"
+          >
+            <motion.p className="text-3xl font-bold text-white mb-1">
+              {user?.name}
+            </motion.p>
+            <motion.p className="text-gray-100 text-lg font-medium">
               {user?.role?.join(" and ")}
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
-        <div className="bg-purple-900 rounded-lg shadow-md p-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="bg-purple-900 rounded-lg shadow-md p-8"
+        >
           <h2 className="text-white text-3xl font-bold mb-4">
             List of your courses:
           </h2>
-          {courses &&
-            courses.map((course) => (
+
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {courses.map((course) => (
               <div
                 key={course._id}
-                className="flex items-center border-b border-gray-50 py-4"
+                className="bg-white rounded-lg shadow-md p-4"
               >
-                <Avatar
-                  size={100}
-                  shape="square"
-                  src={course.image ? course.image.url : "/course.png"}
-                  className="mr-4 rounded-lg shadow-lg"
-                />
-
-                <div className="flex-grow">
-                  <Link
-                    href={`/user/course/${course.slug}`}
-                    className="pointer"
-                  >
-                    <h5 className="text-2xl font-bold text-white">
-                      {course.name}
-                    </h5>
+                <div className="relative">
+                  <Link href={`/user/course/${course.slug}`}>
+                    <motion.img
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 }}
+                      src={course.image ? course.image.url : "/course.png"}
+                      alt="course image"
+                      className=" rounded-lg shadow-lg h-64 w-full object-cover"
+                    />
                   </Link>
-                  <p className="text-sm text-gray-50 my-1">
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="absolute bottom-0 right-0 bg-purple-500 text-white font-bold px-4 py-1 rounded-tl-lg"
+                  >
                     {course.lessons.length} lessons
-                  </p>
-                  <p className="text-sm text-gray-50 my-1">
+                  </motion.div>
+                </div>
+
+                <div className="mt-4">
+                  <Link href={`/user/course/${course.slug}`}>
+                    <motion.h5
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.6 }}
+                      className="text-xl font-bold text-purple-900 hover:text-purple-700"
+                    >
+                      {course.name}
+                    </motion.h5>
+                  </Link>
+
+                  <p className="text-gray-500 text-sm mt-1">
                     By {course.instructor.name}
                   </p>
                 </div>
 
-                <div className="flex-shrink-0 ml-4">
-                  <Link
-                    href={`/user/course/${course.slug}`}
-                    className="flex items-center justify-center rounded-full w-12 h-12"
-                  >
-                    <FaPlay className="text-white text-3xl" />
-                  </Link>
-                </div>
+                <Link
+                  className="inline-block mt-4 px-4 py-2 rounded-md text-white font-bold bg-purple-600 hover:bg-purple-500"
+                  href={`/user/course/${course.slug}`}
+                >
+                  Start Learning
+                </Link>
               </div>
             ))}
-        </div>
-      </div>
-
-      {/* <pre>{JSON.stringify(courses, null, 4)}</pre> */}
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </UserRoute>
   );
 };
