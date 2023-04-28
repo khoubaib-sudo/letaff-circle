@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import StudentRoute from "../../../components/routes/StudentRoute";
 
 const SingleCourse = () => {
   const [loading, setLoading] = useState(false);
@@ -19,9 +20,9 @@ const SingleCourse = () => {
   };
 
   return (
-    <>
+    <StudentRoute>
       <h1>{JSON.stringify(course, null, 4)}</h1>
-    </>
+    </StudentRoute>
   );
 };
 
