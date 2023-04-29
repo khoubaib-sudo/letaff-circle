@@ -23,7 +23,7 @@ const WelcomePage = () => {
       transition: { duration: 0.8, ease: "easeInOut" },
     },
   };
-  
+
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: {
@@ -41,12 +41,10 @@ const WelcomePage = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          
           <div
             className="relative h-64 md:h-80 bg-cover bg-center"
             style={{ backgroundImage: "url('/assets/hero3.png')" }}
           >
-            
             <div className="absolute inset-0 bg-black opacity-25"></div>
             <motion.div
               className="absolute inset-0 p-8 flex flex-col justify-end"
@@ -66,9 +64,7 @@ const WelcomePage = () => {
               variants={imageVariants}
               initial="hidden"
               animate="visible"
-            >
-              
-            </motion.div>
+            ></motion.div>
           </div>
           <motion.div
             className="p-6"
@@ -83,20 +79,20 @@ const WelcomePage = () => {
           </motion.div>
         </motion.div>
         <motion.div
-            className="p-6"
-            variants={textVariants}
-            initial="hidden"
-            animate="visible"
-          >
-        <div className="container-fluid flex-grow ">
-          <div className="grid grid-cols-3 row justify-center gap-10 px-5 py-10">
-            {courses.map((course) => (
-              <div className="w-full max-w-sm">
-                <CourseCard course={course} />
-              </div>
-            ))}
+          className="p-6"
+          variants={textVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className="container-fluid flex-grow ">
+            <div className="grid grid-cols-3 row justify-center gap-10 px-5 py-10">
+              {courses.map((course) => (
+                <div className="w-full max-w-sm">
+                  <CourseCard course={course} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
         </motion.div>
       </div>
     </div>

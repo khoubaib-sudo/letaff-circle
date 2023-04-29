@@ -19,7 +19,10 @@ const Hero = () => {
             that help your knowledge growing.
           </p>
           <div className="flex gap-4">
-            <button href={"/login"} className="btn bg-purple-500 border-none capitalize btn-lg">
+            <button
+              href={"/login"}
+              className="btn bg-purple-500 border-none capitalize btn-lg"
+            >
               <Link href={"/login"}>Get Started</Link>
             </button>
             <button className="btn bg-purple-100 text-purple-500 border-none capitalize btn-lg ">
@@ -28,21 +31,21 @@ const Hero = () => {
           </div>
           <div className="flex gap-6 items-center pt-6">
             <div className="flex gap-2 items-center">
-                <img src="/assets/public.svg" alt="" />
-                <p>Public Speaking</p>
+              <img src="/assets/public.svg" alt="" />
+              <p>Public Speaking</p>
             </div>
             <div className="flex gap-2 items-center">
-                <img src="/assets/career.svg" alt="" />
-                <p>Career Oriented</p>
+              <img src="/assets/career.svg" alt="" />
+              <p>Career Oriented</p>
             </div>
             <div className="flex gap-2 items-center">
-                <img src="/assets/think.svg" alt="" />
-                <p>Creative Thinking</p>
+              <img src="/assets/think.svg" alt="" />
+              <p>Creative Thinking</p>
             </div>
           </div>
         </div>
 
-        <img src="/assets/hero.png" alt="hero" className="animate-float"/>
+        <img src="/assets/hero.png" alt="hero" className="animate-float" />
       </div>
       <img src="/assets/company.svg" alt="company" />
     </div>

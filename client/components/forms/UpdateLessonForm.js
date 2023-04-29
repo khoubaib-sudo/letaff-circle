@@ -1,7 +1,6 @@
 import { Button, Form, Input, Upload, Switch } from "antd";
 import { SaveOutlined, InboxOutlined } from "@ant-design/icons";
 
-
 const { Dragger } = Upload;
 const { TextArea } = Input;
 

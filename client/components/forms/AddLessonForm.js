@@ -1,4 +1,3 @@
-
 import { Button, Form, Input, Upload } from "antd";
 import { SaveOutlined, InboxOutlined } from "@ant-design/icons";
 
@@ -14,7 +13,6 @@ const AddLessonForm = ({
   handleVideo,
   handleVideoRemove,
 }) => {
- 
   return (
     <div className="container pt-3">
       <Form

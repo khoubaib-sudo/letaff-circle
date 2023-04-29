@@ -1,5 +1,5 @@
-const jwt = require('express-jwt');
-import User from "../models/user"
+const jwt = require("express-jwt");
+import User from "../models/user";
 import Course from "../models/course";
 
 const getToken = (req) => {
@@ -11,25 +11,24 @@ const getToken = (req) => {
 
 export const requireSignin = jwt({
   secret: process.env.JWT_SECRET,
-  algorithms: ['HS256'],
+  algorithms: ["HS256"],
   getToken: getToken,
 });
 
 // module.exports = { requireSignin };
 
 export const isInstructor = async (req, res, next) => {
-  try{
+  try {
     const user = await User.findById(req.user._id).exec();
-    if(!user.role.includes('Instructor')){
-      return res.sendStatus(403)
-    }else{
+    if (!user.role.includes("Instructor")) {
+      return res.sendStatus(403);
+    } else {
       next();
     }
-  }catch(err){
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   }
-}
-
+};
 
 export const isEnrolled = async (req, res, next) => {
   try {

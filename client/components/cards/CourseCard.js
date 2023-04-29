@@ -15,7 +15,7 @@ const CourseCard = ({ course }) => {
             alt={name}
             className="h-64 w-full object-cover"
           />
-        }   
+        }
       >
         <Meta
           title={name}
@@ -29,9 +29,7 @@ const CourseCard = ({ course }) => {
             className="mr-2"
           />
           {paid ? (
-            <div className=" font-semibold">
-              ${price.toFixed(2)}
-            </div>
+            <div className=" font-semibold">${price.toFixed(2)}</div>
           ) : (
             <div className="font-semibold">Free</div>
           )}

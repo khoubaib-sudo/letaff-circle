@@ -45,7 +45,7 @@ const PopularClass = () => {
                 <p className="text-2xl group-hover:text-white font-semibold line-clamp-1">
                   {ser.title}
                 </p>
-               <HiOutlineArrowUpRight className="group-hover:text-white text-lg font-semibold"/>
+                <HiOutlineArrowUpRight className="group-hover:text-white text-lg font-semibold" />
               </div>
 
               <p className="text-base group-hover:text-white pr-6 py-2">
@@ -56,16 +56,20 @@ const PopularClass = () => {
                 <img src="/assets/star.svg" alt="star" />
                 <p>123</p>
               </div> */}
-            <div className="flex justify-between py-2">
+              <div className="flex justify-between py-2">
                 <div className="flex gap-3">
-                    <img src="/assets/person.svg" alt="person" />
-                    <div className="flex flex-col">
-                        <p className="text-sm group-hover:text-white">Jimmy</p>
-                        <p className="text-xs text-gray-500 group-hover:text-white">200 Enrolled</p>
-                    </div>
+                  <img src="/assets/person.svg" alt="person" />
+                  <div className="flex flex-col">
+                    <p className="text-sm group-hover:text-white">Jimmy</p>
+                    <p className="text-xs text-gray-500 group-hover:text-white">
+                      200 Enrolled
+                    </p>
+                  </div>
                 </div>
-                <p className="text-xl text-purple-600 group-hover:text-white font-semibold">$13.45</p>
-            </div>
+                <p className="text-xl text-purple-600 group-hover:text-white font-semibold">
+                  $13.45
+                </p>
+              </div>
             </div>
           );
         })}

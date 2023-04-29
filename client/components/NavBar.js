@@ -80,7 +80,6 @@ const NavBar = () => {
           {user !== null && (
             <Menu mode="vertical" style={{ direction: "ltr" }}>
               <SubMenu
-              
                 title={user && user.name}
                 className="ant-dropdown-submenu float-right cursor-pointer "
                 icon={<MenuOutlined />}

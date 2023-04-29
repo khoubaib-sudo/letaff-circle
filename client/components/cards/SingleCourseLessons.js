@@ -17,7 +17,6 @@ const SingleCourseLessons = ({
       <div className="flex flex-col justify-between items-cente p-8">
         <div className="flex">
           <div className="flex-1 lesson-list">
-            
             <List
               itemLayout="horizontal"
               dataSource={lessons}
@@ -25,20 +24,21 @@ const SingleCourseLessons = ({
                 <Item className="flex items-center text-white cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:scale-105">
                   <Item.Meta
                     avatar={<Avatar>{index + 1}</Avatar>}
-                    title={<span className="text-lg text-white">{item.title}</span>}
+                    title={
+                      <span className="text-lg text-white">{item.title}</span>
+                    }
                   />
                   {item.video && item.video !== null && item.free_preview && (
-                  <Button
-                  className="text-gray-50"
-                    onClick={() => {
-                      setPreview(item.video.url);
-                      setShowModal(!showModal);
-                    }}
-                    
-                  >
-                    Preview
-                  </Button>
-                )}
+                    <Button
+                      className="text-gray-50"
+                      onClick={() => {
+                        setPreview(item.video.url);
+                        setShowModal(!showModal);
+                      }}
+                    >
+                      Preview
+                    </Button>
+                  )}
                 </Item>
               )}
               className="relative"

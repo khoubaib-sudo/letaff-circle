@@ -34,7 +34,7 @@ router.post("/course/upload-image", uploadImage);
 router.post("/course/remove-image", removeImage);
 // course
 router.post("/course", requireSignin, isInstructor, create);
-router.put("/course/:slug" , requireSignin, update);
+router.put("/course/:slug", requireSignin, update);
 router.get("/course/:slug", read);
 router.post(
   "/course/video-upload/:instructorId",
@@ -42,7 +42,6 @@ router.post(
   formidable(),
   uploadVideo
 );
-
 
 router.post("/course/video-remove/:instructorId", requireSignin, removeVideo);
 
@@ -53,7 +52,6 @@ router.put("/course/unpublish/:courseId", requireSignin, unpublishCourse);
 router.post("/course/lesson/:slug/:instructorId", requireSignin, addLesson);
 router.put("/course/lesson/:slug/:instructorId", requireSignin, updateLesson);
 router.put("/course/:slug/:lessonId", requireSignin, removeLesson);
-
 
 router.get("/check-enrollment/:courseId", requireSignin, checkEnrollment);
 
