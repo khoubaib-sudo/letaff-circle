@@ -1,10 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createElement } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import StudentRoute from "../../../components/routes/StudentRoute";
 import { Button, Menu, Avatar } from "antd";
 import ReactPlayer from "react-player";
-import ReactMarkdown from "react-markdown";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  CheckCircleFilled,
+  MinusCircleFilled,
+} from "@ant-design/icons";
+import { FaPlay } from "react-icons/fa";
 
 const { Item } = Menu;
 const SingleCourse = () => {
@@ -28,12 +34,19 @@ const SingleCourse = () => {
   return (
     <StudentRoute>
       <div className="container mx-auto">
-        <div className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8">
-          <div className="w-60">
+        <div className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8 flex">
+          <div className="w-60 mr-8 ">
+            <Button
+              onClick={() => setCollapsed(!collapsed)}
+              className="text-white mt-1 btn-block mb-2"
+            >
+              {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}{" "}
+              {!collapsed && "Lessons"}
+            </Button>
             <Menu
               defaultSelectedKeys={[clicked]}
               inlineCollapsed={collapsed}
-              className=" text-white rounded-lg "
+              className="text-white "
               style={{
                 background: "rgba(11, 0, 20, 0.30)", // Set background color with opacity
                 backdropFilter: "blur(10px)", // Add backdrop filter for blur effect
@@ -48,15 +61,46 @@ const SingleCourse = () => {
                   onClick={() => setClicked(index)}
                   key={index}
                   icon={<span className="text-gray-500 mr-2">{index + 1}</span>}
-                  
-                
                 >
-                  <span className="ml-1 font-medium">
+                  <span className="ml-1 font-medium ">
                     {lesson.title.substring(0, 30)}
                   </span>
                 </Item>
               ))}
             </Menu>
+          </div>
+
+          <div className="col">
+            {clicked !== -1 ? (
+              <>
+                {course.lessons[clicked].video &&
+                  course.lessons[clicked].video.url && (
+                    <>
+                      <div className="wrapper">
+                        <ReactPlayer
+                          className="player"
+                          url={course.lessons[clicked].video.url}
+                          width="100%"
+                          height="580px"
+                          controls
+                        />
+                      </div>
+                    </>
+                  )}
+                <div className="single-post mt-4 bg-purple-200 rounded-lg shadow-md p-8 flex">
+                  {course.lessons[clicked].content}
+                </div>
+              </>
+            ) : (
+              <div className="flex justify-center ml-9  p-40">
+                <div className="text-center p-5">
+                  <FaPlay className="text-white text-5xl inline-block mr-4" />
+                  <p className="text-xl font-bold text-white inline-block">
+                    Click on the lessons to start learning
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
