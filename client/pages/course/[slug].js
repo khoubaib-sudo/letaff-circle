@@ -7,7 +7,7 @@ import SingleCourseLessons from "../../components/cards/SingleCourseLessons";
 import { motion } from "framer-motion";
 import { Context } from "../../context";
 import { toast } from "react-toastify";
-import {loadStripe} from '@stripe/stripe-js'
+import { loadStripe } from "@stripe/stripe-js";
 
 const SingleCourse = ({ course }) => {
   // state
@@ -24,7 +24,7 @@ const SingleCourse = ({ course }) => {
   useEffect(() => {
     if (user && course) checkEnrollment();
   }, [user, course]);
-  
+
   const checkEnrollment = async () => {
     const { data } = await axios.get(`/api/check-enrollment/${course._id}`);
     console.log("CHECK ENROLLMENT", data);
@@ -98,6 +98,8 @@ const SingleCourse = ({ course }) => {
           loading={loading}
           handlePaidEnrollment={handlePaidEnrollment}
           handleFreeEnrollment={handleFreeEnrollment}
+          enrolled={enrolled}
+          setEnrolled={setEnrolled}
         />
         <PreviewModal
           showModal={showModal}
