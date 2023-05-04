@@ -37,11 +37,8 @@ const SingleCourse = () => {
         <div className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8 flex">
           <div className="w-60 mr-8 ">
             <Button
-              onClick={() => setCollapsed(!collapsed)}
               className="text-white mt-1 btn-block mb-2"
-            >
-              {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}{" "}
-              {!collapsed && "Lessons"}
+            > Lessons
             </Button>
             <Menu
               defaultSelectedKeys={[clicked]}
