@@ -4,13 +4,9 @@ import axios from "axios";
 import StudentRoute from "../../../components/routes/StudentRoute";
 import { Button, Menu, Avatar } from "antd";
 import ReactPlayer from "react-player";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  CheckCircleFilled,
-  MinusCircleFilled,
-} from "@ant-design/icons";
+
 import { FaPlay } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const { Item } = Menu;
 const SingleCourse = () => {
@@ -31,26 +27,36 @@ const SingleCourse = () => {
     setCourse(data);
   };
 
+  const markCompleted = async () => {
+    const { data } = await axios.post(`/api/mark-completed`, {
+      courseId: course._id,
+      lessonId: course.lessons[clicked]._id,
+    });
+    console.log(data);
+    setCompletedLessons([...completedLessons, course.lessons[clicked]._id]);
+  };
+
   return (
     <StudentRoute>
       <div className="container mx-auto">
-        <div className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8 flex">
-          <div className="w-60 mr-8 ">
-            <Button
-              className="text-white mt-1 btn-block mb-2"
-            > Lessons
-            </Button>
+        <motion.div
+          className="bg-gradient-to-br from-purple-600 to-purple-200 rounded-lg shadow-md p-8 flex"
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="w-60 mr-8">
+          <div className="col bg-purple-200  font-bold rounded-lg p-4 mb-4"> Lessons</div>
             <Menu
-              defaultSelectedKeys={[clicked]}
-              inlineCollapsed={collapsed}
               className="text-white "
               style={{
-                background: "rgba(11, 0, 20, 0.30)", // Set background color with opacity
-                backdropFilter: "blur(10px)", // Add backdrop filter for blur effect
-                borderRadius: "8px", // Add border radius
-                padding: "16px", // Add padding
+                background: "rgba(11, 0, 20, 0.30)",
+                backdropFilter: "blur(10px)",
+                borderRadius: "8px",
+                padding: "16px",
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                 height: "80vh",
+                width: "29vh",
               }}
             >
               {course.lessons.map((lesson, index) => (
@@ -67,9 +73,24 @@ const SingleCourse = () => {
             </Menu>
           </div>
 
-          <div className="col">
+          <motion.div
+            className="col"
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             {clicked !== -1 ? (
               <>
+                <div className="col bg-purple-200  font-bold rounded-lg p-4 mb-4">
+                  <span>{course.lessons[clicked].title.substring(0, 30)}</span>
+                  <button
+                    className="float-right   hover:text-purple-500"
+                    onClick={markCompleted}
+                  >
+                    Mark as Completed
+                  </button>
+                </div>
+
                 {course.lessons[clicked].video &&
                   course.lessons[clicked].video.url && (
                     <>
@@ -98,8 +119,8 @@ const SingleCourse = () => {
                 </div>
               </div>
             )}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </StudentRoute>
   );

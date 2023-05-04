@@ -30,7 +30,7 @@ const StudentRoute = ({ children, showNav = true }) => {
       {!ok ? (
         <SyncOutlined
           spin
-          className="d-flex justify-content-center display-1 text-primary p-5"
+          className="d-flex justify-content-center display-1 p-5"
         />
       ) : (
         <div className="container-fluid">{children}</div>
