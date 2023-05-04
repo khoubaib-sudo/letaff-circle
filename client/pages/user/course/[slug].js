@@ -33,7 +33,6 @@ const SingleCourse = () => {
       lessonId: course.lessons[clicked]._id,
     });
     console.log(data);
-    setCompletedLessons([...completedLessons, course.lessons[clicked]._id]);
   };
 
   return (
