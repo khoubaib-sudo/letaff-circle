@@ -14,17 +14,31 @@ const SingleCourse = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState({ lessons: [] });
-
+  const [completedLessons, setCompletedLessons] = useState([]);
+  
+  
   const router = useRouter();
   const { slug } = router.query;
 
   useEffect(() => {
     if (slug) loadCourse();
   }, [slug]);
+  
+  useEffect(() => {
+    if (course) loadCompletedLessons();
+  }, [course]);
 
   const loadCourse = async () => {
     const { data } = await axios.get(`/api/user/course/${slug}`);
     setCourse(data);
+  };
+  
+  const loadCompletedLessons = async () => {
+    const { data } = await axios.post(`/api/list-completed`, {
+      courseId: course._id,
+    });
+    console.log("COMPLETED LESSONS => ", data);
+    setCompletedLessons(data);
   };
 
   const markCompleted = async () => {
