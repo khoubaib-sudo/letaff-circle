@@ -4,7 +4,10 @@ import axios from "axios";
 import StudentRoute from "../../../components/routes/StudentRoute";
 import { Button, Menu, Avatar } from "antd";
 import ReactPlayer from "react-player";
-
+import {
+  CheckCircleFilled,
+  MinusCircleFilled,
+} from "@ant-design/icons";
 import { FaPlay } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -48,6 +51,27 @@ const SingleCourse = () => {
     });
     console.log(data);
   };
+  
+  const markIncompleted = async () => {
+    try {
+      const { data } = await axios.post(`/api/mark-incomplete`, {
+        courseId: course._id,
+        lessonId: course.lessons[clicked]._id,
+      });
+      console.log(data);
+      const all = completedLessons;
+      console.log("ALL => ", all);
+      const index = all.indexOf(course.lessons[clicked]._id);
+      if (index > -1) {
+        all.splice(index, 1);
+        console.log("ALL WITHOUT REMOVED => ", all);
+        setCompletedLessons(all);
+        setUpdateState(!updateState);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <StudentRoute>
@@ -59,7 +83,7 @@ const SingleCourse = () => {
           transition={{ duration: 0.5 }}
         >
           <div className="w-60 mr-8">
-          <div className="col bg-purple-200  font-bold rounded-lg p-4 mb-4"> Lessons</div>
+          <div className="col bg-purple-200  font-bold rounded-lg p-4 mb-4">Lessons</div>
             <Menu
               className="text-white "
               style={{
@@ -79,7 +103,18 @@ const SingleCourse = () => {
                   icon={<span className="text-gray-500 mr-2">{index + 1}</span>}
                 >
                   <span className="ml-1 font-medium ">
-                    {lesson.title.substring(0, 30)}
+                    {lesson.title}
+                    {completedLessons.includes(lesson._id) ? (
+                  <CheckCircleFilled
+                    className="float-right text-white "
+                    style={{ marginTop: "13px" }}
+                  />
+                ) : (
+                  <MinusCircleFilled
+                    className="float-right text-white "
+                    style={{ marginTop: "13px" }}
+                  />
+                )}
                   </span>
                 </Item>
               ))}
@@ -96,12 +131,18 @@ const SingleCourse = () => {
               <>
                 <div className="col bg-purple-200  font-bold rounded-lg p-4 mb-4">
                   <span>{course.lessons[clicked].title.substring(0, 30)}</span>
+                  {completedLessons.includes(course.lessons[clicked]._id) ? (
                   <button
-                    className="float-right   hover:text-purple-500"
-                    onClick={markCompleted}
+                  className="float-right   hover:text-purple-500"
+                    onClick={markIncompleted}
                   >
-                    Mark as Completed
+                    Mark as incomplete
                   </button>
+                ) : (
+                  <button className="float-right   hover:text-purple-500" onClick={markCompleted}>
+                    Mark as completed
+                  </button>
+                )}
                 </div>
 
                 {course.lessons[clicked].video &&
