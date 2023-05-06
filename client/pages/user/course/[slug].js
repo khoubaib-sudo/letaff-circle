@@ -1,18 +1,23 @@
-import { useState, useEffect, createElement } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import StudentRoute from "../../../components/routes/StudentRoute";
-import { Menu } from "antd";
+import { Menu, message } from "antd";
 import ReactPlayer from "react-player";
 import { FaPlay } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { TbCheck } from "react-icons/tb";
-
+import {
+  CheckCircleFilled,
+  MinusCircleFilled,
+} from "@ant-design/icons";
 const { Item } = Menu;
+
 const SingleCourse = () => {
   const [clicked, setClicked] = useState(-1);
   const [course, setCourse] = useState({ lessons: [] });
   const [completedLessons, setCompletedLessons] = useState([]);
+  const [allLessonsCompleted, setAllLessonsCompleted] = useState(false);
+
   // force state update
   const [updateState, setUpdateState] = useState(false);
 
@@ -38,6 +43,13 @@ const SingleCourse = () => {
     });
     console.log("COMPLETED LESSONS => ", data);
     setCompletedLessons(data);
+
+    // Check if all lessons are completed
+    const lessonIds = course.lessons.map((lesson) => lesson._id);
+    const areAllLessonsCompleted = lessonIds.every((lessonId) =>
+      data.includes(lessonId)
+    );
+    setAllLessonsCompleted(areAllLessonsCompleted);
   };
 
   const markCompleted = async () => {
@@ -47,6 +59,18 @@ const SingleCourse = () => {
     });
     console.log(data);
     setCompletedLessons([...completedLessons, course.lessons[clicked]._id]);
+
+    // Check if all lessons are completed after marking current lesson as completed
+    const lessonIds = course.lessons.map((lesson) => lesson._id);
+    const areAllLessonsCompleted = lessonIds.every((lessonId) =>
+      [...completedLessons, course.lessons[clicked]._id].includes(lessonId)
+    );
+    setAllLessonsCompleted(areAllLessonsCompleted);
+
+    // Show congratulatory message if all lessons are completed
+    if (areAllLessonsCompleted) {
+      message.success("Congratulations! You have completed all the lessons.");
+    }
   };
 
   const markIncompleted = async () => {
@@ -104,12 +128,15 @@ const SingleCourse = () => {
                   <span className="ml-1 font-medium ">
                     {lesson.title.substring(0, 30)}
                     {completedLessons.includes(lesson._id) ? (
-                      <TbCheck
-                        className="float-right text-green-500 "
-                        style={{ marginTop: "13px" }}
-                      />
-                    ) : (
-                      <></>
+                      <CheckCircleFilled
+                      className="float-right text-green-500 ml-2"
+                      style={{ marginTop: "13px" }}
+                    />
+                  ) : (
+                    <MinusCircleFilled
+                      className="float-right text-white ml-2"
+                      style={{ marginTop: "13px" }}
+                    />
                     )}
                   </span>
                 </Item>
@@ -123,7 +150,20 @@ const SingleCourse = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            {clicked !== -1 ? (
+            {allLessonsCompleted ? (
+              <div className="flex justify-center ml-9  p-40">
+                <div className="text-center p-5">
+                  <img
+                    src="/assets/hero4.png"
+                    alt="Hero Image"
+                    className="relative h-64 ml-24"
+                  />
+                  <p className="text-xl font-bold text-white inline-block">
+                    Congratulations! You have completed the course.
+                  </p>
+                </div>
+              </div>
+            ) : clicked !== -1 ? (
               <>
                 <div className="col bg-purple-200  font-bold rounded-lg p-4 mb-4">
                   <span>{course.lessons[clicked].title.substring(0, 30)}</span>
