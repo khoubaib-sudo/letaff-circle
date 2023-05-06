@@ -2,31 +2,27 @@ import { useState, useEffect, createElement } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import StudentRoute from "../../../components/routes/StudentRoute";
-import { Button, Menu, Avatar } from "antd";
+import { Menu } from "antd";
 import ReactPlayer from "react-player";
-import {
-  CheckCircleFilled,
-  MinusCircleFilled,
-} from "@ant-design/icons";
 import { FaPlay } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { TbCheck } from "react-icons/tb";
 
 const { Item } = Menu;
 const SingleCourse = () => {
   const [clicked, setClicked] = useState(-1);
-  const [collapsed, setCollapsed] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState({ lessons: [] });
   const [completedLessons, setCompletedLessons] = useState([]);
-  
-  
+  // force state update
+  const [updateState, setUpdateState] = useState(false);
+
   const router = useRouter();
   const { slug } = router.query;
 
   useEffect(() => {
     if (slug) loadCourse();
   }, [slug]);
-  
+
   useEffect(() => {
     if (course) loadCompletedLessons();
   }, [course]);
@@ -35,7 +31,7 @@ const SingleCourse = () => {
     const { data } = await axios.get(`/api/user/course/${slug}`);
     setCourse(data);
   };
-  
+
   const loadCompletedLessons = async () => {
     const { data } = await axios.post(`/api/list-completed`, {
       courseId: course._id,
@@ -50,8 +46,9 @@ const SingleCourse = () => {
       lessonId: course.lessons[clicked]._id,
     });
     console.log(data);
+    setCompletedLessons([...completedLessons, course.lessons[clicked]._id]);
   };
-  
+
   const markIncompleted = async () => {
     try {
       const { data } = await axios.post(`/api/mark-incomplete`, {
@@ -82,8 +79,10 @@ const SingleCourse = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="w-60 mr-8">
-          <div className="col bg-purple-200  font-bold rounded-lg p-4 mb-4">Lessons</div>
+          <div className="w-50 mr-8">
+            <div className="col bg-purple-800 text-white  font-bold rounded-lg p-4 mb-4">
+              Lessons
+            </div>
             <Menu
               className="text-white "
               style={{
@@ -93,7 +92,7 @@ const SingleCourse = () => {
                 padding: "16px",
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                 height: "80vh",
-                width: "29vh",
+                width: "30vh",
               }}
             >
               {course.lessons.map((lesson, index) => (
@@ -103,18 +102,15 @@ const SingleCourse = () => {
                   icon={<span className="text-gray-500 mr-2">{index + 1}</span>}
                 >
                   <span className="ml-1 font-medium ">
-                    {lesson.title}
+                    {lesson.title.substring(0, 30)}
                     {completedLessons.includes(lesson._id) ? (
-                  <CheckCircleFilled
-                    className="float-right text-white "
-                    style={{ marginTop: "13px" }}
-                  />
-                ) : (
-                  <MinusCircleFilled
-                    className="float-right text-white "
-                    style={{ marginTop: "13px" }}
-                  />
-                )}
+                      <TbCheck
+                        className="float-right text-green-500 "
+                        style={{ marginTop: "13px" }}
+                      />
+                    ) : (
+                      <></>
+                    )}
                   </span>
                 </Item>
               ))}
@@ -132,17 +128,20 @@ const SingleCourse = () => {
                 <div className="col bg-purple-200  font-bold rounded-lg p-4 mb-4">
                   <span>{course.lessons[clicked].title.substring(0, 30)}</span>
                   {completedLessons.includes(course.lessons[clicked]._id) ? (
-                  <button
-                  className="float-right   hover:text-purple-500"
-                    onClick={markIncompleted}
-                  >
-                    Mark as incomplete
-                  </button>
-                ) : (
-                  <button className="float-right   hover:text-purple-500" onClick={markCompleted}>
-                    Mark as completed
-                  </button>
-                )}
+                    <button
+                      className="float-right   hover:text-purple-500"
+                      onClick={markIncompleted}
+                    >
+                      Mark as incomplete
+                    </button>
+                  ) : (
+                    <button
+                      className="float-right   hover:text-purple-500"
+                      onClick={markCompleted}
+                    >
+                      Mark as completed
+                    </button>
+                  )}
                 </div>
 
                 {course.lessons[clicked].video &&
@@ -155,6 +154,7 @@ const SingleCourse = () => {
                           width="100%"
                           height="580px"
                           controls
+                          onEnded={() => markCompleted()}
                         />
                       </div>
                     </>

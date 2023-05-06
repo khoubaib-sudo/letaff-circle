@@ -388,7 +388,7 @@ export const userCourses = async (req, res) => {
     .exec();
   res.json(courses);
 };
- 
+
 export const markCompleted = async (req, res) => {
   const { courseId, lessonId } = req.body;
   // console.log(courseId, lessonId);
@@ -436,7 +436,6 @@ export const listCompleted = async (req, res) => {
 export const markIncomplete = async (req, res) => {
   try {
     const { courseId, lessonId } = req.body;
-
     const updated = await Completed.findOneAndUpdate(
       {
         user: req.user._id,
