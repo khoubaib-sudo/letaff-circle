@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import InstructorRoute from "../../../../components/routes/InstructorRoute";
 import axios from "axios";
-import { Avatar, Tooltip, Button, Modal, List } from "antd";
+import { Avatar, Tooltip, Button, Modal, Badge } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
 
-import { TbEdit, TbCheckbox, TbCircleX } from "react-icons/tb";
+import { TbEdit, TbCheckbox, TbCircleX, TbUsers } from "react-icons/tb";
 
 import { RiQuestionLine } from "react-icons/ri";
 
@@ -24,6 +24,8 @@ const CourseView = () => {
   });
   const [uploading, setUploading] = useState(false);
   const [uploadButtonText, setUploadButtonText] = useState("Upload video");
+  // student count
+  const [students, setStudents] = useState(0);
 
   const router = useRouter();
   const { slug } = router.query;
@@ -32,9 +34,21 @@ const CourseView = () => {
     loadCourse();
   }, [slug]);
 
+  useEffect(() => {
+    course && studentCount();
+  }, [course]);
+
   const loadCourse = async () => {
     const { data } = await axios.get(`/api/course/${slug}`);
     setCourse(data);
+  };
+
+  const studentCount = async () => {
+    const { data } = await axios.post(`/api/instructor/student-count`, {
+      courseId: course._id,
+    });
+    console.log("STUDENT COUNT => ", data);
+    setStudents(data.length);
   };
 
   // functions for add lesson
@@ -157,9 +171,30 @@ const CourseView = () => {
                     <p className="text-sm text-gray-50 mt-1">
                       {course.category}
                     </p>
+                    <div className="flex flex-row">
+                      <span
+                        style={{
+                          backgroundColor: "#6b21a8",
+                          color: "#ffffff",
+                          fontWeight: "bold",
+                          fontSize: "15px",
+                          padding: "4px 8px",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        <TbUsers
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: "20px",
+                            marginRight: '4px'
+                          }}
+                        />
+                         {`${students} Students Enrolled`}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="flex pb-8 items-center">
+                  <div className="flex items-center">
                     <div className="flex flex-row">
                       <Tooltip title="Edit">
                         <TbEdit

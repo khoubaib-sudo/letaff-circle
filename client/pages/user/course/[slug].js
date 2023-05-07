@@ -6,10 +6,7 @@ import { Menu, message } from "antd";
 import ReactPlayer from "react-player";
 import { FaPlay } from "react-icons/fa";
 import { motion } from "framer-motion";
-import {
-  CheckCircleFilled,
-  MinusCircleFilled,
-} from "@ant-design/icons";
+import { CheckCircleFilled, MinusCircleFilled } from "@ant-design/icons";
 const { Item } = Menu;
 
 const SingleCourse = () => {
@@ -129,14 +126,14 @@ const SingleCourse = () => {
                     {lesson.title.substring(0, 30)}
                     {completedLessons.includes(lesson._id) ? (
                       <CheckCircleFilled
-                      className="float-right text-green-500 ml-2"
-                      style={{ marginTop: "13px" }}
-                    />
-                  ) : (
-                    <MinusCircleFilled
-                      className="float-right text-white ml-2"
-                      style={{ marginTop: "13px" }}
-                    />
+                        className="float-right text-green-500 ml-2"
+                        style={{ marginTop: "13px" }}
+                      />
+                    ) : (
+                      <MinusCircleFilled
+                        className="float-right text-white ml-2"
+                        style={{ marginTop: "13px" }}
+                      />
                     )}
                   </span>
                 </Item>
