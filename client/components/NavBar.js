@@ -12,7 +12,7 @@ import {
   UserOutlined,
   FileAddFilled,
   FundProjectionScreenOutlined,
-  VideoCameraFilled 
+  VideoCameraFilled,
 } from "@ant-design/icons";
 
 const { Item, SubMenu, ItemGroup } = Menu;
@@ -56,28 +56,27 @@ const NavBar = () => {
           {user !== null &&
             (user && user.role && user.role.includes("Instructor") ? (
               <>
-               <Menu>
-                <Item
-                  className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
-                  key="/instructor/course/create"
-                  onClick={(e) => setCurrent(e.key)}
-                  icon={<VideoCameraFilled />}
-                >
-                  <Link href={"/instructor/course/create"}>Go live</Link>
-                </Item>
-              </Menu>
-              <Menu>
-              <Item
-                className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
-                key="/instructor/course/create"
-                onClick={(e) => setCurrent(e.key)}
-                icon={<FileAddFilled  />}
-              >
-                <Link href={"/instructor/course/create"}>Create course</Link>
-              </Item>
-            </Menu>
+                <Menu>
+                  <Item
+                    className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
+                    icon={<VideoCameraFilled />}
+                  >
+                    <Link href={""}>Go live</Link>
+                  </Item>
+                </Menu>
+                <Menu>
+                  <Item
+                    className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
+                    key="/instructor/course/create"
+                    onClick={(e) => setCurrent(e.key)}
+                    icon={<FileAddFilled />}
+                  >
+                    <Link href={"/instructor/course/create"}>
+                      Create course
+                    </Link>
+                  </Item>
+                </Menu>
               </>
-             
             ) : (
               <Menu>
                 <Item

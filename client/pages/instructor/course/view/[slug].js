@@ -180,16 +180,18 @@ const CourseView = () => {
                           fontSize: "15px",
                           padding: "4px 8px",
                           borderRadius: "4px",
+                          display: "flex",
+                          alignItems: "center",
                         }}
                       >
                         <TbUsers
                           style={{
                             fontWeight: "bold",
                             fontSize: "20px",
-                            marginRight: '4px'
+                            marginRight: "4px",
                           }}
                         />
-                         {`${students} Students Enrolled`}
+                        <span>{`${students} Students Enrolled`}</span>
                       </span>
                     </div>
                   </div>
