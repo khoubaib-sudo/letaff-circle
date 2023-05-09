@@ -61,7 +61,7 @@ const NavBar = () => {
                     className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
                     icon={<VideoCameraFilled />}
                   >
-                    <Link href={""}>Go live</Link>
+                    <Link href={"/"}>Go live</Link>
                   </Item>
                 </Menu>
                 <Menu>

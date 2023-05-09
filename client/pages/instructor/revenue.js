@@ -18,7 +18,8 @@ const InstructorRevenue = () => {
   }, []);
 
   const sendBalanceRequest = async () => {
-    console.log("send balance request");
+    const { data } = await axios.get("/api/instructor/balance");
+    setBalance(data);
   };
 
   // Framer Motion Variants
@@ -37,27 +38,36 @@ const InstructorRevenue = () => {
       >
         <div class="md:mr-auto ml-auto">
           <div class="row pt-2">
-            <div class="col-md-8 offset-md-2 ">
-              <h2 class="flex items-center text-white text-4xl">
+            <div className="col-span-8 md:col-span-8 md:col-start-3">
+              <h2 className="flex items-center text-white text-4xl">
                 Revenue report
-                <DollarOutlined class="ml-auto text-5xl" />
+                <DollarOutlined className="ml-auto text-5xl" />
               </h2>
-              <small class="text-white ">
+              <small className="text-white">
                 You get paid directly from Stripe to your bank account every 48
                 hours
               </small>
-              <hr class="my-4 border-1 border-white" />
-              <h4 class="flex items-center text-white text-2xl">
-                Pending balance <span >$0.00</span>
+              <hr className="my-4 border-1 border-white" />
+              <h4 className="flex items-center text-white text-2xl">
+                Pending balance 
+                {balance.pending &&
+                balance.pending.map((bp, i) => (
+                  <span key={i} className="ml-auto text-5xl">
+                    {stripeCurrencyFormatter(bp)}
+                  </span>
+                ))}
+                
               </h4>
-              <small class="text-white text-lg">For the last 48 hours</small>
-              <hr class="my-4 border-1 border-white" />
-              <h4 class="flex items-center text-white text-2xl">
+              <small className="text-white text-lg">
+                For the last 48 hours
+              </small>
+              <hr className="my-4 border-1 border-white" />
+              <h4 className="flex items-center text-white text-2xl">
                 Payouts
-                <SettingOutlined class="ml-auto cursor-pointer text-3xl transform hover:rotate-180 transition-all" />
-                <LoadingOutlined class="ml-auto animate-spin cursor-pointer text-3xl" />
+                <SettingOutlined className="ml-auto cursor-pointer text-3xl transform hover:rotate-180 transition-all" />
+                {/* <LoadingOutlined className="ml-auto animate-spin cursor-pointer text-3xl" /> */}
               </h4>
-              <small class="text-white text-lg">
+              <small className="text-white text-lg">
                 Update your Stripe account details or view previous payouts.
               </small>
             </div>
@@ -65,7 +75,7 @@ const InstructorRevenue = () => {
         </div>
         <img
           src="/assets/revenue.png"
-          alt="Example image"
+          alt="revenue image"
           class="mt-4 ml-4  animate-float w-1/2 h-auto"
         />
       </motion.div>
