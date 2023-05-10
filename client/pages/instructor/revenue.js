@@ -7,6 +7,8 @@ import {
   SettingOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
+import { RiSettings4Fill } from "react-icons/ri";
+
 import { stripeCurrencyFormatter } from "../../utils/helpers";
 import { motion } from "framer-motion";
 
@@ -77,13 +79,13 @@ const InstructorRevenue = () => {
               <h4 className="flex items-center text-white text-2xl">
                 Payouts{" "}
                 {!loading ? (
-                  <SettingOutlined className="ml-auto cursor-pointer text-3xl " />
+                  <RiSettings4Fill onClick={handlePayoutSettings} className="ml-auto animate-spin cursor-pointer text-3xl " />
                 ) : (
-                  <LoadingOutlined className="ml-auto animate-spin cursor-pointer text-3xl" />
+                  <LoadingOutlined className="ml-auto animate-spin cursor-pointer text-xl" />
                 )}
               </h4>
               <small className="text-white text-lg">
-                Click on the Setting icon to update your Stripe account details or view previous payouts.
+                Click on the Setting icon to view your previous payouts.
               </small>
             </div>
           </div>

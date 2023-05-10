@@ -66,7 +66,7 @@ export const currentInstructor = async (req, res) => {
     } else {
       res.json({ ok: true });
     }
-  } catch (err) { 
+  } catch (err) {
     console.log(err);
   }
 };
@@ -76,7 +76,7 @@ export const instructorCourses = async (req, res) => {
     const courses = await Course.find({ instructor: req.user._id })
       .sort({ createdAt: -1 })
       .exec();
-      res.json(courses)
+    res.json(courses);
   } catch (err) {
     console.log(err);
   }
@@ -93,7 +93,6 @@ export const studentCount = async (req, res) => {
   }
 };
 
-
 export const instructorBalance = async (req, res) => {
   try {
     let user = await User.findById(req.user._id).exec();
@@ -103,5 +102,18 @@ export const instructorBalance = async (req, res) => {
     res.json(balance);
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const instructorPayoutSettings = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).exec();
+    const loginLink = await stripe.accounts.createLoginLink(
+      user.stripe_seller.id,
+      { redirect_url: process.env.STRIPE_SETTINGS_REDIRECT }
+    );
+    res.json(loginLink.url);
+  } catch (err) {
+    console.log("stripe payout settings login link err => , err");
   }
 };
