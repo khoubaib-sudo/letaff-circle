@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 
 const InstructorRevenue = () => {
   const [balance, setBalance] = useState({ pending: [] });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     sendBalanceRequest();
@@ -20,6 +21,18 @@ const InstructorRevenue = () => {
   const sendBalanceRequest = async () => {
     const { data } = await axios.get("/api/instructor/balance");
     setBalance(data);
+  };
+
+  const handlePayoutSettings = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/api/instructor/payout-settings");
+      window.location.href = data;
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+      alert("Unable to access payout settings. Try later.");
+    }
   };
 
   // Framer Motion Variants
@@ -49,26 +62,28 @@ const InstructorRevenue = () => {
               </small>
               <hr className="my-4 border-1 border-white" />
               <h4 className="flex items-center text-white text-2xl">
-                Pending balance 
+                Pending balance
                 {balance.pending &&
-                balance.pending.map((bp, i) => (
-                  <span key={i} className="ml-auto text-5xl">
-                    {stripeCurrencyFormatter(bp)}
-                  </span>
-                ))}
-                
+                  balance.pending.map((bp, i) => (
+                    <span key={i} className="ml-auto text-5xl">
+                      {stripeCurrencyFormatter(bp)}
+                    </span>
+                  ))}
               </h4>
               <small className="text-white text-lg">
                 For the last 48 hours
               </small>
               <hr className="my-4 border-1 border-white" />
               <h4 className="flex items-center text-white text-2xl">
-                Payouts
-                <SettingOutlined className="ml-auto cursor-pointer text-3xl transform hover:rotate-180 transition-all" />
-                {/* <LoadingOutlined className="ml-auto animate-spin cursor-pointer text-3xl" /> */}
+                Payouts{" "}
+                {!loading ? (
+                  <SettingOutlined className="ml-auto cursor-pointer text-3xl " />
+                ) : (
+                  <LoadingOutlined className="ml-auto animate-spin cursor-pointer text-3xl" />
+                )}
               </h4>
               <small className="text-white text-lg">
-                Update your Stripe account details or view previous payouts.
+                Click on the Setting icon to update your Stripe account details or view previous payouts.
               </small>
             </div>
           </div>
