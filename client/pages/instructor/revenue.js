@@ -1,28 +1,38 @@
-import { useState, useEffect, useContext } from "react";
-import { Context } from "../../context";
+import { useState, useEffect } from "react";
+
 import InstructorRoute from "../../components/routes/InstructorRoute";
 import axios from "axios";
-import {
-  DollarOutlined,
-  SettingOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { DollarOutlined, LoadingOutlined } from "@ant-design/icons";
 import { RiSettings4Fill } from "react-icons/ri";
-
-import { stripeCurrencyFormatter } from "../../utils/helpers";
+import { List, Typography } from "antd";
+import { stripeCurrencyFormatter, formatAmount } from "../../utils/helpers";
 import { motion } from "framer-motion";
 
 const InstructorRevenue = () => {
   const [balance, setBalance] = useState({ pending: [] });
   const [loading, setLoading] = useState(false);
+  const [payouts, setPayouts] = useState([]);
+
+  const { Title, Text } = Typography;
 
   useEffect(() => {
     sendBalanceRequest();
+    fetchPayouts();
   }, []);
 
   const sendBalanceRequest = async () => {
     const { data } = await axios.get("/api/instructor/balance");
     setBalance(data);
+  };
+
+  const fetchPayouts = async () => {
+    try {
+      const { data } = await axios.get("/api/instructor/payouts");
+      setPayouts(data);
+    } catch (err) {
+      console.log(err);
+      alert("Unable to fetch payout history. Please try again later.");
+    }
   };
 
   const handlePayoutSettings = async () => {
@@ -79,7 +89,10 @@ const InstructorRevenue = () => {
               <h4 className="flex items-center text-white text-2xl">
                 Payouts{" "}
                 {!loading ? (
-                  <RiSettings4Fill onClick={handlePayoutSettings} className="ml-auto animate-spin cursor-pointer text-3xl " />
+                  <RiSettings4Fill
+                    onClick={handlePayoutSettings}
+                    className="ml-auto animate-spin cursor-pointer text-3xl "
+                  />
                 ) : (
                   <LoadingOutlined className="ml-auto animate-spin cursor-pointer text-xl" />
                 )}
@@ -87,6 +100,28 @@ const InstructorRevenue = () => {
               <small className="text-white text-lg">
                 Click on the Setting icon to view your previous payouts.
               </small>
+              <List
+        dataSource={payouts}
+        renderItem={(payout) => (
+          <List.Item>
+            <List.Item.Meta
+              title={<Text className="text-white">Payout ID: {payout.id}</Text>}
+              description={
+                <div>
+                <div>
+                  <Text className="text-white">Amount: {formatAmount(payout.amount, payout.currency)}{"   "}</Text>
+                  <Text className="text-white">Status: {payout.status}</Text>
+                </div>
+                <div>
+                  <Text className="text-white">Initiated: {new Date(payout.created * 1000).toLocaleDateString()}{"   "}</Text>
+                  <Text className="text-white">Estimated Arrival: {new Date(payout.arrival_date * 1000).toLocaleDateString()}</Text>
+                </div>
+                </div>
+              }
+            />
+          </List.Item>
+        )}
+      />
             </div>
           </div>
         </div>

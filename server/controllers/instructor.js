@@ -105,6 +105,27 @@ export const instructorBalance = async (req, res) => {
   }
 };
 
+export const fetchPayoutHistory = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).exec();
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const stripeAccountId = user.stripe_account_id;
+    if (!stripeAccountId) {
+      return res.status(400).json({ message: 'Stripe account ID not found for the user' });
+    }
+    const payouts = await stripe.payouts.list({
+      stripeAccount: stripeAccountId,
+    });
+    res.json(payouts.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Unable to fetch payout history. Please try again later.' });
+  }
+};
+
 export const instructorPayoutSettings = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).exec();
@@ -117,3 +138,6 @@ export const instructorPayoutSettings = async (req, res) => {
     console.log("stripe payout settings login link err => , err");
   }
 };
+
+
+

@@ -1,5 +1,4 @@
 import express from "express";
-
 const router = express.Router();
 
 // middleware
@@ -13,6 +12,7 @@ import {
   instructorCourses,
   studentCount,
   instructorBalance,
+  fetchPayoutHistory,
   instructorPayoutSettings
 } from "../controllers/instructor";
 
@@ -24,11 +24,13 @@ router.get("/instructor-courses", requireSignin, instructorCourses);
 router.post("/instructor/student-count", requireSignin, studentCount);
 
 router.get("/instructor/balance", requireSignin, instructorBalance);
+router.get("/instructor/payouts", requireSignin, fetchPayoutHistory);
 
 router.get(
   "/instructor/payout-settings",
   requireSignin,
   instructorPayoutSettings
 );
+
 
 module.exports = router;
