@@ -61,7 +61,7 @@ const NavBar = () => {
                     className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
                     icon={<VideoCameraFilled />}
                   >
-                    <Link href={"/live/create-room"}>Go live</Link>
+                    <Link href={"/instructor/CreateRoom"}>Go live</Link>
                   </Item>
                 </Menu>
                 <Menu>
@@ -78,6 +78,7 @@ const NavBar = () => {
                 </Menu>
               </>
             ) : (
+              <>
               <Menu>
                 <Item
                   className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
@@ -88,6 +89,18 @@ const NavBar = () => {
                   <Link href={"/user/become-instructor"}>Become Instuctor</Link>
                 </Item>
               </Menu>
+              <Menu>
+                <Item
+                  className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
+                  key="/user/become-instructor"
+                  onClick={(e) => setCurrent(e.key)}
+                  icon={<FundProjectionScreenOutlined />}
+                >
+                  <Link href={"/user/JoinRoom"}>Join Room</Link>
+                </Item>
+              </Menu>
+              </>
+              
             ))}
 
           {user !== null && (

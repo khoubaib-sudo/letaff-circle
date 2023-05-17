@@ -1,7 +1,6 @@
 import User from "../models/user";
 import { hashPassword, comparePassword } from "../utils/auth";
 import jwt from "jsonwebtoken";
-import AWS from "aws-sdk";
 import { nanoid } from "nanoid";
 import nodemailer from "nodemailer";
 
