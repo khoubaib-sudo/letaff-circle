@@ -14,6 +14,7 @@ import {
   FundProjectionScreenOutlined,
   VideoCameraFilled,
 } from "@ant-design/icons";
+import { CiStreamOn } from "react-icons/ci";
 
 const { Item, SubMenu, ItemGroup } = Menu;
 
@@ -94,7 +95,7 @@ const NavBar = () => {
                   className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
                   key="/user/become-instructor"
                   onClick={(e) => setCurrent(e.key)}
-                  icon={<FundProjectionScreenOutlined />}
+                  icon={<CiStreamOn />}
                 >
                   <Link href={"/user/JoinRoom"}>Join Room</Link>
                 </Item>

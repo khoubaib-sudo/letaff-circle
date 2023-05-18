@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -30,10 +29,6 @@ const CreateRoom = () => {
         }
       );
 
-      console.log("Created room: ", response.data);
-      console.log("Redirecting to room: /rooms/" + response.data.name);
-
-      // Redirect the user to the new room page on your website
       window.location.href = response.data.url;
     } catch (error) {
       console.error(error);
