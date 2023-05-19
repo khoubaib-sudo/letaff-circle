@@ -129,10 +129,6 @@ const CourseCreate = () => {
           className="mt-4 mx-auto md:ml-4 md:mt-0 md:max-w-none animate-float"
         />
       </motion.div>
-
-      {/* <pre>{JSON.stringify(values, null, 4)}</pre>
-      <hr />
-      <pre>{JSON.stringify(image, null, 4)}</pre> */}
     </InstructorRoute>
   );
 };

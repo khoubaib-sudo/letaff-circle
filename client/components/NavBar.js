@@ -15,11 +15,15 @@ import {
   VideoCameraFilled,
 } from "@ant-design/icons";
 import { CiStreamOn } from "react-icons/ci";
+import { MdLightMode, MdDarkMode } from "react-icons/md";
+
+
 
 const { Item, SubMenu, ItemGroup } = Menu;
 
 const NavBar = () => {
   const [current, setCurrent] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const { state, dispatch } = useContext(Context);
   const { user } = state;
@@ -31,6 +35,11 @@ const NavBar = () => {
     const { data } = await axios.get("/api/logout");
     toast(data.message);
     router.push("/login");
+  };
+  const changeBgColor = () => {
+    const color = isDarkMode ? "rgb(245 243 255)" : "rgb(17 24 39)";
+    setIsDarkMode(!isDarkMode);
+    document.body.style.backgroundColor = color;
   };
 
   return (
@@ -57,7 +66,7 @@ const NavBar = () => {
           {user !== null &&
             (user && user.role && user.role.includes("Instructor") ? (
               <>
-                <Menu>
+                <Menu className=" bg-transparent">
                   <Item
                     className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
                     icon={<VideoCameraFilled />}
@@ -65,7 +74,7 @@ const NavBar = () => {
                     <Link href={"/instructor/CreateRoom"}>Go live</Link>
                   </Item>
                 </Menu>
-                <Menu>
+                <Menu className=" bg-transparent">
                   <Item
                     className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
                     key="/instructor/course/create"
@@ -80,32 +89,37 @@ const NavBar = () => {
               </>
             ) : (
               <>
-              <Menu>
-                <Item
-                  className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
-                  key="/user/become-instructor"
-                  onClick={(e) => setCurrent(e.key)}
-                  icon={<FundProjectionScreenOutlined />}
-                >
-                  <Link href={"/user/become-instructor"}>Become Instuctor</Link>
-                </Item>
-              </Menu>
-              <Menu>
-                <Item
-                  className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
-                  key="/user/become-instructor"
-                  onClick={(e) => setCurrent(e.key)}
-                  icon={<CiStreamOn />}
-                >
-                  <Link href={"/user/JoinRoom"}>Join Room</Link>
-                </Item>
-              </Menu>
+                <Menu className=" bg-transparent">
+                  <Item
+                    className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
+                    key="/user/become-instructor"
+                    onClick={(e) => setCurrent(e.key)}
+                    icon={<FundProjectionScreenOutlined />}
+                  >
+                    <Link href={"/user/become-instructor"}>
+                      Become Instuctor
+                    </Link>
+                  </Item>
+                </Menu>
+                <Menu className=" bg-transparent">
+                  <Item
+                    className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
+                    key="/user/become-instructor"
+                    onClick={(e) => setCurrent(e.key)}
+                    icon={<CiStreamOn />}
+                  >
+                    <Link href={"/user/JoinRoom"}>Join Room</Link>
+                  </Item>
+                </Menu>
               </>
-              
             ))}
 
           {user !== null && (
-            <Menu mode="vertical" style={{ direction: "ltr" }}>
+            <Menu
+              mode="vertical"
+              style={{ direction: "ltr" }}
+              className=" bg-transparent"
+            >
               <SubMenu
                 title={user && user.name}
                 className="ant-dropdown-submenu float-right cursor-pointer "
@@ -143,6 +157,12 @@ const NavBar = () => {
               </SubMenu>
             </Menu>
           )}
+          <button
+            className="text-base font-medium capitalize bg-purple-500 border border-none cursor-pointer btn btn-sm"
+            onClick={changeBgColor}
+          >
+            {isDarkMode ? <MdLightMode /> : <MdDarkMode />}
+          </button>
         </div>
       </div>
     </div>

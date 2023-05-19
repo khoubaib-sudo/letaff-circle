@@ -11,26 +11,39 @@ const JoinRoom = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await axios.get("https://api.daily.co/v1/rooms", {
+        const response = await axios.get("/api/getroom", { // change this to your server endpoint
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_DAILY_API_KEY}`,
           },
         });
+        console.log(response.data.data); 
         setRooms(response.data.data);
+        setRooms(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchRooms();
   }, []);
+  const calculateTimeElapsed = (updatedAt) => {
+    const updated = new Date(updatedAt);
+    const now = new Date();
+    
+    let elapsed = now - updated;
+  
+    const seconds = Math.floor((elapsed / 1000) % 60);
+    const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+    const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+  
+    return ` ${hours}h ${minutes}m ${seconds}s`;
+  };
 
-  const handleJoin = (roomName) => {
-    router.push("https://khoubaib.daily.co/" + roomName);
+  const handleJoin = (roomUrl) => {
+    router.push(roomUrl);
   };
-  const replaceUnderscores = (text) => {
-    return text.replace(/_/g, " ");
-  };
+  
   return (
     <div className="container mx-auto my-4">
       <motion.div
@@ -70,7 +83,15 @@ const JoinRoom = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
-                    {room.name}
+                    {room.roomName}
+                  </motion.h2>
+                  <motion.h2
+                    className="ag-courses-item_title text-white  mb-5"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    {room.description} 
                   </motion.h2>
                   <motion.div
                     className="ag-courses-item_date-box text-white"
@@ -78,9 +99,9 @@ const JoinRoom = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
-                    Start at:
+                    
                     <span className="ag-courses-item_date text-slate-400 font-bold ml-1">
-                      {new Date(room.created_at).toLocaleString()}
+                    {calculateTimeElapsed(room.updatedAt)}
                     </span>
                   </motion.div>
                   <motion.button
@@ -88,7 +109,7 @@ const JoinRoom = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    onClick={() => handleJoin(room.name)}
+                    onClick={() => handleJoin(room.url)}
                   >
                     Join Room
                   </motion.button>
