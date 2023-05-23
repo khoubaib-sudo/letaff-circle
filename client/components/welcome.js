@@ -3,11 +3,15 @@ import { useState, useEffect, useContext } from "react";
 import { Context } from "../context";
 import CourseCard from "../components/cards/CourseCard";
 import { motion } from "framer-motion";
+import { Select } from "antd";
+const { Option } = Select;
 
 const WelcomePage = () => {
   const [courses, setCourses] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const { state, dispatch } = useContext(Context);
   const { user } = state;
+
   useEffect(() => {
     const fetchCourses = async () => {
       const { data } = await axios.get("/api/courses");
@@ -15,6 +19,7 @@ const WelcomePage = () => {
     };
     fetchCourses();
   }, []);
+
   const imageVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
@@ -23,6 +28,10 @@ const WelcomePage = () => {
       transition: { duration: 0.8, ease: "easeInOut" },
     },
   };
+
+  const filteredCourses = selectedCategory
+    ? courses.filter((course) => course.category === selectedCategory)
+    : courses;
 
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
@@ -84,9 +93,20 @@ const WelcomePage = () => {
           initial="hidden"
           animate="visible"
         >
+          <Select
+            defaultValue="All"
+            style={{ width: 120 }}
+            onChange={(value) => setSelectedCategory(value)}
+          >
+            <Option value="">All</Option>
+            <Option value="Web Development">Web Development</Option>
+            <Option value="Ux Design">Ux Design</Option>
+            <Option value="Marketing">Marketing</Option>
+          </Select>
+
           <div className="container-fluid flex-grow ">
             <div className="grid grid-cols-3 row justify-center gap-10 px-5 py-10">
-              {courses.map((course) => (
+              {filteredCourses.map((course) => (
                 <div className="w-full max-w-sm">
                   <CourseCard course={course} />
                 </div>
