@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context";
 import UserRoute from "../../components/routes/UserRoute";
-import { Avatar } from "antd";
+import { Avatar, Form, Input, Button, Upload } from "antd";
 import axios from "axios";
 import Link from "next/link";
-import { SyncOutlined } from "@ant-design/icons";
-import { FaPlay } from "react-icons/fa";
+import { SyncOutlined , UploadOutlined} from "@ant-design/icons";
 import { motion } from "framer-motion";
+
 
 const UserIndex = () => {
   const {
@@ -15,11 +15,25 @@ const UserIndex = () => {
 
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  
+  const [name, setName] = useState(user?.name || "");
+  const [avatar, setAvatar] = useState(null);
+  
   useEffect(() => {
     loadCourses();
   }, []);
 
+  const handleAvatarUpload = (info) => {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      setAvatar(info.file.response.url);
+    } else if (info.file.status === 'error') {
+      console.log(`${info.file.name} file upload failed.`);
+    }
+  };
+  
   const loadCourses = async () => {
     try {
       setLoading(true);
