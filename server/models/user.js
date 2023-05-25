@@ -23,7 +23,7 @@ const userSchema = new Schema(
     },
     picture: {
       type: String,
-      default: "../../client/public/assets/avatar.png",
+      default: "",
     },
     role: {
       type: [String],

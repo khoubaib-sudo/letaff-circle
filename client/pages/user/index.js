@@ -4,9 +4,9 @@ import UserRoute from "../../components/routes/UserRoute";
 import { Avatar, Form, Input, Button, Upload } from "antd";
 import axios from "axios";
 import Link from "next/link";
-import { SyncOutlined , UploadOutlined} from "@ant-design/icons";
+import { SyncOutlined, UploadOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
-
+import Resizer from "react-image-file-resizer";
 
 const UserIndex = () => {
   const {
@@ -15,25 +15,13 @@ const UserIndex = () => {
 
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
-  
-  const [name, setName] = useState(user?.name || "");
-  const [avatar, setAvatar] = useState(null);
-  
+
   useEffect(() => {
     loadCourses();
   }, []);
 
-  const handleAvatarUpload = (info) => {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      setAvatar(info.file.response.url);
-    } else if (info.file.status === 'error') {
-      console.log(`${info.file.name} file upload failed.`);
-    }
-  };
-  
+  // Handle the Image Upload
+
   const loadCourses = async () => {
     try {
       setLoading(true);
@@ -79,14 +67,14 @@ const UserIndex = () => {
         animate="visible"
       >
         <div className="flex items-center mb-4">
-        <motion.div
+          <motion.div
             variants={cardVariants}
             className="flex flex-col justify-center"
           >
-          <Avatar
-            src="https://www.christies.com/img/LotImages/2022/CKS/2022_CKS_20661_0088_000(world_of_women_woman_5672110206).jpg?mode=max?w=780"
-            className="w-20 h-20 mr-4 border-4 border-purple-200 rounded-full shadow-lg"
-          />
+            <Avatar
+              src="{avatar}"
+              className="w-20 h-20 mr-4 border-4 border-purple-200 rounded-full shadow-lg"
+            />
           </motion.div>
           <motion.div
             variants={cardVariants}
